@@ -53,17 +53,15 @@ public class RegistroUsuario extends HttpServlet {
             String contraseña = request.getParameter("contraseña");
             String tipo = request.getParameter("tipo");
             Integer identificacion = Integer.parseInt(request.getParameter("identificacion"));
-            String fecha_nacimiento = request.getParameter("fecha de nacimiento");
+            String fecha = request.getParameter("fecha de nacimiento");
             String departamento = request.getParameter("departamento");
             String ciudad = request.getParameter("ciudad");
             String direccion = request.getParameter("direccion");
             
-            Usuario usuario= new Usuario(identificacion,nombres,apellidos,new Date(fecha_nacimiento),telefono,email,contraseña,tipo,direccion,municipioFacade.find(5001));
-            if (request.getParameter("action").equals("Registrar")) 
-            {
+             Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha.split("/")[0]), Integer.parseInt(fecha.split("/")[1]), Integer.parseInt(fecha.split("/")[2])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(5001));
+            if (request.getParameter("action").equals("Registrarse")) {
                 usuarioFacade.create(usuario);
             }
-            
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
