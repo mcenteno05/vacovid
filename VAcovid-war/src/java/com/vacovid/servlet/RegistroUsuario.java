@@ -12,6 +12,7 @@ import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,8 +55,7 @@ public class RegistroUsuario extends HttpServlet {
             String tipo = request.getParameter("tipo");
             Integer identificacion = Integer.parseInt(request.getParameter("identificacion"));
             String fecha = request.getParameter("fecha de nacimiento");
-            String departamento = request.getParameter("departamento");
-            String ciudad = request.getParameter("municipio");
+            Integer municipio = Integer.parseInt(request.getParameter("municipio"));
             String direccion = request.getParameter("direccion");
             String[] fecha_nacimiento = fecha.split("/");
 
@@ -66,7 +66,7 @@ public class RegistroUsuario extends HttpServlet {
             } 
             else 
             {
-                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[2]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(5001));
+                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[2]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
                 if (request.getParameter("action").equals("Registrarse")) 
                 {
                     usuarioFacade.create(usuario);

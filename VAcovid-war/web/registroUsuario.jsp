@@ -9,7 +9,8 @@
         <script
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+        </script>
     </head>
     <body>
         <h1>Registro</h1>
@@ -48,7 +49,7 @@
                     <select name="tipo" value="${usuario.tipo}">
                         <option>Cédula de ciudadania</option>
                         <option>Tarjeta de identidad</option>
-                        <option>Cédula de extrangería</option>
+                        <option>Cédula de extranjería</option>
                     </select>
                     </td>
                 </tr>
@@ -60,6 +61,7 @@
                     <td>Fecha de nacimiento</td>
                     <td><input type="text" name="fecha de nacimiento" value="${usuario.email}" /></td>
                 </tr>
+                
                 <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
                                            url = "jdbc:derby://localhost:1527/vacovid"
                                            user = "root"  password = "admin"/>
@@ -72,34 +74,30 @@
                             ORDER BY departamento
                         </sql:query>
                             
-                        <select id="departamentoLista" name="departamentoLista" value="${usuario.departamento}">
+                        <select id="departamento" name="departamento" value='${usuario.departamento}'>
                             <option value="0">Elija un departamento</option>
                         <c:forEach var = "row" items = "${resultadoDepartamento.rows}">
                                 <option value="${row.codigo_dane_departamento}">${row.departamento}</option>
                         </c:forEach>
                         </select>
+                            
                     </td>
                 </tr>
                 <tr>
                     <td>Ciudad/Municipio</td>
                     <td>
-                        <select id="municipioLista" name="municipioLista" value="${usuario.municipio}">
-                        </select>
-                    </td>
-                    <%/*<td>
                         <sql:query var="resultadoMunicipio" dataSource="${bd}">
-                            SELECT municipio
+                            SELECT codigo_dane_municipio,municipio
                             FROM ROOT.MUNICIPIO
-                            WHERE departamento=
                             ORDER BY municipio
                         </sql:query>
                             
                         <select name="municipio" value="${usuario.municipio}">
                         <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
-                                <option>${row.municipio}</option>
+                                <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
                         </c:forEach>
                         </select>
-                    </td>*/%>
+                    </td>
                 </tr>
                 <tr>
                     <td>Dirección</td>
@@ -116,25 +114,3 @@
 
     </body>
 </html>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#lista1').val(0);
-		recargarLista();
-
-		$('#lista1').change(function(){
-			recargarLista();
-		});
-	});
-</script>
-<script type="text/javascript">
-	function recargarLista(){
-		$.ajax({
-			type:"POST",
-			url:"datos.php",
-			data:"continente=" + $('#lista1').val(),
-			success:function(r){
-				$('#select2lista').html(r);
-			}
-		});
-	}
-</script>
