@@ -45,28 +45,37 @@ public class RegistroUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             String nombres = request.getParameter("nombre");
             String apellidos = request.getParameter("apellido");
             String email = request.getParameter("email");
             String telefono = request.getParameter("telefono");
-            String contraseña = request.getParameter("contraseña");
+            String contraseña = request.getParameter("contra");
             String tipo = request.getParameter("tipo");
             Integer identificacion = Integer.parseInt(request.getParameter("identificacion"));
             String fecha = request.getParameter("fecha de nacimiento");
             String departamento = request.getParameter("departamento");
             String ciudad = request.getParameter("ciudad");
             String direccion = request.getParameter("direccion");
-            
-             Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha.split("/")[0]), Integer.parseInt(fecha.split("/")[1]), Integer.parseInt(fecha.split("/")[2])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(5001));
-            if (request.getParameter("action").equals("Registrarse")) {
-                usuarioFacade.create(usuario);
+            String[] fecha_nacimiento = fecha.split("/");
+
+            if (!contraseña.equals(request.getParameter("contraConfirmada"))) 
+            {
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
+            } 
+            else 
+            {
+                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[2]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(5001));
+                if (request.getParameter("action").equals("Registrarse")) 
+                {
+                    usuarioFacade.create(usuario);
+                }
             }
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistroUsuario</title>");            
+            out.println("<title>Servlet RegistroUsuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("</html>");

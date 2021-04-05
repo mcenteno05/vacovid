@@ -24,8 +24,8 @@
                 </tr>
             </table>
         </form>
-        <a href="http://localhost:8080/covid-war/cambioContraseña.jsp">¿Olvidó su contraseña?</a>
-        <a href="http://localhost:8080/covid-war/registroUsuario.jsp">¿No tiene una cuenta?</a>        
+        <a href="http://localhost:8080/VAcovid-war/cambioContraseña.jsp">¿Olvidó su contraseña?</a>
+        <a href="http://localhost:8080/VAcovid-war/registroUsuario.jsp">¿No tiene una cuenta?</a>        
         
     </body>
 </html>

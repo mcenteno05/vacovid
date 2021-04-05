@@ -29,17 +29,21 @@
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td><input type="password" name="contraseña" value="${usuario.contraseña}" /></td>
+                    <td><input type="password" name="contra" value="${usuario.contra}" /></td>
                 </tr>
                 <tr>
                     <td>Confirmar contraseña</td>
-                    <td><input type="password" name="contraseñaConfirmada" value="${usuario.contraseñaConfirmada}" /></td>
+                    <td><input type="password" name="contraConfirmada" value="${usuario.contraConfirmada}" /></td>
                 </tr>
 
                 <h2>Información personal</h2>
                 <tr>
                     <td>Tipo de documento</td>
-                    <td><input type="text" name="tipo" value="${usuario.tipo}" /></td>
+                <select name="tipo" value="${usuario.tipo}">
+                    <option>Cédula de ciudadania</option>
+                    <option>Tarjeta de identidad</option>
+                    <option>Cédula de extrangería</option>
+                </select>
                 </tr>
                 <tr>
                     <td>Número de documento</td>
