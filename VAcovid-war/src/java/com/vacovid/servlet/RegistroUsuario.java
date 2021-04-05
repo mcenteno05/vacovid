@@ -55,7 +55,7 @@ public class RegistroUsuario extends HttpServlet {
             Integer identificacion = Integer.parseInt(request.getParameter("identificacion"));
             String fecha = request.getParameter("fecha de nacimiento");
             String departamento = request.getParameter("departamento");
-            String ciudad = request.getParameter("ciudad");
+            String ciudad = request.getParameter("municipio");
             String direccion = request.getParameter("direccion");
             String[] fecha_nacimiento = fecha.split("/");
 
