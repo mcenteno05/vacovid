@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,13 +36,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cita.findByCitaid", query = "SELECT c FROM Cita c WHERE c.citaid = :citaid"),
     @NamedQuery(name = "Cita.findByFecha", query = "SELECT c FROM Cita c WHERE c.fecha = :fecha"),
     @NamedQuery(name = "Cita.findByFase", query = "SELECT c FROM Cita c WHERE c.fase = :fase"),
-    @NamedQuery(name = "Cita.findByHora", query = "SELECT c FROM Cita c WHERE c.hora = :hora")})
+    @NamedQuery(name = "Cita.findByEntidadSalud", query = "SELECT c FROM Cita c WHERE c.entidadSalud = :entidadSalud")})
 public class Cita implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CITAID")
     private Integer citaid;
     @Basic(optional = false)
@@ -53,9 +56,9 @@ public class Cita implements Serializable {
     private int fase;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "HORA")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
+    @Size(min = 1, max = 75)
+    @Column(name = "ENTIDAD_SALUD")
+    private String entidadSalud;
     @JoinColumn(name = "ID_SITIO", referencedColumnName = "SITIOID")
     @ManyToOne(optional = false)
     private SitioVacunacion idSitio;
@@ -70,12 +73,15 @@ public class Cita implements Serializable {
         this.citaid = citaid;
     }
 
-    public Cita(Integer citaid, Date fecha, int fase, Date hora) {
-        this.citaid = citaid;
+    public Cita(Date fecha, int fase, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario) {
+        this.citaid=null;
         this.fecha = fecha;
         this.fase = fase;
-        this.hora = hora;
+        this.entidadSalud = entidadSalud;
+        this.idSitio = idSitio;
+        this.identificacionUsuario = identificacionUsuario;
     }
+
 
     public Integer getCitaid() {
         return citaid;
@@ -101,12 +107,12 @@ public class Cita implements Serializable {
         this.fase = fase;
     }
 
-    public Date getHora() {
-        return hora;
+    public String getEntidadSalud() {
+        return entidadSalud;
     }
 
-    public void setHora(Date hora) {
-        this.hora = hora;
+    public void setEntidadSalud(String entidadSalud) {
+        this.entidadSalud = entidadSalud;
     }
 
     public SitioVacunacion getIdSitio() {

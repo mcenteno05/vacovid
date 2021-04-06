@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td><input type="password" name="contraseña" value="${usuario.contraseña}" /></td>
+                    <td><input type="password" name="contra" value="${usuario.contra}" /></td>
                 <tr>
                     <td colspan="2">
                         <input type="submit" name="action" value="Iniciar Sesión" />

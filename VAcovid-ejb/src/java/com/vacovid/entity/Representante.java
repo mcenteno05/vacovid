@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -80,9 +78,6 @@ public class Representante implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "PASSWORD")
     private String password;
-    @JoinColumn(name = "ID_SITIO", referencedColumnName = "SITIOID")
-    @ManyToOne(optional = false)
-    private SitioVacunacion idSitio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "identificacionRepresentante")
     private Collection<SitioVacunacion> sitioVacunacionCollection;
 
@@ -157,14 +152,6 @@ public class Representante implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public SitioVacunacion getIdSitio() {
-        return idSitio;
-    }
-
-    public void setIdSitio(SitioVacunacion idSitio) {
-        this.idSitio = idSitio;
     }
 
     @XmlTransient

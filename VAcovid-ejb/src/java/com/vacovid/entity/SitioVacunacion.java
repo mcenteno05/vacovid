@@ -55,8 +55,6 @@ public class SitioVacunacion implements Serializable {
     private String direccion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSitio")
     private Collection<InventarioDeVacunacion> inventarioDeVacunacionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSitio")
-    private Collection<Representante> representanteCollection;
     @JoinColumn(name = "IDENTIFICACION_REPRESENTANTE", referencedColumnName = "IDENTIFICACION")
     @ManyToOne(optional = false)
     private Representante identificacionRepresentante;
@@ -107,15 +105,6 @@ public class SitioVacunacion implements Serializable {
 
     public void setInventarioDeVacunacionCollection(Collection<InventarioDeVacunacion> inventarioDeVacunacionCollection) {
         this.inventarioDeVacunacionCollection = inventarioDeVacunacionCollection;
-    }
-
-    @XmlTransient
-    public Collection<Representante> getRepresentanteCollection() {
-        return representanteCollection;
-    }
-
-    public void setRepresentanteCollection(Collection<Representante> representanteCollection) {
-        this.representanteCollection = representanteCollection;
     }
 
     public Representante getIdentificacionRepresentante() {

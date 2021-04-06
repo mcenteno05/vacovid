@@ -57,7 +57,8 @@ public class RegistroUsuario extends HttpServlet {
             String fecha = request.getParameter("fecha de nacimiento");
             Integer municipio = Integer.parseInt(request.getParameter("municipio"));
             String direccion = request.getParameter("direccion");
-            String[] fecha_nacimiento = fecha.split("/");
+            String[] fecha_nacimiento = fecha.split("-");
+            out.println(fecha);
 
             if (!contraseña.equals(request.getParameter("contraConfirmada"))) 
             {
@@ -66,7 +67,7 @@ public class RegistroUsuario extends HttpServlet {
             } 
             else 
             {
-                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[2]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
+                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[0]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
                 if (request.getParameter("action").equals("Registrarse")) 
                 {
                     usuarioFacade.create(usuario);

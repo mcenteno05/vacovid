@@ -13,27 +13,26 @@
             <table>
                 <tr>
                     <td>Tipo de solicitud</td>
-                    <td><input type="text" name="tipo" value="${cita.tipo}" /></td>
+                    <td><select name="fase" value="${cita.fase}">
+                        <option value="1">Primera dosis</option>
+                        <option value="2">Segunda dosis</option>
+                    </select></td>
                 </tr>
                 <tr>
                     <td>Fecha</td>
-                    <td><input type="text" name="fecha" value="${cita.fecha}" /></td>
+                    <td><input type="date" name="fecha" value="${cita.fecha}" /></td>
                 </tr>
                 <tr>
                     <td>Hora</td>
-                    <td><input type="text" name="hora" value="${cita.hora}" /></td>
-                </tr>
-                <tr>
-                    <td>Departamento</td>
-                    <td><input type="text" name="departamento" value="${cita.departamento}" /></td>
-                </tr>
-                <tr>
-                    <td>Ciudad</td>
-                    <td><input type="text" name="ciudad" value="${cita.ciudad}" /></td>
+                    <td><input type="time" name="hora" value="${cita.hora}" /></td>
                 </tr>
                 <tr>
                     <td>Entidad de salud</td>
-                    <td><input type="text" name="entidad" value="${usuario.entidad}" /></td>
+                    <td><input type="text" name="entidad" value="${cita.entidad}" /></td>
+                </tr>
+                <tr>
+                    <td>Sitio de vacunación</td>
+                    <td><input type="text" name="sitio" value="${cita.sitio}" /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

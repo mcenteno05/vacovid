@@ -5,8 +5,10 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "LoginUsuario", urlPatterns = {"/LoginUsuario"})
 public class LoginUsuario extends HttpServlet {
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +38,32 @@ public class LoginUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
+            Integer identificacion= Integer.parseInt(request.getParameter("identificacion"));
+            String contra=request.getParameter("contra");
+            
+            if (usuarioFacade.find(identificacion)==null) 
+            {
+                out.println("Usuario no registrado");
+            }
+            else
+            {
+                if (usuarioFacade.find(identificacion).getPassword().equals(contra)) 
+                {
+                    out.println("Login Exitoso");
+                }
+                else
+                {
+                    out.println("Contraseña incorrecta");
+                }
+            }
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet LoginUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

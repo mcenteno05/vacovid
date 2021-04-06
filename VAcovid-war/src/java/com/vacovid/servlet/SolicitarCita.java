@@ -5,8 +5,14 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.entity.Cita;
+import com.vacovid.session.CitaFacadeLocal;
+import com.vacovid.session.SitioVacunacionFacadeLocal;
+import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +25,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "SolicitarCita", urlPatterns = {"/SolicitarCita"})
 public class SolicitarCita extends HttpServlet {
+
+    @EJB
+    private SitioVacunacionFacadeLocal sitioVacunacionFacade;
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
+
+    @EJB
+    private CitaFacadeLocal citaFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +48,24 @@ public class SolicitarCita extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
+            Integer fase = Integer.parseInt(request.getParameter("fase"));
+            String fecha = request.getParameter("fecha");
+            String hora = request.getParameter("hora");
+            String entidad = request.getParameter("entidad");
+            String[] fecha_cita = fecha.split("-");
+            String[] hora_cita = hora.split(":");
+            Date date=new Date(Integer.parseInt(fecha_cita[0]) - 1900, Integer.parseInt(fecha_cita[1]) - 1, Integer.parseInt(fecha_cita[0]), Integer.parseInt(hora_cita[0]),Integer.parseInt(hora_cita[1]));
+            Cita cita= new Cita(date,fase,entidad,sitioVacunacionFacade.find(1) ,usuarioFacade.find(1000048305));
+            out.println(date.toString());
+            citaFacade.create(cita);
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet SolicitarCita</title>");            
             out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SolicitarCita at " + request.getContextPath() + "</h1>");
+            out.println("<body>"); 
             out.println("</body>");
             out.println("</html>");
         }
