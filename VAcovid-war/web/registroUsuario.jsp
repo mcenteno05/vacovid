@@ -10,8 +10,8 @@
     <body>
         <h1>Registro</h1>
         <form action="./RegistroUsuario" method="POST">
-            <h2>Información de contacto</h2>
             <table>
+                <td><h2>Información de contacto</h2></td>
                 <tr>
                     <td>Nombres</td>
                     <td><input type="text" name="nombre" value="${usuario.nombre}" /></td>
