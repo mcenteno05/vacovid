@@ -11,7 +11,12 @@ import com.vacovid.session.SitioVacunacionFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +50,7 @@ public class SolicitarCita extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
@@ -53,11 +58,10 @@ public class SolicitarCita extends HttpServlet {
             String fecha = request.getParameter("fecha");
             String hora = request.getParameter("hora");
             String entidad = request.getParameter("entidad");
-            String[] fecha_cita = fecha.split("-");
-            String[] hora_cita = hora.split(":");
-            Date date=new Date(Integer.parseInt(fecha_cita[0]) - 1900, Integer.parseInt(fecha_cita[1]) - 1, Integer.parseInt(fecha_cita[0]), Integer.parseInt(hora_cita[0]),Integer.parseInt(hora_cita[1]));
+            DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
+            Date date= df.parse(fecha+hora);
+            
             Cita cita= new Cita(date,fase,entidad,sitioVacunacionFacade.find(1) ,usuarioFacade.find(1000048305));
-            out.println(date.toString());
             citaFacade.create(cita);
             
             out.println("<!DOCTYPE html>");
@@ -65,9 +69,12 @@ public class SolicitarCita extends HttpServlet {
             out.println("<head>");
             out.println("<title>Servlet SolicitarCita</title>");            
             out.println("</head>");
-            out.println("<body>"); 
+            out.println("<body>");
+            out.println("Cita agendada existosamente");
             out.println("</body>");
             out.println("</html>");
+        } catch (ParseException ex) {
+            Logger.getLogger(SolicitarCita.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

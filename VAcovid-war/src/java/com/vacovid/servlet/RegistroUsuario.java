@@ -11,8 +11,13 @@ import com.vacovid.session.MunicipioFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,9 +62,9 @@ public class RegistroUsuario extends HttpServlet {
             String fecha = request.getParameter("fecha de nacimiento");
             Integer municipio = Integer.parseInt(request.getParameter("municipio"));
             String direccion = request.getParameter("direccion");
-            String[] fecha_nacimiento = fecha.split("-");
-            out.println(fecha);
-
+            
+            DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+            Date date= df.parse(fecha);
             if (!contraseña.equals(request.getParameter("contraConfirmada"))) 
             {
                 out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
@@ -67,7 +72,7 @@ public class RegistroUsuario extends HttpServlet {
             } 
             else 
             {
-                Usuario usuario = new Usuario(identificacion, nombres, apellidos, new Date(Integer.parseInt(fecha_nacimiento[0]) - 1900, Integer.parseInt(fecha_nacimiento[1]) - 1, Integer.parseInt(fecha_nacimiento[0])), telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
+                Usuario usuario = new Usuario(identificacion, nombres, apellidos,date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
                 if (request.getParameter("action").equals("Registrarse")) 
                 {
                     usuarioFacade.create(usuario);
@@ -80,6 +85,8 @@ public class RegistroUsuario extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("</html>");
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
