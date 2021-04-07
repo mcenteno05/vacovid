@@ -74,7 +74,6 @@ public class Cita implements Serializable {
     }
 
     public Cita(Date fecha, int fase, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario) {
-        this.citaid=null;
         this.fecha = fecha;
         this.fase = fase;
         this.entidadSalud = entidadSalud;
