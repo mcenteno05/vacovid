@@ -5,8 +5,12 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.entity.Usuario;
+import com.vacovid.session.MunicipioFacadeLocal;
+import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ActualizarDatos", urlPatterns = {"/ActualizarDatos"})
 public class ActualizarDatos extends HttpServlet {
 
+    @EJB
+    private MunicipioFacadeLocal municipioFacade;
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
+    
+
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,13 +46,32 @@ public class ActualizarDatos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
+            //Se obtiene el usuario a 
+            Usuario user = usuarioFacade.find(1000121662);
+            
+            //Se obtienen los nuevos datos
+            String telefono= request.getParameter("telefono");
+            Integer municipio = Integer.parseInt(request.getParameter("municipio"));
+            String direccion = request.getParameter("direccion");
+            String correo = request.getParameter("correo");
+                    
+            //Se ajustan los nuevos datos
+            user.setTelefono(telefono);
+            user.setCodigoDaneMunicipio(municipioFacade.find(municipio));
+            user.setDireccion(direccion);
+            user.setCorreo(correo);
+            
+            //se edita el usuario
+            usuarioFacade.edit(user);
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet ActualizarDatos</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ActualizarDatos at " + request.getContextPath() + "</h1>");
+            out.println("Se han actualizado los datos correctamente");
             out.println("</body>");
             out.println("</html>");
         }

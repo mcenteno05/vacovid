@@ -84,6 +84,7 @@ public class RegistroUsuario extends HttpServlet {
             out.println("<title>Servlet RegistroUsuario</title>");
             out.println("</head>");
             out.println("<body>");
+            out.println("Usuario registrado correctamente");
             out.println("</html>");
         } catch (ParseException ex) {
             Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);

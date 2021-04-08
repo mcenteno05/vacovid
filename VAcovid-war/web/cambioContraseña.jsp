@@ -8,19 +8,19 @@
     </head>
     <body>
         <h1>Cambiar Contraseña</h1>
-        <form action="./CambioContraseña" method="POST">
+        <form action="./CambioContrase_a" method="POST">
             <table>
                 <tr>
                     <td>Contraseña actual</td>
-                    <td><input type="password" name="contraseñaActual" value="${usuario.contraseñaActual}" /></td>
+                    <td><input type="password" name="contraActual" value="${usuario.contraseñaActual}" /></td>
                 </tr>
                 <tr>
                     <td>Nueva contraseña</td>
-                    <td><input type="password" name="contraseñaNueva" value="${usuario.contraseñaNueva}" /></td>
+                    <td><input type="password" name="contraNueva" value="${usuario.contraseñaNueva}" /></td>
                 <tr>
                 <tr>
                     <td>Confirmar contraseña</td>
-                    <td><input type="password" name="contraseñaConfirmar" value="${usuario.contraseñaConfirmar}" /></td>
+                    <td><input type="password" name="contraConfirmar" value="${usuario.contraseñaConfirmar}" /></td>
                 <tr>
                 <tr>
                     <td>Email</td>

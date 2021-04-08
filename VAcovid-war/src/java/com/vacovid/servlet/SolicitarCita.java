@@ -61,7 +61,7 @@ public class SolicitarCita extends HttpServlet {
             DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
             Date date= df.parse(fecha+hora);
             
-            Cita cita= new Cita(date,fase,entidad,sitioVacunacionFacade.find(1) ,usuarioFacade.find(1000048305));
+            Cita cita= new Cita(date,fase,entidad,sitioVacunacionFacade.find(1) ,usuarioFacade.find(1000121662));
             citaFacade.create(cita);
             
             out.println("<!DOCTYPE html>");
