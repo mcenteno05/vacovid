@@ -56,11 +56,13 @@ public class CambioContraseña extends HttpServlet {
                     out.println("La contraseña ha sido actualizada correctamente");
                 }
                 else{
-                    out.println("Las contraseñas no coinciden");
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"Las contraseñas no coinciden\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/cambioContraseña.jsp\" />");
                 }
             }
             else{
-                out.println("La contraseña actual es incorrecta");
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseña incorrecta\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/cambioContraseña.jsp\" />");
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");

@@ -67,6 +67,7 @@ public class Cita implements Serializable {
     private Usuario identificacionUsuario;
 
     public Cita() {
+        
     }
 
     public Cita(Integer citaid) {
