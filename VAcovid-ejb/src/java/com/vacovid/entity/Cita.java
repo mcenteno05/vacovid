@@ -39,6 +39,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cita.findByEntidadSalud", query = "SELECT c FROM Cita c WHERE c.entidadSalud = :entidadSalud")})
 public class Cita implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "HORA")
+    private String hora;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,12 +80,13 @@ public class Cita implements Serializable {
         this.citaid = citaid;
     }
 
-    public Cita(Date fecha, int fase, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario) {
+    public Cita(Date fecha, int fase, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario, String hora) {
         this.fecha = fecha;
         this.fase = fase;
         this.entidadSalud = entidadSalud;
         this.idSitio = idSitio;
         this.identificacionUsuario = identificacionUsuario;
+        this.hora=hora;
     }
 
 
@@ -93,7 +100,7 @@ public class Cita implements Serializable {
 
     public String getFecha() {
         int año=fecha.getYear()+1900;
-        String fechaStr=fecha.getDate()+"/"+fecha.getMonth()+"/"+año+" "+fecha.getHours()+":"+fecha.getMinutes();
+        String fechaStr=fecha.getDate()+"/"+fecha.getMonth()+"/"+año;
         return fechaStr;
     }
 
@@ -156,6 +163,14 @@ public class Cita implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.Cita[ citaid=" + citaid + " ]";
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
     
 }

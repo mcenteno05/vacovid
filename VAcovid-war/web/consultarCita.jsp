@@ -47,6 +47,10 @@
                     <td><input type="text" name="fecha" value="${cita.fecha}" readonly onmousedown="return false;"/></td>
                 </tr>
                 <tr>
+                    <td>Hora</td>
+                    <td><input type="text" name="hora" value="${cita.hora}" readonly onmousedown="return false;"/></td>
+                </tr>
+                <tr>
                     <td>Departamento</td>
                     <td><input type="text" name="departamento" value="${municipio.departamento}" readonly onmousedown="return false;"/></td>
                 </tr>
