@@ -65,7 +65,7 @@
                     <td>
                         <sql:query var="resultadoDepartamento" dataSource="${bd}">
                             SELECT DISTINCT(codigo_dane_departamento), departamento
-                            FROM ROOT.MUNICIPIO
+                            FROM MUNICIPIO
                             ORDER BY departamento
                         </sql:query>
                             
@@ -83,7 +83,7 @@
                     <td>
                         <sql:query var="resultadoMunicipio" dataSource="${bd}">
                             SELECT codigo_dane_municipio,municipio
-                            FROM ROOT.MUNICIPIO
+                            FROM MUNICIPIO
                             ORDER BY municipio
                         </sql:query>
                             

@@ -90,8 +90,10 @@ public class Cita implements Serializable {
         this.citaid = citaid;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFecha() {
+        int año=fecha.getYear()+1900;
+        String fechaStr=fecha.getDate()+"/"+fecha.getMonth()+"/"+año+" "+fecha.getHours()+":"+fecha.getMinutes();
+        return fechaStr;
     }
 
     public void setFecha(Date fecha) {
