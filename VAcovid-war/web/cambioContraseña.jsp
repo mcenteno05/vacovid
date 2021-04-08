@@ -22,10 +22,6 @@
                     <td>Confirmar contraseña</td>
                     <td><input type="password" name="contraConfirmar" value="${usuario.contraseñaConfirmar}" /></td>
                 <tr>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" name="email" value="${usuario.email}" /></td>
-                <tr>
                     <td colspan="2">
                         <input type="submit" name="action" value="Enviar" />
                     </td>

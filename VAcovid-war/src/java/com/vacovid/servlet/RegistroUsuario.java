@@ -5,7 +5,7 @@
  */
 package com.vacovid.servlet;
 
-import com.vacovid.entity.Municipio;
+
 import com.vacovid.entity.Usuario;
 import com.vacovid.session.MunicipioFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
@@ -15,7 +15,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -58,25 +57,35 @@ public class RegistroUsuario extends HttpServlet {
             String telefono = request.getParameter("telefono");
             String contraseña = request.getParameter("contra");
             String tipo = request.getParameter("tipo");
-            Integer identificacion = Integer.parseInt(request.getParameter("identificacion"));
+            int identificacion = Integer.parseInt(request.getParameter("identificacion"));
             String fecha = request.getParameter("fecha de nacimiento");
             Integer municipio = Integer.parseInt(request.getParameter("municipio"));
             String direccion = request.getParameter("direccion");
             
             DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
             Date date= df.parse(fecha);
-            if (!contraseña.equals(request.getParameter("contraConfirmada"))) 
-            {
-                out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
-                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
-            } 
-            else 
-            {
-                Usuario usuario = new Usuario(identificacion, nombres, apellidos,date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
-                if (request.getParameter("action").equals("Registrarse")) 
-                {
-                    usuarioFacade.create(usuario);
+            int count=0;
+           
+            for (Usuario user : usuarioFacade.findAll()) {
+                if (user.getIdentificacion() == identificacion) {
+                    count=1;
+                    break;
                 }
+            }
+            if (count == 0) {
+                if (!contraseña.equals(request.getParameter("contraConfirmada"))) {
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
+                } else {
+                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio));
+                    if (request.getParameter("action").equals("Registrarse")) {
+                        usuarioFacade.create(usuario);
+                        out.println("Usuario registrado correctamente");
+                    }
+                }
+            }else{
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"El usuario ya se encuentra registrado\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -84,7 +93,7 @@ public class RegistroUsuario extends HttpServlet {
             out.println("<title>Servlet RegistroUsuario</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("Usuario registrado correctamente");
+           
             out.println("</html>");
         } catch (ParseException ex) {
             Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);

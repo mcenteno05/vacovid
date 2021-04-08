@@ -44,7 +44,8 @@ public class LoginUsuario extends HttpServlet {
             
             if (usuarioFacade.find(identificacion)==null) 
             {
-                out.println("Usuario no registrado");
+                 out.println("<script type=\"text/javascript\">\n" + "  alert(\"Usuario no registrado\");\n" + "</script>");
+                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
             }
             else
             {

@@ -70,7 +70,6 @@ public class CambioContraseña extends HttpServlet {
             out.println("<title>Servlet CambioContraseña</title>");            
             out.println("</head>");
             out.println("<body>");
-          
             out.println("</body>");
             out.println("</html>");
         }
