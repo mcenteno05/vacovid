@@ -5,21 +5,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Usuario</title>
+        <script src="js/main.js"></script> 
     </head>
     <body>
         <h1>Login</h1>
-        <form action="./LoginUsuario" method="POST">
+        <form action="./LoginUsuario" method="POST" id="forminicio">
             <table>
                 <tr>
                     <td>Identificación</td>
-                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" required /></td>
+                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" id="txtusuario" required /></td>
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td><input type="password" name="contra" value="${usuario.contra}" required /></td>
+                    <td><input type="password" name="contra" value="${usuario.contra}" id="txtpass" required /></td>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" name="action" value="Iniciar Sesión" />
+                            <input type="button" name="action" value="Iniciar Sesión" id="btniniciar"/>
                     </td>
                 </tr>
             </table>

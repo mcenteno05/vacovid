@@ -6,6 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registro Usuario</title>
+        
     </head>
     <body>
         <h1>Registro</h1>
@@ -89,12 +90,14 @@
                         </sql:query>
                             
                         <select name="municipio" value="${usuario.municipio}">
+                        <option value="0">Elija un municipio</option>
                         <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
                                 <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
                         </c:forEach>
                         </select>
                     </td>
                 </tr>
+                
                 <tr>
                     <td>Dirección</td>
                     <td><input type="text" name="direccion" value="${usuario.direccion}" required /></td>
@@ -106,7 +109,6 @@
                 </tr>
             </table>
         </form>
-
-
+                
     </body>
 </html>

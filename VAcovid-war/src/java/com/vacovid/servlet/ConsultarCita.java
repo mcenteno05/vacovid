@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ConsultarCita", urlPatterns = {"/ConsultarCita"})
 public class ConsultarCita extends HttpServlet {
+
     @EJB
     private CitaFacadeLocal citaFacade;
 
@@ -40,55 +42,46 @@ public class ConsultarCita extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            int id=Integer.parseInt(request.getParameter("identificacion"));
-            Municipio municipio=null;
-            Usuario usuario=null;
-            Cita cita=null;
-            for (Cita object : citaFacade.findAll()) 
-            {
-                
-                if (object.getIdentificacionUsuario().getIdentificacion()==id) 
-                {
-                    cita=object;
-                    usuario=object.getIdentificacionUsuario();
-                    municipio=usuario.getCodigoDaneMunicipio();
+
+            HttpSession objsession = request.getSession(false);
+            String user1 = (String) objsession.getAttribute("usuario1");
+            int user = Integer.parseInt(user1);
+
+            Municipio municipio = null;
+            Usuario usuario = null;
+            Cita cita = null;
+            for (Cita object : citaFacade.findAll()) {
+
+                if (object.getIdentificacionUsuario().getIdentificacion() == user) {
+                    cita = object;
+                    usuario = object.getIdentificacionUsuario();
+                    municipio = usuario.getCodigoDaneMunicipio();
                 }
             }
-            if (request.getParameter("action").equals("Consultar")) 
-            {
-                if (cita==null) 
-                {
-                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
-                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
-                }
-                else
-                {
-                    request.setAttribute("cita", cita);
-                    request.setAttribute("usuario", usuario);
-                    request.setAttribute("municipio", municipio);
-                    request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
-                }
+
+            if (cita == null) {
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
+            } else {
+                request.setAttribute("cita", cita);
+                request.setAttribute("usuario", usuario);
+                request.setAttribute("municipio", municipio);
+                request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
             }
-            else if (request.getParameter("action").equals("Cancelar")) 
-            {
-                if (cita==null) 
-                {
+            if (request.getParameter("action").equals("Cancelar")) {
+                if (cita == null) {
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
                     out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
-                }
-                else
-                {
+                } else {
                     citaFacade.remove(cita);
                     out.println("Cita removida");
                 }
             }
-            
-            
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsultarCita</title>");            
+            out.println("<title>Servlet ConsultarCita</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("</body>");

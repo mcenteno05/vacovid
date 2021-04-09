@@ -16,10 +16,10 @@
                     <td>Telefono</td>
                     <td><input type="text" name="telefono" value="${usuario.telefono}" required /></td>
                 </tr>
-                
-                <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                           url = "jdbc:derby://localhost:1527/VAcovid"
-                                           user = "admin123"  password = "admin123"/>
+
+                        <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
+                                   url = "jdbc:derby://localhost:1527/VAcovid"
+                                   user = "admin123"  password = "admin123"/>
                 <tr>
                     <td>Departamento</td>
                     <td>

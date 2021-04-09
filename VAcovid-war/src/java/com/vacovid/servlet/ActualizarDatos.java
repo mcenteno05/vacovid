@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,8 +48,12 @@ public class ActualizarDatos extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
+            HttpSession objsession = request.getSession(false);
+            String usuario = (String)objsession.getAttribute("usuario1");
+            
+            
             //Se obtiene el usuario 
-            Usuario user = usuarioFacade.find(1000121662);
+            Usuario user = usuarioFacade.find(Integer.parseInt(usuario));
             
             //Se obtienen los nuevos datos
             String telefono= request.getParameter("telefono");

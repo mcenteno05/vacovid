@@ -10,11 +10,6 @@
         <h1>Login</h1>
         <form action="./ConsultarCita" method="POST">
             <table>
-                <td><h2>Ingrese su documento</h2></td>
-                <tr>
-                    <td>Identificación</td>
-                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" /></td>
-                </tr>
                 <tr>
                     <td colspan="2">
                         <input type="submit" name="action" value="Consultar" />

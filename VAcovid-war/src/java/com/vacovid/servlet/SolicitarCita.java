@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,6 +56,9 @@ public class SolicitarCita extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+            HttpSession objsession = request.getSession(false);
+            String usuario = (String)objsession.getAttribute("usuario1");
+            
             SitioVacunacion sitiovacuna = new SitioVacunacion();
             Integer fase = Integer.parseInt(request.getParameter("fase"));
             String fecha = request.getParameter("fecha");
@@ -73,7 +77,7 @@ public class SolicitarCita extends HttpServlet {
             }
             //si el sitio existe crea la cita
             if (count == 1) {
-                Cita cita= new Cita(date,fase,entidad,sitiovacuna,usuarioFacade.find(1000121662),hora);
+                Cita cita= new Cita(date,fase,entidad,sitiovacuna,usuarioFacade.find(Integer.parseInt(usuario)),hora);
                 citaFacade.create(cita); 
                 out.println("Cita agendada existosamente");
             }
