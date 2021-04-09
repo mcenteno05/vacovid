@@ -6,6 +6,7 @@
 package com.vacovid.servlet;
 
 import com.vacovid.entity.Cita;
+import com.vacovid.entity.SitioVacunacion;
 import com.vacovid.session.CitaFacadeLocal;
 import com.vacovid.session.SitioVacunacionFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
@@ -54,15 +55,33 @@ public class SolicitarCita extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+            SitioVacunacion sitiovacuna = new SitioVacunacion();
             Integer fase = Integer.parseInt(request.getParameter("fase"));
             String fecha = request.getParameter("fecha");
             String hora = request.getParameter("hora");
             String entidad = request.getParameter("entidad");
+            int sitio = Integer.parseInt(request.getParameter("sitio"));
             DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
             Date date= df.parse(fecha+hora);
-            
-            Cita cita= new Cita(date,fase,entidad,sitioVacunacionFacade.find(1) ,usuarioFacade.find(79533737),hora);
-            citaFacade.create(cita);
+            int count=0;
+            sitiovacuna.setSitioid(sitio);
+            //verifica si existe el sitio de vacunacion
+            for (SitioVacunacion sitio1 : sitioVacunacionFacade.findAll()) {
+                if (sitio == sitio1.getSitioid()) {
+                    count=1;
+                } 
+            }
+            //si el sitio existe crea la cita
+            if (count == 1) {
+                Cita cita= new Cita(date,fase,entidad,sitiovacuna,usuarioFacade.find(1000121662),hora);
+                citaFacade.create(cita); 
+                out.println("Cita agendada existosamente");
+            }
+            //si el sitio no existe lo redirige a la pagina nuevamente
+            else{
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"El sitio de vacunacion no existe, por favor digite uno válido\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
+            }
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -70,7 +89,6 @@ public class SolicitarCita extends HttpServlet {
             out.println("<title>Servlet SolicitarCita</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("Cita agendada existosamente");
             out.println("</body>");
             out.println("</html>");
         } catch (ParseException ex) {

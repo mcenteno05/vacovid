@@ -47,8 +47,8 @@ public class ActualizarDatos extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            //Se obtiene el usuario a 
-            Usuario user = usuarioFacade.find(1000048305);
+            //Se obtiene el usuario 
+            Usuario user = usuarioFacade.find(1000121662);
             
             //Se obtienen los nuevos datos
             String telefono= request.getParameter("telefono");

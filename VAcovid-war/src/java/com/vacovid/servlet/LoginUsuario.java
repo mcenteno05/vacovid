@@ -55,7 +55,8 @@ public class LoginUsuario extends HttpServlet {
                 }
                 else
                 {
-                    out.println("Contraseña incorrecta");
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseña incorrecta\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
                 }
             }
             

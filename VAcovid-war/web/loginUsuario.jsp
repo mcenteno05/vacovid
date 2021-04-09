@@ -12,11 +12,11 @@
             <table>
                 <tr>
                     <td>Identificación</td>
-                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" /></td>
+                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" required /></td>
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td><input type="password" name="contra" value="${usuario.contra}" /></td>
+                    <td><input type="password" name="contra" value="${usuario.contra}" required /></td>
                 <tr>
                     <td colspan="2">
                         <input type="submit" name="action" value="Iniciar Sesión" />

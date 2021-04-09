@@ -14,34 +14,35 @@
                 <td><h2>Información de contacto</h2></td>
                 <tr>
                     <td>Nombres</td>
-                    <td><input type="text" name="nombre" value="${usuario.nombre}" /></td>
+                    <td><input type="text" name="nombre" value="${usuario.nombre}" required /></td>
+                    
                 </tr>
                 <tr>
                     <td>Apellidos</td>
-                    <td><input type="text" name="apellido" value="${usuario.apellido}" /></td>
+                    <td><input type="text" name="apellido" value="${usuario.apellido}" required /></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td><input type="text" name="email" value="${usuario.email}" /></td>
+                    <td><input type="text" name="email" value="${usuario.email}" required/></td>
                 </tr>
                 <tr>
                     <td>Telefono</td>
-                    <td><input type="text" name="telefono" value="${usuario.telefono}" /></td>
+                    <td><input type="text" name="telefono" value="${usuario.telefono}" required/></td>
                 </tr>
                 <tr>
                     <td>Contraseña</td>
-                    <td><input type="password" name="contra" value="${usuario.contra}" /></td>
+                    <td><input type="password" name="contra" value="${usuario.contra}" required /></td>
                 </tr>
                 <tr>
                     <td>Confirmar contraseña</td>
-                    <td><input type="password" name="contraConfirmada" value="${usuario.contraConfirmada}" /></td>
+                    <td><input type="password" name="contraConfirmada" value="${usuario.contraConfirmada}" required /></td>
                 </tr>
 
                 <td><h2>Información personal</h2></td>
                 <tr>
                     <td>Tipo de documento</td>
                     <td>
-                    <select name="tipo" value="${usuario.tipo}">
+                    <select name="tipo" value="${usuario.tipo}" required >
                         <option>Cédula de ciudadania</option>
                         <option>Tarjeta de identidad</option>
                         <option>Cédula de extranjería</option>
@@ -50,16 +51,16 @@
                 </tr>
                 <tr>
                     <td>Número de documento</td>
-                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" /></td>
+                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" required /></td>
                 </tr>
                 <tr>
                     <td>Fecha de nacimiento</td>
-                    <td><input type="date" name="fecha de nacimiento" value="${usuario.email}" /></td>
+                    <td><input type="date" name="fecha de nacimiento" value="${usuario.email}" required/></td>
                 </tr>
                 
                 <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                           url = "jdbc:derby://localhost:1527/vacovid"
-                                           user = "root"  password = "admin"/>
+                                           url = "jdbc:derby://localhost:1527/VAcovid"
+                                           user = "admin123"  password = "admin123"/>
                 <tr>
                     <td>Departamento</td>
                     <td>
@@ -96,7 +97,7 @@
                 </tr>
                 <tr>
                     <td>Dirección</td>
-                    <td><input type="text" name="direccion" value="${usuario.direccion}" /></td>
+                    <td><input type="text" name="direccion" value="${usuario.direccion}" required /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

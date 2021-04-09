@@ -14,12 +14,12 @@
                 <h2>Datos</h2>
                 <tr>
                     <td>Telefono</td>
-                    <td><input type="text" name="telefono" value="${usuario.telefono}" /></td>
+                    <td><input type="text" name="telefono" value="${usuario.telefono}" required /></td>
                 </tr>
                 
                 <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                           url = "jdbc:derby://localhost:1527/vacovid"
-                                           user = "root"  password = "admin"/>
+                                           url = "jdbc:derby://localhost:1527/VAcovid"
+                                           user = "admin123"  password = "admin123"/>
                 <tr>
                     <td>Departamento</td>
                     <td>
@@ -56,11 +56,11 @@
                 </tr>
                 <tr>
                     <td>Dirección</td>
-                    <td><input type="text" name="direccion" value="${usuario.direccion}" /></td>
+                    <td><input type="text" name="direccion" value="${usuario.direccion}" required /></td>
                 </tr>
                 <tr>
                     <td>Correo electronico</td>
-                    <td><input type="text" name="correo" value="${usuario.correo}" /></td>
+                    <td><input type="text" name="correo" value="${usuario.correo}" required /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

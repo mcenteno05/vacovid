@@ -9,7 +9,6 @@ import com.vacovid.entity.Cita;
 import com.vacovid.entity.Municipio;
 import com.vacovid.entity.Usuario;
 import com.vacovid.session.CitaFacadeLocal;
-import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
