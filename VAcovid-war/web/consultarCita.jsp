@@ -62,6 +62,11 @@
                     <td>Entidad de salud</td>
                     <td><input type="text" name="entidad" value="${cita.entidadSalud}" readonly onmousedown="return false;"/></td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="action" value="Cancelar" />
+                    </td>
+                </tr>
             </table>
         </form>
     </body>

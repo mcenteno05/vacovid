@@ -25,10 +25,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ConsultarCita", urlPatterns = {"/ConsultarCita"})
 public class ConsultarCita extends HttpServlet {
-
-    @EJB
-    private UsuarioFacadeLocal usuarioFacade;
-
     @EJB
     private CitaFacadeLocal citaFacade;
 
@@ -52,6 +48,7 @@ public class ConsultarCita extends HttpServlet {
             Cita cita=null;
             for (Cita object : citaFacade.findAll()) 
             {
+                
                 if (object.getIdentificacionUsuario().getIdentificacion()==id) 
                 {
                     cita=object;
@@ -59,15 +56,35 @@ public class ConsultarCita extends HttpServlet {
                     municipio=usuario.getCodigoDaneMunicipio();
                 }
             }
-            
-            if (request.getParameter("action").equals("Consultar")) {
-                cita=citaFacade.find(cita.getCitaid());
+            if (request.getParameter("action").equals("Consultar")) 
+            {
+                if (cita==null) 
+                {
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
+                }
+                else
+                {
+                    request.setAttribute("cita", cita);
+                    request.setAttribute("usuario", usuario);
+                    request.setAttribute("municipio", municipio);
+                    request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
+                }
+            }
+            else if (request.getParameter("action").equals("Cancelar")) 
+            {
+                if (cita==null) 
+                {
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
+                }
+                else
+                {
+                    citaFacade.remove(cita);
+                    out.println("Cita removida");
+                }
             }
             
-            request.setAttribute("cita", cita);
-            request.setAttribute("usuario", usuario);
-            request.setAttribute("municipio", municipio);
-            request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");

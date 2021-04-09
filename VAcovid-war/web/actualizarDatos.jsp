@@ -18,8 +18,8 @@
                 </tr>
                 
                 <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                           url = "jdbc:derby://localhost:1527/VAcovid"
-                                           user = "admin123"  password = "admin123"/>
+                                           url = "jdbc:derby://localhost:1527/vacovid"
+                                           user = "root"  password = "admin"/>
                 <tr>
                     <td>Departamento</td>
                     <td>
