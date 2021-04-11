@@ -2,113 +2,198 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registro Usuario</title>
-        
-    </head>
-    <body>
-        <h1>Registro</h1>
-        <form action="./RegistroUsuario" method="POST">
-            <table>
-                <td><h2>Información de contacto</h2></td>
-                <tr>
-                    <td>Nombres</td>
-                    <td><input type="text" name="nombre" value="${usuario.nombre}" required /></td>
-                    
-                </tr>
-                <tr>
-                    <td>Apellidos</td>
-                    <td><input type="text" name="apellido" value="${usuario.apellido}" required /></td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" name="email" value="${usuario.email}" required/></td>
-                </tr>
-                <tr>
-                    <td>Telefono</td>
-                    <td><input type="text" name="telefono" value="${usuario.telefono}" required/></td>
-                </tr>
-                <tr>
-                    <td>Contraseña</td>
-                    <td><input type="password" name="contra" value="${usuario.contra}" required /></td>
-                </tr>
-                <tr>
-                    <td>Confirmar contraseña</td>
-                    <td><input type="password" name="contraConfirmada" value="${usuario.contraConfirmada}" required /></td>
-                </tr>
+<!DOCTYPE html>
+<html lang="en">
 
-                <td><h2>Información personal</h2></td>
-                <tr>
-                    <td>Tipo de documento</td>
-                    <td>
-                    <select name="tipo" value="${usuario.tipo}" required >
-                        <option>Cédula de ciudadania</option>
-                        <option>Tarjeta de identidad</option>
-                        <option>Cédula de extranjería</option>
-                    </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Número de documento</td>
-                    <td><input type="text" name="identificacion" value="${usuario.identificacion}" required /></td>
-                </tr>
-                <tr>
-                    <td>Fecha de nacimiento</td>
-                    <td><input type="date" name="fecha de nacimiento" value="${usuario.email}" required/></td>
-                </tr>
-                
-                <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                           url = "jdbc:derby://localhost:1527/VAcovid"
-                                           user = "admin123"  password = "admin123"/>
-                <tr>
-                    <td>Departamento</td>
-                    <td>
-                        <sql:query var="resultadoDepartamento" dataSource="${bd}">
-                            SELECT DISTINCT(codigo_dane_departamento), departamento
-                            FROM MUNICIPIO
-                            ORDER BY departamento
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="static/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="img/flavicon.png">
+    <title>VAcovid</title>
+</head>
+
+<body>
+    <header>
+        <div class="header__logo contenedor">
+            <a href="index.html">
+                <img src="img/VAcovid_logo.png" alt="Logo VAcovid">
+            </a>
+        </div>
+        <nav class="header__nav contenedor">
+            <li class="header__nav__item">
+                <a class="header__nav__item__text" href="index.html">Inicio</a>
+            </li>
+            <li class="header__nav__item">
+                <a class="header__nav__item__text" href="#">Covid-19</a>
+            </li>
+            <li class="header__nav__item">
+                <a class="header__nav__item__text" href="#">Plan de vacunación</a>
+            </li>
+            <li class="header__nav__item">
+                <a class="header__nav__item__text" href="#">Contacto</a>
+            </li class="header__nav__item">
+            <li class="header__nav__item">
+                <a class="header__nav__item__button" href="">Regístrate</a>
+            </li>
+            <li class="header__nav__item">
+                <a class="header__nav__item__button" href="loginUsuario.jsp">Ingresar</a>
+            </li>
+        </nav>
+    </header>
+    <main class="main__register">
+        <div class="main__register__content">
+            <h1>Registro</h1>
+        </div>
+    </main>
+    <div class="forms">
+        <form action="./RegistroUsuario" method="POST" class="form">
+            <fieldset>
+                <div class="form__content1">
+                    <legend>Información de contacto</legend>
+                    <div class="form__content1__campo">
+                        <h3>Nombres:</h3>
+                        <input type="text" name="nombre" value="${usuario.nombre}" required />
+                    </div>
+                    <div class="form__content1__campo">
+                        <h3>Apellidos:</h3>
+                        <input type="text" name="apellido" value="${usuario.apellido}" required />
+                    </div>
+                    <div class="form__content1__campo">
+                        <h3>Email:</h3>
+                        <input type="email" name="email" value="${usuario.email}" required/>
+                    </div>
+
+                    <div class="form__content1__campo">
+                        <h3>Teléfono:</h3>
+                        <input type="number" name="telefono" value="${usuario.telefono}" required/>
+                    </div>
+                    <div class="form__content1__campo">
+                        <h3>Clave:</h3>
+                        <input type="password" name="contra" value="${usuario.contra}" required />
+                    </div>
+                    <div class="form__content1__campo">
+                        <h3>Confirmar Clave:</h3>
+                        <input type="password" name="contraConfirmada" value="${usuario.contraConfirmada}" required />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form__content2">
+                    <legend>Información personal</legend>
+                    <div class="form__content2__campo">
+                        <h3>Tipo de documento:</h3>
+                        <select name="tipo" value="${usuario.tipo}">
+                            <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                            <option value="Cedula Extranjera">Cedula Extranjera</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Registro Civil">Registro Civil</option>
+                            <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                        </select>
+                    </div>
+                    <div class="form__content2__campo">
+                        <h3>Fecha de nacimiento:</h3>
+                        <input type="date" max="2021-12-31" name="fecha de nacimiento" value="${usuario.email}" required>
+                    </div>
+
+                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/VAcovid" user="admin123" password="admin123" />
+
+                    <div class="form__content2__campo">
+                        <sql:query var="resultadoMunicipio" dataSource="${bd}">
+                            SELECT codigo_dane_municipio,municipio FROM MUNICIPIO ORDER BY municipio
                         </sql:query>
-                            
+                        <h3>Ciudad:</h3>
+                        <select name="municipio" value="${usuario.municipio}">
+                            <option value="0">Elija un municipio</option>
+                            <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
+                            <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="form__content2__campo">
+                        <h3>No. Documento:</h3>
+                        <input type="number" name="identificacion" value="${usuario.identificacion}" required>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="form__content2__campo">
+                        <sql:query var="resultadoDepartamento" dataSource="${bd}">
+                            SELECT DISTINCT(codigo_dane_departamento), departamento FROM MUNICIPIO ORDER BY departamento
+                        </sql:query>
+                        <h3>Departamento:</h3>
                         <select id="departamento" name="departamento" value='${usuario.departamento}'>
                             <option value="0">Elija un departamento</option>
-                        <c:forEach var = "row" items = "${resultadoDepartamento.rows}">
+                            <c:forEach var = "row" items = "${resultadoDepartamento.rows}">
                                 <option value="${row.codigo_dane_departamento}">${row.departamento}</option>
-                        </c:forEach>
+                            </c:forEach>
                         </select>
-                            
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ciudad/Municipio</td>
-                    <td>
-                        <sql:query var="resultadoMunicipio" dataSource="${bd}">
-                            SELECT codigo_dane_municipio,municipio
-                            FROM MUNICIPIO
-                            ORDER BY municipio
-                        </sql:query>
-                            
-                        <select name="municipio" value="${usuario.municipio}">
-                        <option value="0">Elija un municipio</option>
-                        <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
-                                <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
-                        </c:forEach>
+                    </div>
+
+                    <div class="form__content2__campo">
+                        <h3>Direccion:</h3>
+                        <input type="text" name="direccion" value="${usuario.direccion}" required>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form__content3">
+                    <legend>Información importante</legend>
+                    <div class="form__content3__campo">
+                        <h3>¿Presenta alguna enfermedad?</h3>
+                        <input class="select" type="radio" name="check_enfermedad" required> Si
+                        <input class="select" type="radio" name="check_enfermedad" required> No
+
+                    </div>
+                    <div class="form__content3__campo">
+                        <h3>¿Pertenece al personal de la salud?</h3>
+                        <input class="select" type="radio" name="check_personal" required> Si
+                        <input class="select" type="radio" name="check_personal" required> No
+                    </div>
+                    <div class="form__content3__campo">
+                        <h3>Enfermedad:</h3>
+                        <select>
+                            <option value="">Select</option>
                         </select>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>Dirección</td>
-                    <td><input type="text" name="direccion" value="${usuario.direccion}" required /></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" name="action" value="Registrarse" />
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                    <div class="form__content3__campo">
+                        <h3>EPS:</h3>
+                        <select>
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    <div class="form__content3__campo">
+                        <h3>Categoria de profesion:</h3>
+                        <select>
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="">
+                <input class="form__submit" type="submit" name="action" value="Registrarse">
+            </fieldset>
         </form>
-                
-    </body>
+    </div>
+    <footer>
+        <div class="footer__logo contenedor">
+            <img src="img/VAcovid_logo.png" alt="Logo VAcovid">
+        </div>
+        <div class="footer__text">
+            <h4>Copyright @ 2021 VAcovid</h4>
+        </div>
+    </footer>
+</body>
+
 </html>
