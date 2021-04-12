@@ -63,11 +63,14 @@ public class Vacuna implements Serializable {
         this.vacunaid = vacunaid;
     }
 
-    public Vacuna(Integer vacunaid, String nombre, Date fechaDeVencimiento) {
+    public Vacuna(Integer vacunaid, String nombre, Date fechaDeVencimiento, InventarioDeVacunacion idInventario) {
         this.vacunaid = vacunaid;
         this.nombre = nombre;
         this.fechaDeVencimiento = fechaDeVencimiento;
+        this.idInventario = idInventario;
     }
+
+    
 
     public Integer getVacunaid() {
         return vacunaid;

@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,6 +15,14 @@
     <link rel="stylesheet" href="static/normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="img/flavicon.png">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <script type="text/javascript">
+        function combo_municipio(){
+            $.post("comboM.jsp",$("#data").serialize(),function(data){$("#municipio").html(data);});
+        }
+    </script>
     <title>VAcovid</title>
 </head>
 
@@ -50,8 +59,9 @@
             <h1>Registro</h1>
         </div>
     </main>
+    
     <div class="forms">
-        <form action="./RegistroUsuario" method="POST" class="form">
+        <form action="./RegistroUsuario" method="POST" class="form" id="data">
             <fieldset>
                 <div class="form__content1">
                     <legend>Información de contacto</legend>
@@ -100,18 +110,12 @@
                         <input type="date" max="2021-12-31" name="fecha de nacimiento" value="${usuario.email}" required>
                     </div>
 
-                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/VAcovid" user="admin123" password="admin123" />
+                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
 
                     <div class="form__content2__campo">
-                        <sql:query var="resultadoMunicipio" dataSource="${bd}">
-                            SELECT codigo_dane_municipio,municipio FROM MUNICIPIO ORDER BY municipio
-                        </sql:query>
-                        <h3>Ciudad:</h3>
-                        <select name="municipio" value="${usuario.municipio}">
-                            <option value="0">Elija un municipio</option>
-                            <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
-                            <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
-                            </c:forEach>
+                        <h3>Ciudad/Municipio:</h3>
+                        <select id="municipio" name="municipio" value="${usuario.municipio}">
+                            <option value="">Elija un municipio</option>
                         </select>
                     </div>
 
@@ -121,20 +125,14 @@
                     </div>
 
 
-
-
-
-
-
-
-
                     <div class="form__content2__campo">
                         <sql:query var="resultadoDepartamento" dataSource="${bd}">
                             SELECT DISTINCT(codigo_dane_departamento), departamento FROM MUNICIPIO ORDER BY departamento
                         </sql:query>
+                            
                         <h3>Departamento:</h3>
-                        <select id="departamento" name="departamento" value='${usuario.departamento}'>
-                            <option value="0">Elija un departamento</option>
+                        <select id="departamento" name="departamento" value='${usuario.departamento}' onchange="combo_municipio()">
+                            <option value="">Elija un departamento</option>
                             <c:forEach var = "row" items = "${resultadoDepartamento.rows}">
                                 <option value="${row.codigo_dane_departamento}">${row.departamento}</option>
                             </c:forEach>
@@ -180,6 +178,7 @@
                         </select>
                     </div>
                 </div>
+                
             </fieldset>
             <fieldset class="">
                 <input class="form__submit" type="submit" name="action" value="Registrarse">

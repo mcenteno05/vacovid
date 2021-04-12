@@ -90,7 +90,7 @@ public class RegistroUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistroUsuario</title>");
+            out.println("<title>RegistroUsuario</title>");
             out.println("</head>");
             out.println("<body>");
            

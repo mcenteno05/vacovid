@@ -69,13 +69,8 @@ public class ConsultarCita extends HttpServlet {
                 request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
             }
             if (request.getParameter("action").equals("Cancelar")) {
-                if (cita == null) {
-                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
-                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
-                } else {
-                    citaFacade.remove(cita);
-                    out.println("Cita removida");
-                }
+                citaFacade.remove(cita);
+                out.println("Cita removida");
             }
 
             out.println("<!DOCTYPE html>");

@@ -24,12 +24,6 @@
     <body>
         <h1> Hola usuario <% out.println(usuario);  %>  acceso correcto </h1>
         
-        
-         <form action="http://localhost:8080/VAcovid-war/registroUsuario.jsp">
-            <input type="submit" value="Ir a Registro" />
-        </form>
-        <form action="http://localhost:8080/VAcovid-war/loginUsuario.jsp">
-            <input type="submit" value="Ir a login" />
         </form>
         <form action="http://localhost:8080/VAcovid-war/actualizarDatos.jsp">
             <input type="submit" value="Ir a actualizar datos" />

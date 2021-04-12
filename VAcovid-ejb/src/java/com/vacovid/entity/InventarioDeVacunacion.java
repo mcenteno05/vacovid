@@ -62,11 +62,13 @@ public class InventarioDeVacunacion implements Serializable {
         this.inventarioid = inventarioid;
     }
 
-    public InventarioDeVacunacion(Integer inventarioid, int cantidad, int lote) {
+    public InventarioDeVacunacion(Integer inventarioid, int cantidad, int lote, SitioVacunacion idSitio) {
         this.inventarioid = inventarioid;
         this.cantidad = cantidad;
         this.lote = lote;
+        this.idSitio = idSitio;
     }
+
 
     public Integer getInventarioid() {
         return inventarioid;
