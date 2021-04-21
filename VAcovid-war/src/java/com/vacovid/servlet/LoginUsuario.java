@@ -5,6 +5,7 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.session.RepresentanteFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LoginUsuario", urlPatterns = {"/LoginUsuario"})
 public class LoginUsuario extends HttpServlet {
+
+    @EJB
+    private RepresentanteFacadeLocal representanteFacade;
 
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
@@ -43,7 +47,30 @@ public class LoginUsuario extends HttpServlet {
             Integer identificacion= Integer.parseInt(request.getParameter("identificacion"));
             String contra=request.getParameter("contra");
             
-            if (usuarioFacade.find(identificacion)==null) 
+            if (request.getParameter("rol").equals("Usuario de vacunacion")) 
+            {
+                loginUs(identificacion, contra, request, response);
+            }
+            else if (request.getParameter("rol").equals("Representante de sitio")) 
+            {
+                loginRep(identificacion, contra, request, response);
+            }
+            
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoginUsuario</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+    
+    public void loginUs(Integer identificacion, String contra, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        try (PrintWriter out = response.getWriter()) {
+        if (usuarioFacade.find(identificacion)==null) 
             {
                  out.println("<script type=\"text/javascript\">\n" + "  alert(\"Usuario no registrado\");\n" + "</script>");
                  out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
@@ -63,15 +90,31 @@ public class LoginUsuario extends HttpServlet {
                     out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
                 }
             }
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("</body>");
-            out.println("</html>");
+        }
+    }
+    
+    public void loginRep(Integer identificacion, String contra, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        try (PrintWriter out = response.getWriter()) {
+        if (representanteFacade.find(identificacion)==null) 
+            {
+                 out.println("<script type=\"text/javascript\">\n" + "  alert(\"Usuario no registrado\");\n" + "</script>");
+                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
+            }
+            else
+            {
+                if (representanteFacade.find(identificacion).getPassword().equals(contra)) 
+                {
+                    HttpSession objsession = request.getSession(true);
+                    objsession.setAttribute("usuario1", Integer.toString(identificacion));
+                    response.sendRedirect("menu_representante.jsp");
+                    //out.println("Login Exitoso");
+                }
+                else
+                {
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseña incorrecta\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
+                }
+            }
         }
     }
 

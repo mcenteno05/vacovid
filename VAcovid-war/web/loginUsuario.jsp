@@ -25,8 +25,18 @@
                 </a>
             </div>
             <form class="main__login__square__content" action="./LoginUsuario" id="forminicio" method="post">
+                
                 <div>
                     <h1>Login</h1>
+                </div>
+                <div class="main__login__square__content__campos">
+                    <h2>Rol:</h2>
+                    <select name="rol">
+                        <option value="Usuario de vacunacion">Usuario de vacunación</option>
+                        <option value="Representante de sitio">Representante de sitio</option>
+                        <option value="Personal de vacunacion">Personal de vacunación</option>
+                        <option value="Distribuidor de vacunas">Distribuidor de vacunas</option>
+                    </select>
                 </div>
                 <div class="main__login__square__content__campos">
                     <h2>Correo electrónico:</h2>

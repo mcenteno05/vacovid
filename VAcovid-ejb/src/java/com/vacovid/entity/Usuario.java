@@ -46,6 +46,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion")})
 public class Usuario implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRESENTA_ENFERMEDAD")
+    private Boolean presentaEnfermedad;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PERSONAL_SALUD")
+    private Boolean personalSalud;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -105,7 +114,7 @@ public class Usuario implements Serializable {
         this.identificacion = identificacion;
     }
 
-    public Usuario(Integer identificacion, String nombre, String apellido, Date fechaDeNacimiento, String telefono, String correo, String password, String tipoDocumento, String direccion, Municipio codigoDaneMunicipio) {
+    public Usuario(Integer identificacion, String nombre, String apellido, Date fechaDeNacimiento, String telefono, String correo, String password, String tipoDocumento, String direccion, Municipio codigoDaneMunicipio, boolean presentaEnfermedad, boolean personalSalud) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -116,6 +125,8 @@ public class Usuario implements Serializable {
         this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.codigoDaneMunicipio=codigoDaneMunicipio;
+        this.presentaEnfermedad=presentaEnfermedad;
+        this.personalSalud=personalSalud;
     }
 
     public Integer getIdentificacion() {
@@ -230,6 +241,22 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.Usuario[ identificacion=" + identificacion + " ]";
+    }
+
+    public Boolean getPresentaEnfermedad() {
+        return presentaEnfermedad;
+    }
+
+    public void setPresentaEnfermedad(Boolean presentaEnfermedad) {
+        this.presentaEnfermedad = presentaEnfermedad;
+    }
+
+    public Boolean getPersonalSalud() {
+        return personalSalud;
+    }
+
+    public void setPersonalSalud(Boolean personalSalud) {
+        this.personalSalud = personalSalud;
     }
     
 }

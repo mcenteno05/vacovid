@@ -103,6 +103,10 @@ public class Cita implements Serializable {
         String fechaStr=fecha.getDate()+"/"+fecha.getMonth()+"/"+año;
         return fechaStr;
     }
+    
+    public Date getFechaDate(){
+        return fecha;
+    }
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;

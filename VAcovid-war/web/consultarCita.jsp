@@ -4,10 +4,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Usuario</title>
+        <title>Consultar cita</title>
     </head>
     <body>
-        <h1>Login</h1>
+        <h1>Consultar Cita</h1>
         <form action="./ConsultarCita" method="POST">
             <table>
                 <tr>

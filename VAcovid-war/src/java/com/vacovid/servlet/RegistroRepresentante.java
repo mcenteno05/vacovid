@@ -6,8 +6,10 @@
 package com.vacovid.servlet;
 
 
+import com.vacovid.entity.Representante;
 import com.vacovid.entity.Usuario;
 import com.vacovid.session.MunicipioFacadeLocal;
+import com.vacovid.session.RepresentanteFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,14 +30,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author JEFRY
  */
-@WebServlet(name = "RegistroUsuario", urlPatterns = {"/RegistroUsuario"})
-public class RegistroUsuario extends HttpServlet {
+@WebServlet(name = "RegistroRepresentante", urlPatterns = {"/RegistroRepresentante"})
+public class RegistroRepresentante extends HttpServlet {
 
     @EJB
-    private MunicipioFacadeLocal municipioFacade;
+    private RepresentanteFacadeLocal representanteFacade;
 
-    @EJB
-    private UsuarioFacadeLocal usuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,26 +51,20 @@ public class RegistroUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            //Datos del formularios
             String nombres = request.getParameter("nombre");
             String apellidos = request.getParameter("apellido");
             String email = request.getParameter("email");
             String telefono = request.getParameter("telefono");
             String contraseña = request.getParameter("contra");
-            String tipo = request.getParameter("tipo");
             int identificacion = Integer.parseInt(request.getParameter("identificacion"));
             String fecha = request.getParameter("fecha de nacimiento");
-            Integer municipio = Integer.parseInt(request.getParameter("municipio"));
-            String direccion = request.getParameter("direccion");
-            boolean presentaEnfermedad = (request.getParameter("check_enfermedad").equals("Si"))?true:false;
-            boolean personalSalud = (request.getParameter("check_personal").equals("Si"))?true:false;
             
             DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
             Date date= df.parse(fecha);
             int count=0;
            
-            for (Usuario user : usuarioFacade.findAll()) {
-                if (user.getIdentificacion() == identificacion) {
+            for (Representante representante : representanteFacade.findAll()) {
+                if (representante.getIdentificacion()== identificacion) {
                     count=1;
                     break;
                 }
@@ -78,28 +72,28 @@ public class RegistroUsuario extends HttpServlet {
             if (count == 0) {
                 if (!contraseña.equals(request.getParameter("contraConfirmada"))) {
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
-                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroRepresentante.jsp\" />");
                 } else {
-                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), presentaEnfermedad, personalSalud);
+                    Representante representante= new Representante(identificacion, nombres, apellidos, date, telefono, email, contraseña);
                     if (request.getParameter("action").equals("Registrarse")) {
-                        usuarioFacade.create(usuario);
-                        out.println("Usuario registrado correctamente");
+                        representanteFacade.create(representante);
+                        out.println("Representante registrado correctamente");
                     }
                 }
             }else{
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"El usuario ya se encuentra registrado\");\n" + "</script>");
-                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroRepresentante.jsp\" />");
             }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>RegistroUsuario</title>");
+            out.println("<title>Servlet RegistroRepresentante</title>");
             out.println("</head>");
             out.println("<body>");
            
             out.println("</html>");
         } catch (ParseException ex) {
-            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistroRepresentante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

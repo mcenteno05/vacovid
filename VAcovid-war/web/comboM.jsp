@@ -9,9 +9,9 @@ String sentencia="SELECT codigo_dane_municipio,municipio\nFROM MUNICIPIO\nWHERE 
 <sql:query var="resultadoMunicipio" dataSource="${bd2}">
     <%=sentencia %>
 </sql:query>
-<select name="municipio">
-    <option value="">Elija un municipio</option>
-    <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
-        <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
-    </c:forEach>
-</select>
+    <select name="municipio">
+        <option value="">Elija un municipio</option>
+        <c:forEach var = "row" items = "${resultadoMunicipio.rows}">
+            <option value="${row.codigo_dane_municipio}">${row.municipio}</option>
+        </c:forEach>
+    </select>

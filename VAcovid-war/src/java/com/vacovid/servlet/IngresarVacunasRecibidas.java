@@ -5,11 +5,13 @@
  */
 package com.vacovid.servlet;
 
-import com.vacovid.entity.Cita;
+import com.vacovid.entity.InventarioDeVacunacion;
 import com.vacovid.entity.SitioVacunacion;
-import com.vacovid.session.CitaFacadeLocal;
+import com.vacovid.entity.Vacuna;
+import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
+import com.vacovid.session.RepresentanteFacadeLocal;
 import com.vacovid.session.SitioVacunacionFacadeLocal;
-import com.vacovid.session.UsuarioFacadeLocal;
+import com.vacovid.session.VacunaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -30,17 +32,18 @@ import javax.servlet.http.HttpSession;
  *
  * @author JEFRY
  */
-@WebServlet(name = "SolicitarCita", urlPatterns = {"/SolicitarCita"})
-public class SolicitarCita extends HttpServlet {
+@WebServlet(name = "IngresarVacunasRecibidas", urlPatterns = {"/IngresarVacunasRecibidas"})
+public class IngresarVacunasRecibidas extends HttpServlet {
 
     @EJB
-    private SitioVacunacionFacadeLocal sitioVacunacionFacade;
+    private RepresentanteFacadeLocal representanteFacade;
 
     @EJB
-    private UsuarioFacadeLocal usuarioFacade;
+    private VacunaFacadeLocal vacunaFacade;
 
     @EJB
-    private CitaFacadeLocal citaFacade;
+    private InventarioDeVacunacionFacadeLocal inventarioDeVacunacionFacade;
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,66 +55,63 @@ public class SolicitarCita extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession objsession = request.getSession(false);
-            String usuario = (String)objsession.getAttribute("usuario1");
+            String usuario1 = (String) objsession.getAttribute("usuario1");
+            int representante = Integer.parseInt(usuario1);
             
-            SitioVacunacion sitiovacuna = new SitioVacunacion();
-            Integer fase = Integer.parseInt(request.getParameter("fase"));
+            int idinventario= Integer.parseInt(request.getParameter("idinventario"));
+            int idvacuna= Integer.parseInt(request.getParameter("idvacuna"));
+            String nombre= request.getParameter("nombre");
+            
             String fecha = request.getParameter("fecha");
-            String hora = request.getParameter("hora");
-            String entidad = request.getParameter("entidad");
-            int sitio = Integer.parseInt(request.getParameter("sitio"));
-            DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
-            Date date= df.parse(fecha+hora);
-            int count=0;
-            sitiovacuna.setSitioid(sitio);
+            DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+            Date date= df.parse(fecha);
             
-            for (Cita cita : citaFacade.findAll()) 
+            int cantidad= Integer.parseInt(request.getParameter("cantidad"));
+            int lote= Integer.parseInt(request.getParameter("lote"));
+            
+            if (inventarioDeVacunacionFacade.find(idinventario)!=null) 
             {
-                if (cita.getIdentificacionUsuario().getIdentificacion()==Integer.parseInt(usuario)) 
-                {
-                    if (cita.getFase()==fase) 
-                    {
-                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"Cita ya asignada\");\n" + "</script>");
-                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
-                        break;
-                    }
-                }
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"El ID de inventario ya está en uso\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/ingresarVacunasRecibidas.jsp\" />");
+            }
+            if (vacunaFacade.find(idvacuna)!=null) 
+            {
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"El ID de vacuna ya está en uso\");\n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/ingresarVacunasRecibidas.jsp\" />");
             }
             
+            SitioVacunacion sv=null;
+            for (SitioVacunacion sitio : representanteFacade.find(representante).getSitioVacunacionCollection()) 
+            {
+                sv=sitio;
+            }
             
-            //verifica si existe el sitio de vacunacion
-            for (SitioVacunacion sitio1 : sitioVacunacionFacade.findAll()) {
-                if (sitio == sitio1.getSitioid()) {
-                    count=1;
-                } 
+            if (request.getParameter("action").equals("Registrar")) 
+            {
+                InventarioDeVacunacion inventario = new InventarioDeVacunacion(idinventario, cantidad, lote, sv);
+                inventarioDeVacunacionFacade.create(inventario);
+
+                Vacuna vacuna = new Vacuna(idvacuna, nombre, date, inventario);
+                vacunaFacade.create(vacuna);
             }
-            //si el sitio existe crea la cita
-            if (count == 1) {
-                Cita cita= new Cita(date,fase,entidad,sitiovacuna,usuarioFacade.find(Integer.parseInt(usuario)),hora);
-                citaFacade.create(cita); 
-                out.println("Cita agendada existosamente");
-            }
-            //si el sitio no existe lo redirige a la pagina nuevamente
-            else{
-                out.println("<script type=\"text/javascript\">\n" + "  alert(\"El sitio de vacunacion no existe, por favor digite uno válido\");\n" + "</script>");
-                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
-            }
+            
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SolicitarCita</title>");            
+            out.println("<title>Servlet IngresarVacunasRecibidas</title>");            
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1>Servlet IngresarVacunasRecibidas at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } catch (ParseException ex) {
-            Logger.getLogger(SolicitarCita.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IngresarVacunasRecibidas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

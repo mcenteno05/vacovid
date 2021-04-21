@@ -7,7 +7,7 @@
         <title>Solicitar cita</title>
     </head>
     <body>
-        <h1>Socilicitar cita</h1>
+        <h1>Solicitar cita</h1>
         <form action="./SolicitarCita" method="POST">
             <h2>Solicitud de cita</h2>
             <table>

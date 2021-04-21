@@ -150,14 +150,14 @@
                     <legend>Información importante</legend>
                     <div class="form__content3__campo">
                         <h3>¿Presenta alguna enfermedad?</h3>
-                        <input class="select" type="radio" name="check_enfermedad" required> Si
-                        <input class="select" type="radio" name="check_enfermedad" required> No
+                        <input class="select" type="radio" value="Si" name="check_enfermedad" required> Si
+                        <input class="select" type="radio" value="No" name="check_enfermedad" required> No
 
                     </div>
                     <div class="form__content3__campo">
                         <h3>¿Pertenece al personal de la salud?</h3>
-                        <input class="select" type="radio" name="check_personal" required> Si
-                        <input class="select" type="radio" name="check_personal" required> No
+                        <input class="select" type="radio" value="Si" name="check_personal" required> Si
+                        <input class="select" type="radio" value="No" name="check_personal" required> No
                     </div>
                     <div class="form__content3__campo">
                         <h3>Enfermedad:</h3>
