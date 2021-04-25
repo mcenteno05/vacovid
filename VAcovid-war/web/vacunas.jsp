@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html lang="en">
 
 <head>
@@ -22,74 +17,39 @@ and open the template in the editor.
 <body>
     <header>
         <div class="header__logo contenedor">
-            <a href="">
+            <a href="index.html">
                 <img href="#" src="img/VAcovid_logo.png" alt="Logo VAcovid">
             </a>
         </div>
         <nav class="header__nav contenedor">
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="">Inicio</a>
+                <a class="header__nav__item__text" href="index.html">Inicio</a>
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text" href="covid-19.jsp">Covid-19</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="plan_vacunacion.jsp">Plan de vacunaci贸n</a>
+                <a class="header__nav__item__text" href="plan_vacunacion.jsp">Plan de vacunaci髇</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Contacto</a>
+                <a class="header__nav__item__text" href="">Contacto</a>
             </li class="header__nav__item">
             <li class="header__nav__item">
-                <a class="header__nav__item__button" href="registroUsuario.jsp">Reg铆strate</a>
+                <a class="header__nav__item__button" href="registroUsuario.jsp">Reg韘trate</a>
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__button" href="loginUsuario.jsp">Ingresar</a>
             </li>
         </nav>
     </header>
-    <main class="main__principal">
-        <div class="main__square">
-            <div class="main__square__content contenedor">
-                <h1>Nos preocupamos por ti</h1>
-                <p>El plan de vacunaci贸n ya empez贸, por eso te pedimos que te quedes en casa, te avisaremos cuando ya sea tu turno para vacunarte contra el COVID-19 </p>
-                <a href="loginUsuario.jsp">
-                    <button href>Ingresar</button>
-                </a>
-            </div>
 
+    <main class="main__vacunas">
+        <div class="main__vacunas__content">
+            <h1>VACUNAS COVID-19</h1>
         </div>
     </main>
-    <div class="menu">
-        <div class="menu__option">
-            <a href="loginUsuario.jsp">
-                <img class="menu__option__image" src="img/calendario.png" alt="imagen calendario">
-                <h2>Solicitar Cita de Vacunaci贸n</h2>
-            </a>
-        </div>
-        <div class="menu__option">
-            <a href="loginUsuario.jsp">
-                <img class="menu__option__image" src="img/contenido.png" alt="imagen contenido">
-                <h2>Consultar Estado de la Cita</h2>
-            </a>
-        </div>
-        <div class="menu__option"> 
-            <a href="loginUsuario.jsp">
-                <img class="menu__option__image" src="img/corazon.png" alt="imagen corazon">
-                <h2>Reportar Efectos Secundarios</h2>
-            </a>
-        </div>
-    </div>
-    <div class="vacunas">
-        <div class="vacunas__square">
-            <div class="vacunas__square__content contenedor">
-                <h1>Conoce las diferentes vacunas</h1>
-                <p>En Colombia ya se est谩n distribuyendo diferentes tipos de vacunas contra el COVID-19, descubre mas sobre ellas </p>
-                <a href="vacunas.jsp">
-                <button>Conocer m谩s</button>
-                </a>
-            </div>
 
-        </div>
+    <div class="info_vacunas">
     </div>
     <div class="ls_vacunas">
         <div class="ls_vacunas__text">
@@ -122,7 +82,4 @@ and open the template in the editor.
         </div>
     </footer>
 
-
 </body>
-
-</html>

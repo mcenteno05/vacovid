@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
-<sql:setDataSource var="bd2" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
+<sql:setDataSource var="bd2" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
 
 <% String dep= request.getParameter("departamento"); 
 String sentencia="SELECT codigo_dane_municipio,municipio\nFROM MUNICIPIO\nWHERE codigo_dane_departamento="+dep+"\nORDER BY municipio"; %>

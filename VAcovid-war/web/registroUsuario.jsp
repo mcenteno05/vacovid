@@ -38,13 +38,13 @@
                 <a class="header__nav__item__text" href="index.html">Inicio</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Covid-19</a>
+                <a class="header__nav__item__text" href="covid-19.jsp">Covid-19</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Plan de vacunación</a>
+                <a class="header__nav__item__text" href="plan_vacunacion.jsp">Plan de vacunación</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Contacto</a>
+                <a class="header__nav__item__text" href="">Contacto</a>
             </li class="header__nav__item">
             <li class="header__nav__item">
                 <a class="header__nav__item__button" href="">Regístrate</a>
@@ -110,7 +110,7 @@
                         <input type="date" max="2021-12-31" name="fecha de nacimiento" value="${usuario.email}" required>
                     </div>
 
-                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
+                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/VAcovid" user="admin123" password="admin123" />
 
                     <div class="form__content2__campo">
                         <h3>Ciudad/Municipio:</h3>
