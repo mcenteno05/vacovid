@@ -17,7 +17,7 @@
             <table>
                 <tr>
                     <td>ID Inventario</td>
-                    <td><input type="text" name="idinventario" value="${inventario_de_vacunacion.inventarioid}" required /></td>
+                    <td><input type="text" name="idinventario" value="${inventarioDeVacunacion.inventarioid}" required /></td>
                 </tr>
                 <tr>
                     <td>ID Vacuna</td>
@@ -33,11 +33,15 @@
                 </tr>
                 <tr>
                     <td>Cantidad</td>
-                    <td><input type="text" name="cantidad" value="${inventario_de_vacunacion.cantidad}" required/></td>
+                    <td><input type="text" name="cantidad" value="${inventarioDeVacunacion.cantidad}" required/></td>
                 </tr>
                 <tr>
                     <td>Lote</td>
-                    <td><input type="text" name="lote" value="${inventario_de_vacunacion.lote}" required /></td>
+                    <td><input type="text" name="lote" value="${inventarioDeVacunacion.lote}" required /></td>
+                </tr>
+                <tr>
+                    <td>Identificación distribuidor</td>
+                    <td><input type="text" name="identificacionDistribuidor" value="${inventarioDeVacunacion.identificacionDistribuidor}" required /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

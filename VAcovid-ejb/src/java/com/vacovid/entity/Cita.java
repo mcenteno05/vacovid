@@ -6,8 +6,10 @@
 package com.vacovid.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,9 +39,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cita.findAll", query = "SELECT c FROM Cita c"),
     @NamedQuery(name = "Cita.findByCitaid", query = "SELECT c FROM Cita c WHERE c.citaid = :citaid"),
     @NamedQuery(name = "Cita.findByFecha", query = "SELECT c FROM Cita c WHERE c.fecha = :fecha"),
-    @NamedQuery(name = "Cita.findByFase", query = "SELECT c FROM Cita c WHERE c.fase = :fase"),
+    @NamedQuery(name = "Cita.findByDosis", query = "SELECT c FROM Cita c WHERE c.dosis = :dosis"),
     @NamedQuery(name = "Cita.findByEntidadSalud", query = "SELECT c FROM Cita c WHERE c.entidadSalud = :entidadSalud")})
 public class Cita implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DOSIS")
+    private int dosis;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCita")
+    private Collection<ReporteDeVacunacion> reporteDeVacunacionCollection;
 
     @Basic(optional = false)
     @NotNull
@@ -56,10 +67,7 @@ public class Cita implements Serializable {
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FASE")
-    private int fase;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
@@ -80,13 +88,13 @@ public class Cita implements Serializable {
         this.citaid = citaid;
     }
 
-    public Cita(Date fecha, int fase, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario, String hora) {
+    public Cita(int dosis, String hora, Date fecha, String entidadSalud, SitioVacunacion idSitio, Usuario identificacionUsuario) {
+        this.dosis = dosis;
+        this.hora = hora;
         this.fecha = fecha;
-        this.fase = fase;
         this.entidadSalud = entidadSalud;
         this.idSitio = idSitio;
         this.identificacionUsuario = identificacionUsuario;
-        this.hora=hora;
     }
 
 
@@ -110,14 +118,6 @@ public class Cita implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public int getFase() {
-        return fase;
-    }
-
-    public void setFase(int fase) {
-        this.fase = fase;
     }
 
     public String getEntidadSalud() {
@@ -175,6 +175,23 @@ public class Cita implements Serializable {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public int getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(int dosis) {
+        this.dosis = dosis;
+    }
+
+    @XmlTransient
+    public Collection<ReporteDeVacunacion> getReporteDeVacunacionCollection() {
+        return reporteDeVacunacionCollection;
+    }
+
+    public void setReporteDeVacunacionCollection(Collection<ReporteDeVacunacion> reporteDeVacunacionCollection) {
+        this.reporteDeVacunacionCollection = reporteDeVacunacionCollection;
     }
     
 }

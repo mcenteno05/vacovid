@@ -59,8 +59,7 @@ public class SolicitarCita extends HttpServlet {
             HttpSession objsession = request.getSession(false);
             String usuario = (String)objsession.getAttribute("usuario1");
             
-            SitioVacunacion sitiovacuna = new SitioVacunacion();
-            Integer fase = Integer.parseInt(request.getParameter("fase"));
+            Integer dosis = Integer.parseInt(request.getParameter("dosis"));
             String fecha = request.getParameter("fecha");
             String hora = request.getParameter("hora");
             String entidad = request.getParameter("entidad");
@@ -68,13 +67,12 @@ public class SolicitarCita extends HttpServlet {
             DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
             Date date= df.parse(fecha+hora);
             int count=0;
-            sitiovacuna.setSitioid(sitio);
             
             for (Cita cita : citaFacade.findAll()) 
             {
                 if (cita.getIdentificacionUsuario().getIdentificacion()==Integer.parseInt(usuario)) 
                 {
-                    if (cita.getFase()==fase) 
+                    if (cita.getDosis()==dosis) 
                     {
                         out.println("<script type=\"text/javascript\">\n" + "  alert(\"Cita ya asignada\");\n" + "</script>");
                         out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
@@ -92,7 +90,7 @@ public class SolicitarCita extends HttpServlet {
             }
             //si el sitio existe crea la cita
             if (count == 1) {
-                Cita cita= new Cita(date,fase,entidad,sitiovacuna,usuarioFacade.find(Integer.parseInt(usuario)),hora);
+                Cita cita= new Cita(dosis,hora,date,entidad,sitioVacunacionFacade.find(sitio),usuarioFacade.find(Integer.parseInt(usuario)));
                 citaFacade.create(cita); 
                 out.println("Cita agendada existosamente");
             }

@@ -37,6 +37,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SitioVacunacion.findByDireccion", query = "SELECT s FROM SitioVacunacion s WHERE s.direccion = :direccion")})
 public class SitioVacunacion implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSitio")
+    private Collection<Personal> personalCollection;
+    @JoinColumn(name = "CODIGO_DANE_MUNICIPIO", referencedColumnName = "CODIGO_DANE_MUNICIPIO")
+    @ManyToOne(optional = false)
+    private Municipio codigoDaneMunicipio;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -68,10 +74,12 @@ public class SitioVacunacion implements Serializable {
         this.sitioid = sitioid;
     }
 
-    public SitioVacunacion(Integer sitioid, String nombre, String direccion) {
+    public SitioVacunacion(Municipio codigoDaneMunicipio, Integer sitioid, String nombre, String direccion, Representante identificacionRepresentante) {
+        this.codigoDaneMunicipio = codigoDaneMunicipio;
         this.sitioid = sitioid;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.identificacionRepresentante = identificacionRepresentante;
     }
 
     public Integer getSitioid() {
@@ -147,6 +155,23 @@ public class SitioVacunacion implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.SitioVacunacion[ sitioid=" + sitioid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Personal> getPersonalCollection() {
+        return personalCollection;
+    }
+
+    public void setPersonalCollection(Collection<Personal> personalCollection) {
+        this.personalCollection = personalCollection;
+    }
+
+    public Municipio getCodigoDaneMunicipio() {
+        return codigoDaneMunicipio;
+    }
+
+    public void setCodigoDaneMunicipio(Municipio codigoDaneMunicipio) {
+        this.codigoDaneMunicipio = codigoDaneMunicipio;
     }
     
 }

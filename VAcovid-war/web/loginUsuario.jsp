@@ -39,7 +39,7 @@
                     </select>
                 </div>
                 <div class="main__login__square__content__campos">
-                    <h2>Correo electrónico:</h2>
+                    <h2>Identificación:</h2>
                     <input type="text" name="identificacion" value="${usuario.identificacion}" id="txtusuario" required>
                 </div>
                 <div class="main__login__square__content__campos">

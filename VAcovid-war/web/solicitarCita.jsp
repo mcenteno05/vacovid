@@ -13,7 +13,7 @@
             <table>
                 <tr>
                     <td>Tipo de solicitud</td>
-                    <td><select name="fase" value="${cita.fase}" required >
+                    <td><select name="dosis" value="${cita.dosis}" required >
                         <option value="1">Primera dosis</option>
                         <option value="2">Segunda dosis</option>
                     </select></td>

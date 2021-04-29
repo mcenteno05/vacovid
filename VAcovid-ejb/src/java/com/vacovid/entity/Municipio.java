@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Municipio.findByMunicipio", query = "SELECT m FROM Municipio m WHERE m.municipio = :municipio")})
 public class Municipio implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDaneMunicipio")
+    private Collection<SitioVacunacion> sitioVacunacionCollection;
+
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -152,6 +155,15 @@ public class Municipio implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.Municipio[ codigoDaneMunicipio=" + codigoDaneMunicipio + " ]";
+    }
+
+    @XmlTransient
+    public Collection<SitioVacunacion> getSitioVacunacionCollection() {
+        return sitioVacunacionCollection;
+    }
+
+    public void setSitioVacunacionCollection(Collection<SitioVacunacion> sitioVacunacionCollection) {
+        this.sitioVacunacionCollection = sitioVacunacionCollection;
     }
     
 }

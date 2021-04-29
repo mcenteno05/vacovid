@@ -14,6 +14,9 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,7 +83,7 @@ public class RegistroUsuario extends HttpServlet {
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
                     out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
                 } else {
-                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), presentaEnfermedad, personalSalud);
+                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud));
                     if (request.getParameter("action").equals("Registrarse")) {
                         usuarioFacade.create(usuario);
                         out.println("Usuario registrado correctamente");
@@ -100,6 +103,33 @@ public class RegistroUsuario extends HttpServlet {
             out.println("</html>");
         } catch (ParseException ex) {
             Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private int determinarFase(Date fecha, boolean presentaEnfermedad, boolean personalSalud)
+    {
+        LocalDate date= LocalDate.of(fecha.getYear()+1900, fecha.getMonth()+1, fecha.getDay());
+        Period period = Period.between(date, LocalDate.now());
+        if (period.getYears()>=80 || personalSalud)
+        {
+            return 1;
+        }
+        else if (period.getYears()>=60 && period.getYears()<80) 
+        {
+            return 2;
+        }
+        else if (period.getYears()>=16 && period.getYears()<60 && presentaEnfermedad) {
+            return 3;
+        }
+        else if (presentaEnfermedad) {
+            return 4;
+        }
+        else if (period.getYears()>=16 && period.getYears()<60) {
+            return 5;
+        }
+        else
+        {
+            return 0;
         }
     }
 

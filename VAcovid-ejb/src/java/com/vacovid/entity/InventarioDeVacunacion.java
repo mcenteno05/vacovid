@@ -35,6 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "InventarioDeVacunacion.findByLote", query = "SELECT i FROM InventarioDeVacunacion i WHERE i.lote = :lote")})
 public class InventarioDeVacunacion implements Serializable {
 
+    @JoinColumn(name = "IDENTIFICACION_DISTRIBUIDOR", referencedColumnName = "IDENTIFICACION")
+    @ManyToOne(optional = false)
+    private Distribuidor identificacionDistribuidor;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -62,7 +66,8 @@ public class InventarioDeVacunacion implements Serializable {
         this.inventarioid = inventarioid;
     }
 
-    public InventarioDeVacunacion(Integer inventarioid, int cantidad, int lote, SitioVacunacion idSitio) {
+    public InventarioDeVacunacion(Distribuidor identificacionDistribuidor, Integer inventarioid, int cantidad, int lote, SitioVacunacion idSitio) {
+        this.identificacionDistribuidor = identificacionDistribuidor;
         this.inventarioid = inventarioid;
         this.cantidad = cantidad;
         this.lote = lote;
@@ -134,6 +139,14 @@ public class InventarioDeVacunacion implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.InventarioDeVacunacion[ inventarioid=" + inventarioid + " ]";
+    }
+
+    public Distribuidor getIdentificacionDistribuidor() {
+        return identificacionDistribuidor;
+    }
+
+    public void setIdentificacionDistribuidor(Distribuidor identificacionDistribuidor) {
+        this.identificacionDistribuidor = identificacionDistribuidor;
     }
     
 }

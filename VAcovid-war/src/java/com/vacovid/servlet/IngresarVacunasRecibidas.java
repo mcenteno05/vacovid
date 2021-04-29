@@ -8,6 +8,7 @@ package com.vacovid.servlet;
 import com.vacovid.entity.InventarioDeVacunacion;
 import com.vacovid.entity.SitioVacunacion;
 import com.vacovid.entity.Vacuna;
+import com.vacovid.session.DistribuidorFacadeLocal;
 import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
 import com.vacovid.session.RepresentanteFacadeLocal;
 import com.vacovid.session.SitioVacunacionFacadeLocal;
@@ -34,6 +35,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "IngresarVacunasRecibidas", urlPatterns = {"/IngresarVacunasRecibidas"})
 public class IngresarVacunasRecibidas extends HttpServlet {
+
+    @EJB
+    private DistribuidorFacadeLocal distribuidorFacade;
 
     @EJB
     private RepresentanteFacadeLocal representanteFacade;
@@ -66,6 +70,7 @@ public class IngresarVacunasRecibidas extends HttpServlet {
             int idinventario= Integer.parseInt(request.getParameter("idinventario"));
             int idvacuna= Integer.parseInt(request.getParameter("idvacuna"));
             String nombre= request.getParameter("nombre");
+            int identificacionDistribuidor=Integer.parseInt(request.getParameter("identificacionDistribuidor"));
             
             String fecha = request.getParameter("fecha");
             DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
@@ -93,7 +98,7 @@ public class IngresarVacunasRecibidas extends HttpServlet {
             
             if (request.getParameter("action").equals("Registrar")) 
             {
-                InventarioDeVacunacion inventario = new InventarioDeVacunacion(idinventario, cantidad, lote, sv);
+                InventarioDeVacunacion inventario = new InventarioDeVacunacion(distribuidorFacade.find(identificacionDistribuidor),idinventario, cantidad, lote, sv);
                 inventarioDeVacunacionFacade.create(inventario);
 
                 Vacuna vacuna = new Vacuna(idvacuna, nombre, date, inventario);

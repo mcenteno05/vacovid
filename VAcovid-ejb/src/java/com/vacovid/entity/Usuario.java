@@ -48,6 +48,11 @@ public class Usuario implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Column(name = "FASE")
+    private int fase;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "PRESENTA_ENFERMEDAD")
     private Boolean presentaEnfermedad;
     @Basic(optional = false)
@@ -114,7 +119,7 @@ public class Usuario implements Serializable {
         this.identificacion = identificacion;
     }
 
-    public Usuario(Integer identificacion, String nombre, String apellido, Date fechaDeNacimiento, String telefono, String correo, String password, String tipoDocumento, String direccion, Municipio codigoDaneMunicipio, boolean presentaEnfermedad, boolean personalSalud) {
+    public Usuario(Integer identificacion, String nombre, String apellido, Date fechaDeNacimiento, String telefono, String correo, String password, String tipoDocumento, String direccion, Municipio codigoDaneMunicipio, boolean presentaEnfermedad, boolean personalSalud, int fase) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -127,6 +132,7 @@ public class Usuario implements Serializable {
         this.codigoDaneMunicipio=codigoDaneMunicipio;
         this.presentaEnfermedad=presentaEnfermedad;
         this.personalSalud=personalSalud;
+        this.fase=fase;
     }
 
     public Integer getIdentificacion() {
@@ -257,6 +263,14 @@ public class Usuario implements Serializable {
 
     public void setPersonalSalud(Boolean personalSalud) {
         this.personalSalud = personalSalud;
+    }
+
+    public int getFase() {
+        return fase;
+    }
+
+    public void setFase(int fase) {
+        this.fase = fase;
     }
     
 }

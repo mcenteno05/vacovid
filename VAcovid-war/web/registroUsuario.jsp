@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -107,7 +108,8 @@
                     </div>
                     <div class="form__content2__campo">
                         <h3>Fecha de nacimiento:</h3>
-                        <input type="date" max="2021-12-31" name="fecha de nacimiento" value="${usuario.email}" required>
+                        <%Date date= new Date();%>
+                        <input type="date" max="<%=(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDay()%>" name="fecha de nacimiento" value="${usuario.fechaDeNacimiento}" required>
                     </div>
 
                     <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/VAcovid" user="admin123" password="admin123" />

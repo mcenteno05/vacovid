@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>Tipo de solicitud</td>
-                    <td><input type="text" name="fase" value="${cita.fase}" readonly onmousedown="return false;"/></td>
+                    <td><input type="text" name="dosis" value="${cita.dosis}" readonly onmousedown="return false;"/></td>
                 </tr>
                 <tr>
                     <td>Fecha</td>
