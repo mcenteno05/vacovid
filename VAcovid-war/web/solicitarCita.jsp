@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -20,7 +21,18 @@
                 </tr>
                 <tr>
                     <td>Fecha</td>
-                    <td><input type="date" name="fecha" value="${cita.fecha}" required /></td>
+                    <%Date date= new Date();
+                    int year=(date.getYear()+1900);
+                    int month=date.getMonth()+1;
+                    int day=date.getDate();
+                    String dateString=year+"-";
+                    
+                    if(month>=1 && month<=9) dateString+="0"+month+"-";
+                    else dateString+=month+"-";
+                    
+                    if(day>=1 && day<=9) dateString+="0"+day;
+                    else dateString+=day;%>
+                    <td><input type="date" name="fecha" value="${cita.fecha}" required min="<%=dateString%>"/></td>
                 </tr>
                 <tr>
                     <td>Hora</td>

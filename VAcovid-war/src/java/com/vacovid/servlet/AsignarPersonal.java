@@ -5,12 +5,12 @@
  */
 package com.vacovid.servlet;
 
-import com.vacovid.entity.Cita;
+import com.vacovid.entity.ReporteDeVacunacion;
 import com.vacovid.session.CitaFacadeLocal;
+import com.vacovid.session.PersonalFacadeLocal;
+import com.vacovid.session.ReporteDeVacunacionFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,12 +23,27 @@ import javax.servlet.http.HttpSession;
  *
  * @author JEFRY
  */
-@WebServlet(name = "ConsultarPacientes", urlPatterns = {"/ConsultarPacientes"})
-public class ConsultarPacientes extends HttpServlet {
+@WebServlet(name = "AsignarPersonal", urlPatterns = {"/AsignarPersonal"})
+public class AsignarPersonal extends HttpServlet {
+
+    @EJB
+    private PersonalFacadeLocal personalFacade;
 
     @EJB
     private CitaFacadeLocal citaFacade;
 
+    @EJB
+    private ReporteDeVacunacionFacadeLocal reporteDeVacunacionFacade;
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,54 +52,43 @@ public class ConsultarPacientes extends HttpServlet {
             HttpSession objsession = request.getSession(false);
             String usuario = (String)objsession.getAttribute("usuario1");
             
-            ArrayList<Cita> lista= new ArrayList();
+            Integer paciente = Integer.parseInt(request.getParameter("paciente"));
+            Integer personal = Integer.parseInt(request.getParameter("personal"));
             
-            
-            if (request.getParameter("action").equals("Consultar Pacientes sin vacunar por fase")) 
+            if (request.getParameter("action").equals("Asignar")) 
             {
-                for (Cita cita : citaFacade.findAll()) 
+                ReporteDeVacunacion rp= new ReporteDeVacunacion(citaFacade.find(paciente), personalFacade.find(personal));
+                int c=0;
+                
+                for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) 
                 {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())>=0)  
+                    if (r.getIdCita().getCitaid()==paciente) 
                     {
-                        lista.add(cita);
+                        c=1;
+                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"El paciente ya tiene un personal asignado\");\n" + "</script>");
+                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarPersonal.jsp\" />");
+                        break;
+                    }
+                    if (Integer.parseInt(r.getIdCita().getHora().split(":")[0])==Integer.parseInt(citaFacade.find(paciente).getHora().split(":")[0])
+                       && Math.abs(Integer.parseInt(r.getIdCita().getHora().split(":")[1]))-Integer.parseInt(citaFacade.find(paciente).getHora().split(":")[1])>=30) 
+                    {
+                        c=1;
+                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"Hora no válida\");\n" + "</script>");
+                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarPersonal.jsp\" />");
+                        break;
                     }
                 }
-            }
-            else if (request.getParameter("action").equals("Consultar Pacientes vacunados")) 
-            {
-                for (Cita cita : citaFacade.findAll()) 
+                if(c==0)
                 {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())<=0)  
-                    {
-                        lista.add(cita);
-                    }
+                    reporteDeVacunacionFacade.create(rp);
+                    out.print("Personal asignado correctamente");
                 }
             }
-            else if (request.getParameter("action").equals("Consultar Pacientes por vacunar segunda dosis")) 
-            {
-                for (Cita cita : citaFacade.findAll()) 
-                {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())>=0 && cita.getDosis()==2)  
-                    {
-                        lista.add(cita);
-                    }
-                }
-            }
-            if (lista.size() != 0) 
-            {
-                request.setAttribute("allCitas", lista);
-                request.getRequestDispatcher("consultarPacientes.jsp").forward(request, response);
-            }
-            
-            
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsultarPacientes</title>");            
+            out.println("<title>Servlet AsignarPersonal</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("</body>");

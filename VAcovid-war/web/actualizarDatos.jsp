@@ -24,7 +24,7 @@
                 </tr>
 
                         <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
-                                   url = "jdbc:derby://localhost:1527/VAcovid"
+                                   url = "jdbc:derby://localhost:1527/vacovid"
                                    user = "admin123"  password = "admin123"/>
                 <tr>
                     <td>Departamento</td>

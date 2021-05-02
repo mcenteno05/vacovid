@@ -18,6 +18,7 @@
             
             <h1>Consultar pacientes</h1>
                 <table border="1">
+                    <th>Fase</th>
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Tipo de documento</th>
@@ -28,19 +29,22 @@
                     <th>Nombre Sitio</th>
                     <c:forEach var = "row" items = "${allCitas}">
                         <tr>
+                            <td>${row.identificacionUsuario.fase}</td>
                             <td>${row.identificacionUsuario.apellido}</td>
                             <td>${row.identificacionUsuario.nombre}</td>
                             <td>${row.identificacionUsuario.tipoDocumento}</td>
                             <td>${row.identificacionUsuario.identificacion}</td>
-                            <td>${row.fase}</td>
+                            <td>${row.dosis}</td>
                             <td>${row.fecha}</td>
                             <td>${row.entidadSalud}</td>
                             <td>${row.idSitio.nombre}</td>
                         </tr>
                     </c:forEach> 
                 </table>
-                    <input type="submit" name="action" value="Consultar Pacientes sin vacunar" />
+                    <input type="submit" name="action" value="Consultar Pacientes sin vacunar por fase" />
+                    <input type="submit" name="action" value="Consultar Pacientes por vacunar segunda dosis" />
                     <input type="submit" name="action" value="Consultar Pacientes vacunados" />
+                    
                 
         </form>
     </body>

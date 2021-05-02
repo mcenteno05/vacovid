@@ -108,11 +108,21 @@
                     </div>
                     <div class="form__content2__campo">
                         <h3>Fecha de nacimiento:</h3>
-                        <%Date date= new Date();%>
-                        <input type="date" max="<%=(date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDay()%>" name="fecha de nacimiento" value="${usuario.fechaDeNacimiento}" required>
+                        <%Date date= new Date();
+                        int year=(date.getYear()+1900);
+                        int month=date.getMonth()+1;
+                        int day=date.getDate();
+                        String dateString=year+"-";
+                    
+                        if(month>=1 && month<=9) dateString+="0"+month+"-";
+                        else dateString+=month+"-";
+                    
+                        if(day>=1 && day<=9) dateString+="0"+day;
+                        else dateString+=day;%>
+                        <input type="date" max="<%=dateString%>" name="fecha de nacimiento" value="${usuario.fechaDeNacimiento}" required>
                     </div>
 
-                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/VAcovid" user="admin123" password="admin123" />
+                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
 
                     <div class="form__content2__campo">
                         <h3>Ciudad/Municipio:</h3>

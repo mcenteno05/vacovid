@@ -6,7 +6,6 @@
 package com.vacovid.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,8 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReporteDeVacunacion.findAll", query = "SELECT r FROM ReporteDeVacunacion r"),
     @NamedQuery(name = "ReporteDeVacunacion.findByReporteid", query = "SELECT r FROM ReporteDeVacunacion r WHERE r.reporteid = :reporteid"),
-    @NamedQuery(name = "ReporteDeVacunacion.findByFecha", query = "SELECT r FROM ReporteDeVacunacion r WHERE r.fecha = :fecha"),
-    @NamedQuery(name = "ReporteDeVacunacion.findByHora", query = "SELECT r FROM ReporteDeVacunacion r WHERE r.hora = :hora"),
     @NamedQuery(name = "ReporteDeVacunacion.findByBrazo", query = "SELECT r FROM ReporteDeVacunacion r WHERE r.brazo = :brazo")})
 public class ReporteDeVacunacion implements Serializable {
 
@@ -45,19 +39,7 @@ public class ReporteDeVacunacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "REPORTEID")
     private Integer reporteid;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "HORA")
-    private String hora;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "BRAZO")
     private String brazo;
     @JoinColumn(name = "ID_CITA", referencedColumnName = "CITAID")
@@ -70,18 +52,12 @@ public class ReporteDeVacunacion implements Serializable {
     public ReporteDeVacunacion() {
     }
 
-    public ReporteDeVacunacion(Integer reporteid) {
-        this.reporteid = reporteid;
-    }
-
-    public ReporteDeVacunacion(Integer reporteid, Date fecha, String hora, String brazo, Cita idCita, Personal identificacionPersonal) {
-        this.reporteid = reporteid;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.brazo = brazo;
+    public ReporteDeVacunacion(Cita idCita, Personal identificacionPersonal) {
         this.idCita = idCita;
         this.identificacionPersonal = identificacionPersonal;
     }
+
+   
 
     public Integer getReporteid() {
         return reporteid;
@@ -89,22 +65,6 @@ public class ReporteDeVacunacion implements Serializable {
 
     public void setReporteid(Integer reporteid) {
         this.reporteid = reporteid;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
     }
 
     public String getBrazo() {

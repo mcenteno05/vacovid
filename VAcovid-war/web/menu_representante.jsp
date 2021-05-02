@@ -31,6 +31,9 @@
         <form action="http://localhost:8080/VAcovid-war/consultarPacientes.jsp">
             <input type="submit" value="Ir a consultar pacientes" />
         </form>
+        <form action="http://localhost:8080/VAcovid-war/asignarPersonal.jsp">
+            <input type="submit" value="Ir a asignar personal de vacunación" />
+        </form>
 
         
     </body>
