@@ -27,16 +27,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JEFRY
  */
 @Entity
-@Table(name = "VACUNA")
+@Table(name = "VACUNA_RECIBIDA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Vacuna.findAll", query = "SELECT v FROM Vacuna v"),
-    @NamedQuery(name = "Vacuna.findByVacunaid", query = "SELECT v FROM Vacuna v WHERE v.vacunaid = :vacunaid"),
-    @NamedQuery(name = "Vacuna.findByNombre", query = "SELECT v FROM Vacuna v WHERE v.nombre = :nombre"),
-    @NamedQuery(name = "Vacuna.findByFechaDeVencimiento", query = "SELECT v FROM Vacuna v WHERE v.fechaDeVencimiento = :fechaDeVencimiento"),
-    @NamedQuery(name = "Vacuna.findByCantidad", query = "SELECT v FROM Vacuna v WHERE v.cantidad = :cantidad"),
-    @NamedQuery(name = "Vacuna.findByLote", query = "SELECT v FROM Vacuna v WHERE v.lote = :lote")})
-public class Vacuna implements Serializable {
+    @NamedQuery(name = "VacunaRecibida.findAll", query = "SELECT v FROM VacunaRecibida v"),
+    @NamedQuery(name = "VacunaRecibida.findByVacunaid", query = "SELECT v FROM VacunaRecibida v WHERE v.vacunaid = :vacunaid"),
+    @NamedQuery(name = "VacunaRecibida.findByNombre", query = "SELECT v FROM VacunaRecibida v WHERE v.nombre = :nombre"),
+    @NamedQuery(name = "VacunaRecibida.findByFechaDeVencimiento", query = "SELECT v FROM VacunaRecibida v WHERE v.fechaDeVencimiento = :fechaDeVencimiento"),
+    @NamedQuery(name = "VacunaRecibida.findByCantidad", query = "SELECT v FROM VacunaRecibida v WHERE v.cantidad = :cantidad"),
+    @NamedQuery(name = "VacunaRecibida.findByLote", query = "SELECT v FROM VacunaRecibida v WHERE v.lote = :lote")})
+public class VacunaRecibida implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,24 +62,24 @@ public class Vacuna implements Serializable {
     @NotNull
     @Column(name = "LOTE")
     private int lote;
-    @JoinColumn(name = "ID_INVENTARIO_NACIONAL", referencedColumnName = "INVENTARIOID")
+    @JoinColumn(name = "ID_INVENTARIO_VACUNACION", referencedColumnName = "INVENTARIOID")
     @ManyToOne(optional = false)
-    private InventarioNacional idInventarioNacional;
+    private InventarioDeVacunacion idInventarioVacunacion;
 
-    public Vacuna() {
+    public VacunaRecibida() {
     }
 
-    public Vacuna(Integer vacunaid) {
+    public VacunaRecibida(Integer vacunaid) {
         this.vacunaid = vacunaid;
     }
 
-    public Vacuna(Integer vacunaid, String nombre, Date fechaDeVencimiento, int cantidad, int lote, InventarioNacional idInventarioNacional) {
+    public VacunaRecibida(Integer vacunaid, String nombre, Date fechaDeVencimiento, int cantidad, int lote, InventarioDeVacunacion idInventarioVacunacion) {
         this.vacunaid = vacunaid;
         this.nombre = nombre;
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.cantidad = cantidad;
         this.lote = lote;
-        this.idInventarioNacional = idInventarioNacional;
+        this.idInventarioVacunacion = idInventarioVacunacion;
     }
 
     public Integer getVacunaid() {
@@ -122,12 +122,12 @@ public class Vacuna implements Serializable {
         this.lote = lote;
     }
 
-    public InventarioNacional getIdInventarioNacional() {
-        return idInventarioNacional;
+    public InventarioDeVacunacion getIdInventarioVacunacion() {
+        return idInventarioVacunacion;
     }
 
-    public void setIdInventarioNacional(InventarioNacional idInventarioNacional) {
-        this.idInventarioNacional = idInventarioNacional;
+    public void setIdInventarioVacunacion(InventarioDeVacunacion idInventarioVacunacion) {
+        this.idInventarioVacunacion = idInventarioVacunacion;
     }
 
     @Override
@@ -140,10 +140,10 @@ public class Vacuna implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Vacuna)) {
+        if (!(object instanceof VacunaRecibida)) {
             return false;
         }
-        Vacuna other = (Vacuna) object;
+        VacunaRecibida other = (VacunaRecibida) object;
         if ((this.vacunaid == null && other.vacunaid != null) || (this.vacunaid != null && !this.vacunaid.equals(other.vacunaid))) {
             return false;
         }
@@ -152,7 +152,7 @@ public class Vacuna implements Serializable {
 
     @Override
     public String toString() {
-        return "com.vacovid.entity.Vacuna[ vacunaid=" + vacunaid + " ]";
+        return "com.vacovid.entity.VacunaRecibida[ vacunaid=" + vacunaid + " ]";
     }
     
 }

@@ -8,6 +8,7 @@ package com.vacovid.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,14 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "InventarioDeVacunacion.findAll", query = "SELECT i FROM InventarioDeVacunacion i"),
-    @NamedQuery(name = "InventarioDeVacunacion.findByInventarioid", query = "SELECT i FROM InventarioDeVacunacion i WHERE i.inventarioid = :inventarioid"),
-    @NamedQuery(name = "InventarioDeVacunacion.findByCantidad", query = "SELECT i FROM InventarioDeVacunacion i WHERE i.cantidad = :cantidad"),
-    @NamedQuery(name = "InventarioDeVacunacion.findByLote", query = "SELECT i FROM InventarioDeVacunacion i WHERE i.lote = :lote")})
+    @NamedQuery(name = "InventarioDeVacunacion.findByInventarioid", query = "SELECT i FROM InventarioDeVacunacion i WHERE i.inventarioid = :inventarioid")})
 public class InventarioDeVacunacion implements Serializable {
-
-    @JoinColumn(name = "IDENTIFICACION_DISTRIBUIDOR", referencedColumnName = "IDENTIFICACION")
-    @ManyToOne(optional = false)
-    private Distribuidor identificacionDistribuidor;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,16 +40,11 @@ public class InventarioDeVacunacion implements Serializable {
     @NotNull
     @Column(name = "INVENTARIOID")
     private Integer inventarioid;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CANTIDAD")
-    private int cantidad;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "LOTE")
-    private int lote;
-    @OneToMany(mappedBy = "idInventario")
-    private Collection<Vacuna> vacunaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInventarioVacunacion")
+    private Collection<VacunaRecibida> vacunaRecibidaCollection;
+    @JoinColumn(name = "ID_INVENTARIO_NACIONAL", referencedColumnName = "INVENTARIOID")
+    @ManyToOne(optional = false)
+    private InventarioNacional idInventarioNacional;
     @JoinColumn(name = "ID_SITIO", referencedColumnName = "SITIOID")
     @ManyToOne(optional = false)
     private SitioVacunacion idSitio;
@@ -62,18 +52,11 @@ public class InventarioDeVacunacion implements Serializable {
     public InventarioDeVacunacion() {
     }
 
-    public InventarioDeVacunacion(Integer inventarioid) {
+    public InventarioDeVacunacion(Integer inventarioid, InventarioNacional idInventarioNacional, SitioVacunacion idSitio) {
         this.inventarioid = inventarioid;
-    }
-
-    public InventarioDeVacunacion(Distribuidor identificacionDistribuidor, Integer inventarioid, int cantidad, int lote, SitioVacunacion idSitio) {
-        this.identificacionDistribuidor = identificacionDistribuidor;
-        this.inventarioid = inventarioid;
-        this.cantidad = cantidad;
-        this.lote = lote;
+        this.idInventarioNacional = idInventarioNacional;
         this.idSitio = idSitio;
     }
-
 
     public Integer getInventarioid() {
         return inventarioid;
@@ -83,29 +66,21 @@ public class InventarioDeVacunacion implements Serializable {
         this.inventarioid = inventarioid;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public int getLote() {
-        return lote;
-    }
-
-    public void setLote(int lote) {
-        this.lote = lote;
-    }
-
     @XmlTransient
-    public Collection<Vacuna> getVacunaCollection() {
-        return vacunaCollection;
+    public Collection<VacunaRecibida> getVacunaRecibidaCollection() {
+        return vacunaRecibidaCollection;
     }
 
-    public void setVacunaCollection(Collection<Vacuna> vacunaCollection) {
-        this.vacunaCollection = vacunaCollection;
+    public void setVacunaRecibidaCollection(Collection<VacunaRecibida> vacunaRecibidaCollection) {
+        this.vacunaRecibidaCollection = vacunaRecibidaCollection;
+    }
+
+    public InventarioNacional getIdInventarioNacional() {
+        return idInventarioNacional;
+    }
+
+    public void setIdInventarioNacional(InventarioNacional idInventarioNacional) {
+        this.idInventarioNacional = idInventarioNacional;
     }
 
     public SitioVacunacion getIdSitio() {
@@ -139,14 +114,6 @@ public class InventarioDeVacunacion implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.InventarioDeVacunacion[ inventarioid=" + inventarioid + " ]";
-    }
-
-    public Distribuidor getIdentificacionDistribuidor() {
-        return identificacionDistribuidor;
-    }
-
-    public void setIdentificacionDistribuidor(Distribuidor identificacionDistribuidor) {
-        this.identificacionDistribuidor = identificacionDistribuidor;
     }
     
 }

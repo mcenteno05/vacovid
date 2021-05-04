@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Distribuidor.findByPassword", query = "SELECT d FROM Distribuidor d WHERE d.password = :password")})
 public class Distribuidor implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "identificacionDistribuidor")
+    private Collection<InventarioNacional> inventarioNacionalCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -186,6 +189,15 @@ public class Distribuidor implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.Distribuidor[ identificacion=" + identificacion + " ]";
+    }
+
+    @XmlTransient
+    public Collection<InventarioNacional> getInventarioNacionalCollection() {
+        return inventarioNacionalCollection;
+    }
+
+    public void setInventarioNacionalCollection(Collection<InventarioNacional> inventarioNacionalCollection) {
+        this.inventarioNacionalCollection = inventarioNacionalCollection;
     }
     
 }
