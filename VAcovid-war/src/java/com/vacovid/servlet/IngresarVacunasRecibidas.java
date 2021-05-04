@@ -11,7 +11,6 @@ import com.vacovid.entity.Vacuna;
 import com.vacovid.session.DistribuidorFacadeLocal;
 import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
 import com.vacovid.session.RepresentanteFacadeLocal;
-import com.vacovid.session.SitioVacunacionFacadeLocal;
 import com.vacovid.session.VacunaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -98,11 +97,12 @@ public class IngresarVacunasRecibidas extends HttpServlet {
             
             if (request.getParameter("action").equals("Registrar")) 
             {
+                /*
                 InventarioDeVacunacion inventario = new InventarioDeVacunacion(distribuidorFacade.find(identificacionDistribuidor),idinventario, cantidad, lote, sv);
                 inventarioDeVacunacionFacade.create(inventario);
 
                 Vacuna vacuna = new Vacuna(idvacuna, nombre, date, inventario);
-                vacunaFacade.create(vacuna);
+                vacunaFacade.create(vacuna);*/
             }
             
             

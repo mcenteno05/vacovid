@@ -81,8 +81,7 @@ public class Distribuidor implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "PASSWORD")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "identificacionDistribuidor")
-    private Collection<InventarioDeVacunacion> inventarioDeVacunacionCollection;
+   
 
     public Distribuidor() {
     }
@@ -156,15 +155,7 @@ public class Distribuidor implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @XmlTransient
-    public Collection<InventarioDeVacunacion> getInventarioDeVacunacionCollection() {
-        return inventarioDeVacunacionCollection;
-    }
-
-    public void setInventarioDeVacunacionCollection(Collection<InventarioDeVacunacion> inventarioDeVacunacionCollection) {
-        this.inventarioDeVacunacionCollection = inventarioDeVacunacionCollection;
-    }
+  
 
     @Override
     public int hashCode() {

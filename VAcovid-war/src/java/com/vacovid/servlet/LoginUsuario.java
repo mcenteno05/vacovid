@@ -5,6 +5,7 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.session.DistribuidorFacadeLocal;
 import com.vacovid.session.PersonalFacadeLocal;
 import com.vacovid.session.RepresentanteFacadeLocal;
 import com.vacovid.session.UsuarioFacadeLocal;
@@ -24,6 +25,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LoginUsuario", urlPatterns = {"/LoginUsuario"})
 public class LoginUsuario extends HttpServlet {
+
+    @EJB
+    private DistribuidorFacadeLocal distribuidorFacade;
 
     @EJB
     private PersonalFacadeLocal personalFacade;
@@ -62,6 +66,10 @@ public class LoginUsuario extends HttpServlet {
             else if (request.getParameter("rol").equals("Personal de vacunacion")) 
             {
                 loginRep(identificacion, contra, request, response);
+            }
+            else if (request.getParameter("rol").equals("Distribuidor de vacunas")) 
+            {
+                loginDis(identificacion, contra, request, response);
             }
             
             
@@ -140,6 +148,31 @@ public class LoginUsuario extends HttpServlet {
                     HttpSession objsession = request.getSession(true);
                     objsession.setAttribute("usuario1", Integer.toString(identificacion));
                     response.sendRedirect("menu.jsp");
+                    //out.println("Login Exitoso");
+                }
+                else
+                {
+                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseña incorrecta\");\n" + "</script>");
+                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
+                }
+            }
+        }
+    }
+    
+    public void loginDis(Integer identificacion, String contra, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        try (PrintWriter out = response.getWriter()) {
+        if (distribuidorFacade.find(identificacion)==null) 
+            {
+                 out.println("<script type=\"text/javascript\">\n" + "  alert(\"Usuario no registrado\");\n" + "</script>");
+                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/loginUsuario.jsp\" />");
+            }
+            else
+            {
+                if (distribuidorFacade.find(identificacion).getPassword().equals(contra)) 
+                {
+                    HttpSession objsession = request.getSession(true);
+                    objsession.setAttribute("usuario1", Integer.toString(identificacion));
+                    response.sendRedirect("menu_representante.jsp");
                     //out.println("Login Exitoso");
                 }
                 else
