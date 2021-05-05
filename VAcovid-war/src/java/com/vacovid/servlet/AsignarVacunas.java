@@ -6,6 +6,7 @@
 package com.vacovid.servlet;
 
 import com.vacovid.entity.InventarioDeVacunacion;
+import com.vacovid.entity.Vacuna;
 import com.vacovid.entity.VacunaRecibida;
 import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
 import com.vacovid.session.VacunaFacadeLocal;
@@ -73,8 +74,13 @@ public class AsignarVacunas extends HttpServlet {
             {
                 InventarioDeVacunacion inventario = inventarioDeVacunacionFacade.find(idinventario);
                 
-                VacunaRecibida vacuna = new VacunaRecibida(vacunaFacade.find(idvacuna).getNombre(),vacunaFacade.find(idvacuna).getFechaDeVencimiento(), cantidad, vacunaFacade.find(idvacuna).getLote(), inventario);
-                vacunaRecibidaFacade.create(vacuna);
+                Vacuna vacuna = vacunaFacade.find(idvacuna);
+                
+                VacunaRecibida vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
+                vacunaRecibidaFacade.create(vacunarecibida);
+                
+                vacuna.setCantidad(vacuna.getCantidad()-cantidad);
+                vacunaFacade.edit(vacuna);
             }
             
             
