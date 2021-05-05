@@ -5,40 +5,31 @@
  */
 package com.vacovid.servlet;
 
-import com.vacovid.entity.InventarioDeVacunacion;
+import com.vacovid.entity.InventarioNacional;
 import com.vacovid.entity.Vacuna;
-import com.vacovid.entity.VacunaRecibida;
-import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
+import com.vacovid.session.InventarioNacionalFacadeLocal;
 import com.vacovid.session.VacunaFacadeLocal;
-import com.vacovid.session.VacunaRecibidaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Cristian Duarte
  */
-@WebServlet(name = "AsignarVacunas", urlPatterns = {"/AsignarVacunas"})
-public class AsignarVacunas extends HttpServlet {
+@WebServlet(name = "ActualizarInventarioNacional", urlPatterns = {"/ActualizarInventarioNacional"})
+public class ActualizarInventarioNacional extends HttpServlet {
 
     @EJB
     private VacunaFacadeLocal vacunaFacade;
 
     @EJB
-    private VacunaRecibidaFacadeLocal vacunaRecibidaFacade;
-
-    @EJB
-    private InventarioDeVacunacionFacadeLocal inventarioDeVacunacionFacade;
+    private InventarioNacionalFacadeLocal inventarioNacionalFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,48 +39,43 @@ public class AsignarVacunas extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            
-            HttpSession objsession = request.getSession(false);
-            String usuario1 = (String) objsession.getAttribute("usuario1");
-            int distribuidor = Integer.parseInt(usuario1);
 
-            int idSitio = Integer.parseInt(request.getParameter("sitios de vacunacion"));
-            int idinventarioNacional= Integer.parseInt(request.getParameter("idinventarionacional"));
-            int idvacuna= Integer.parseInt(request.getParameter("vacuna"));
-            int cantidad= Integer.parseInt(request.getParameter("cantidad"));
-            int idinventario = Integer.parseInt(request.getParameter("idinventario"));
-          
-            
-            if (request.getParameter("action").equals("Asignar vacunas")) 
-            {
-                InventarioDeVacunacion inventario = inventarioDeVacunacionFacade.find(idinventario);
+            int idvacuna = Integer.parseInt(request.getParameter("vacuna"));
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+
+            if (request.getParameter("action").equals("Actualizar")) {
                 
                 Vacuna vacuna = vacunaFacade.find(idvacuna);
-                
-                VacunaRecibida vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
-                vacunaRecibidaFacade.create(vacunarecibida);
-                
-                vacuna.setCantidad(vacuna.getCantidad()-cantidad);
-                vacunaFacade.edit(vacuna);
-                
-                
+
+                if (request.getParameter("tipo").equals("Agregar vacunas")) {
+                    vacuna.setCantidad(vacuna.getCantidad() + cantidad);
+                    vacunaFacade.edit(vacuna);
+                }
+                if (request.getParameter("tipo").equals("Quitar vacunas")) {
+
+                    if (vacuna.getCantidad() >= cantidad) {
+                        vacuna.setCantidad(vacuna.getCantidad() - cantidad);
+                        vacunaFacade.edit(vacuna);
+                    } else {
+                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas retiradas son mayores a las ya existentes,"
+                                + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
+                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/actualizarInventarioNacional.jsp\" />");
+                    }
+                }
             }
-            
-            
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsignarVacunas</title>");            
+            out.println("<title>Servlet ActualizarInventarioNacional</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AsignarVacunas at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ActualizarInventarioNacional at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -107,11 +93,7 @@ public class AsignarVacunas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(AsignarVacunas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -125,11 +107,7 @@ public class AsignarVacunas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(AsignarVacunas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
