@@ -172,7 +172,7 @@ public class LoginUsuario extends HttpServlet {
                 {
                     HttpSession objsession = request.getSession(true);
                     objsession.setAttribute("usuario1", Integer.toString(identificacion));
-                    response.sendRedirect("menu_representante.jsp");
+                    response.sendRedirect("menu_distribuidor.jsp");
                     //out.println("Login Exitoso");
                 }
                 else

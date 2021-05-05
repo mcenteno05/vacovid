@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author JEFRY
+ * @author Cristian Duarte
  */
 @Entity
 @Table(name = "VACUNA_RECIBIDA")
@@ -40,8 +42,8 @@ public class VacunaRecibida implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "VACUNAID")
     private Integer vacunaid;
     @Basic(optional = false)
@@ -73,8 +75,7 @@ public class VacunaRecibida implements Serializable {
         this.vacunaid = vacunaid;
     }
 
-    public VacunaRecibida(Integer vacunaid, String nombre, Date fechaDeVencimiento, int cantidad, int lote, InventarioDeVacunacion idInventarioVacunacion) {
-        this.vacunaid = vacunaid;
+    public VacunaRecibida(String nombre, Date fechaDeVencimiento, int cantidad, int lote, InventarioDeVacunacion idInventarioVacunacion) {
         this.nombre = nombre;
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.cantidad = cantidad;
@@ -82,6 +83,7 @@ public class VacunaRecibida implements Serializable {
         this.idInventarioVacunacion = idInventarioVacunacion;
     }
 
+    
     public Integer getVacunaid() {
         return vacunaid;
     }

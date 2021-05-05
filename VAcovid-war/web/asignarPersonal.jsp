@@ -43,7 +43,6 @@
                                 <option value="${row.citaid}">${row.nombres}</option>
                         </c:forEach>
                         </select>
-                            
                     </td>
                 </tr>
                 <tr>
