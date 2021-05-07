@@ -6,9 +6,12 @@
 package com.vacovid.servlet;
 
 import com.vacovid.entity.InventarioDeVacunacion;
+import com.vacovid.entity.SitioVacunacion;
 import com.vacovid.entity.Vacuna;
 import com.vacovid.entity.VacunaRecibida;
 import com.vacovid.session.InventarioDeVacunacionFacadeLocal;
+import com.vacovid.session.InventarioNacionalFacadeLocal;
+import com.vacovid.session.SitioVacunacionFacadeLocal;
 import com.vacovid.session.VacunaFacadeLocal;
 import com.vacovid.session.VacunaRecibidaFacadeLocal;
 import java.io.IOException;
@@ -30,6 +33,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "AsignarVacunas", urlPatterns = {"/AsignarVacunas"})
 public class AsignarVacunas extends HttpServlet {
+
+    @EJB
+    private InventarioNacionalFacadeLocal inventarioNacionalFacade;
+
+    @EJB
+    private SitioVacunacionFacadeLocal sitioVacunacionFacade;
 
     @EJB
     private VacunaFacadeLocal vacunaFacade;
@@ -54,42 +63,86 @@ public class AsignarVacunas extends HttpServlet {
             throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            
+
             HttpSession objsession = request.getSession(false);
             String usuario1 = (String) objsession.getAttribute("usuario1");
             int distribuidor = Integer.parseInt(usuario1);
 
             int idSitio = Integer.parseInt(request.getParameter("sitios de vacunacion"));
-            int idinventarioNacional= Integer.parseInt(request.getParameter("idinventarionacional"));
-            int idvacuna= Integer.parseInt(request.getParameter("vacuna"));
-            int cantidad= Integer.parseInt(request.getParameter("cantidad"));
-            int idinventario = Integer.parseInt(request.getParameter("idinventario"));
-          
-            
-            if (request.getParameter("action").equals("Asignar vacunas")) 
-            {
-                InventarioDeVacunacion inventario = inventarioDeVacunacionFacade.find(idinventario);
-                
-                Vacuna vacuna = vacunaFacade.find(idvacuna);
-                
-                VacunaRecibida vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
-                vacunaRecibidaFacade.create(vacunarecibida);
-                
-                vacuna.setCantidad(vacuna.getCantidad()-cantidad);
-                vacunaFacade.edit(vacuna);
-                
-                
+            int idvacuna = Integer.parseInt(request.getParameter("vacuna"));
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            if (cantidad > 0) {
+                if (request.getParameter("action").equals("Asignar vacunas")) {
+
+                    int count = 0, c = 0;
+                    VacunaRecibida vacunarecibida = null;
+                    Vacuna vacuna = vacunaFacade.find(idvacuna);
+                    InventarioDeVacunacion inventario;
+                    SitioVacunacion sitio = sitioVacunacionFacade.find(idSitio);
+                    
+                    //busca los inventarios existentes
+                    for (InventarioDeVacunacion ob : sitio.getInventarioDeVacunacionCollection()) {
+                        
+                        //Compara los id de sitio con el seleccionado
+                        if (ob.getIdSitio().getSitioid() == idSitio) {
+                            inventario = inventarioDeVacunacionFacade.find(ob.getInventarioid());
+                        
+                            //Verifica que las cantidades sean menores o iguales a las existentes en el inventario nacional
+                            if (vacuna.getCantidad() >= cantidad) {
+                                //Busca las vacunas actuales
+                                for (VacunaRecibida v : ob.getVacunaRecibidaCollection()) {
+                                    //Si las vacuna tiene el mismo nombre, fecha y lote se sobreescribe la cantidad actual    
+                                    if (v.getNombre().equals(vacuna.getNombre()) && v.getFechaDeVencimiento().equals(vacuna.getFechaDeVencimiento()) && v.getLote() == vacuna.getLote()) {
+                                        v.setCantidad(v.getCantidad() + cantidad);
+                                        vacunaRecibidaFacade.edit(v);
+                                        c = 1;
+                                        break;
+                                    }
+                                }
+                                vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
+                                vacuna.setCantidad(vacuna.getCantidad() - cantidad);
+                                count = 1;
+                                break;
+                            } else {
+                                out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas asignadas son mayores a las ya existentes en el inventario nacional,"
+                                        + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
+                                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
+                                break;
+                            }
+                        }
+                    }
+                    //Esto sucede cuando no encuentra un inventario asociado al sitio de vacunacion seleccionado por tanto se le crea uno
+                    if (count == 0) {
+                       
+                        if (vacuna.getCantidad() >= cantidad) {
+                            inventario = new InventarioDeVacunacion(inventarioNacionalFacade.find(1), sitio);
+                            inventarioDeVacunacionFacade.create(inventario);
+                            vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
+                            vacuna.setCantidad(vacuna.getCantidad() - cantidad);
+                        } else {
+                            out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas asignadas son mayores a las ya existentes en el inventario nacional,"
+                                    + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
+                            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
+                        }
+                    }
+                    //
+                    if (c == 0) {
+                        vacunaRecibidaFacade.create(vacunarecibida);
+                    }
+                    vacunaFacade.edit(vacuna);
+                }
+            } else {
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"La Cantidad de vacunas debe ser mayor a 0, por favor digite una cantidad valida\" ); \n" + "</script>");
+                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
             }
-            
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsignarVacunas</title>");            
+            out.println("<title>Vacunas asignadas correctamente</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AsignarVacunas at " + request.getContextPath() + "</h1>");
+            out.println("<script type=\"text/javascript\">\n" + "  alert(\" Vacunas asignadas correctamente\" ); \n" + "</script>");
+            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/menu_distribuidor.jsp\" />");
             out.println("</body>");
             out.println("</html>");
         }

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,13 +20,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JEFRY
+ * @author Cristian Duarte
  */
 @Entity
 @Table(name = "INVENTARIO_DE_VACUNACION")
@@ -36,26 +36,33 @@ public class InventarioDeVacunacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "INVENTARIOID")
     private Integer inventarioid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInventarioVacunacion")
-    private Collection<VacunaRecibida> vacunaRecibidaCollection;
     @JoinColumn(name = "ID_INVENTARIO_NACIONAL", referencedColumnName = "INVENTARIOID")
     @ManyToOne(optional = false)
     private InventarioNacional idInventarioNacional;
     @JoinColumn(name = "ID_SITIO", referencedColumnName = "SITIOID")
     @ManyToOne(optional = false)
     private SitioVacunacion idSitio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInventarioVacunacion")
+    private Collection<VacunaRecibida> vacunaRecibidaCollection;
 
+   
+
+    public InventarioDeVacunacion(InventarioNacional idInventarioNacional, SitioVacunacion idSitio) {
+        this.idInventarioNacional = idInventarioNacional;
+        this.idSitio = idSitio;
+    }
+
+    
+    
     public InventarioDeVacunacion() {
     }
 
-    public InventarioDeVacunacion(Integer inventarioid, InventarioNacional idInventarioNacional, SitioVacunacion idSitio) {
+    public InventarioDeVacunacion(Integer inventarioid) {
         this.inventarioid = inventarioid;
-        this.idInventarioNacional = idInventarioNacional;
-        this.idSitio = idSitio;
     }
 
     public Integer getInventarioid() {
@@ -64,15 +71,6 @@ public class InventarioDeVacunacion implements Serializable {
 
     public void setInventarioid(Integer inventarioid) {
         this.inventarioid = inventarioid;
-    }
-
-    @XmlTransient
-    public Collection<VacunaRecibida> getVacunaRecibidaCollection() {
-        return vacunaRecibidaCollection;
-    }
-
-    public void setVacunaRecibidaCollection(Collection<VacunaRecibida> vacunaRecibidaCollection) {
-        this.vacunaRecibidaCollection = vacunaRecibidaCollection;
     }
 
     public InventarioNacional getIdInventarioNacional() {
@@ -89,6 +87,14 @@ public class InventarioDeVacunacion implements Serializable {
 
     public void setIdSitio(SitioVacunacion idSitio) {
         this.idSitio = idSitio;
+    }
+    
+     public Collection<VacunaRecibida> getVacunaRecibidaCollection() {
+        return vacunaRecibidaCollection;
+    }
+
+    public void setVacunaRecibidaCollection(Collection<VacunaRecibida> vacunaRecibidaCollection) {
+        this.vacunaRecibidaCollection = vacunaRecibidaCollection;
     }
 
     @Override

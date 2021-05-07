@@ -75,7 +75,8 @@ public class ActualizarInventarioNacional extends HttpServlet {
             out.println("<title>Servlet ActualizarInventarioNacional</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ActualizarInventarioNacional at " + request.getContextPath() + "</h1>");
+            out.println("<script type=\"text/javascript\">\n" + "  alert(\" Inventario nacional actualizado correctamente\" ); \n" + "</script>");
+            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/menu_distribuidor.jsp\" />");
             out.println("</body>");
             out.println("</html>");
         }

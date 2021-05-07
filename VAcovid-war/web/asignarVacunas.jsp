@@ -51,11 +51,6 @@
                 </tr>
 
                 <tr>
-                    <td>ID Inventario Nacional</td>
-                    <td><input type="text" name="idinventarionacional" value="${inventarioNacional.inventarioid}" required /></td>
-                </tr>
-                
-                <tr>
                     <td>Seleccione la vacuna</td>
                     <td>
                         <sql:query var="resultadosVacuna" dataSource="${bd}">
@@ -75,20 +70,11 @@
                         </select>    
                     </td>
                 </tr>
-                
-                <tr>
-                    <td>ID Inventario</td>
-                    <td><input type="text" name="idinventario" value="${inventarioDeVacunacion.inventarioid}" required /></td>
-                </tr>
-                <tr>
-                    <td>ID Vacuna</td>
-                    <td> <input type="text" name="idinventario" value="${inventarioDeVacunacion.inventarioid}" required /></td>
-                </tr>
-                
-                
+
                 <tr>
                     <td>Cantidad</td>
                     <td><input type="text" name="cantidad" value="${vacuna.cantidad}" required/></td>
+               
                 </tr>
                 <tr>
                     <td colspan="2">
