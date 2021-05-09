@@ -86,7 +86,11 @@ public class RegistroUsuario extends HttpServlet {
                     Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud));
                     if (request.getParameter("action").equals("Registrarse")) {
                         usuarioFacade.create(usuario);
-                        out.println("Usuario registrado correctamente");
+                        out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Usuario registrado correctamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/loginUsuario.jsp\"" +
+                                "</script>");
+                        
                     }
                 }
             }else{

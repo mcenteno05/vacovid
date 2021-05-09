@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,19 +42,24 @@ public class CambioContraseña extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-          //se obtiene el usuario 
-          Usuario user = usuarioFacade.find(1000121662);
+            
+          HttpSession objsession = request.getSession(false);
+          String usuario1 = (String) objsession.getAttribute("usuario1");
+          int id_usuario = Integer.parseInt(usuario1);
+          Usuario user = usuarioFacade.find(id_usuario);
           //se verifica que las contraseña actual sea correcta
          
+            System.out.println(request.getParameter("contraActual"));
             if (user.getPassword().equals(request.getParameter("contraActual"))) {
                 //se verifica que las contraseñas ingresadas coincidan
                 if (request.getParameter("contraNueva").equals(request.getParameter("contraConfirmar"))) {
                     //se ajusta la nueva contraseña
                     user.setPassword(request.getParameter("contraNueva"));
                     usuarioFacade.edit(user);
-                    out.println();
-                    out.println("La contraseña ha sido actualizada correctamente");
+                    out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Contraseña Actualizada\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
+                                "</script>");
                 }
                 else{
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"Las contraseñas no coinciden\");\n" + "</script>");

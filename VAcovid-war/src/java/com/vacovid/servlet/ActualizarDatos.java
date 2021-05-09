@@ -70,15 +70,10 @@ public class ActualizarDatos extends HttpServlet {
             //se edita el usuario
             usuarioFacade.edit(user);
             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ActualizarDatos</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("Se han actualizado los datos correctamente");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Datos Actualizados Correctamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
+                                "</script>");
         }
     }
 

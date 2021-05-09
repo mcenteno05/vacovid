@@ -24,6 +24,7 @@
 
 <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -74,10 +75,10 @@
         </nav>
     </header>
 
-    <main class="main__plan__cc">
+    <main class="main__plan">
         <div class="container__usuario plan_logiado">
             <div class="usuario__opcion">
-                <a href=""> <h2>Cambiar contraseña</h2></a>
+                <a href="cambioContraseña.jsp"> <h2>Cambiar contraseña</h2></a>
             </div>
             <div class="usuario__opcion">
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
@@ -87,35 +88,11 @@
             </div>
         </div>
         <div class="main__plan__content">
-            <h1>CAMBIAR CONTRASEÑA</h1>
+            <h1>PLAN DE VACUNACIÓN</h1>
         </div>
     </main>
 
-    <div class="form_contraseña">
-        <form class="form_con" action="./CambioContrase_a" method="POST">
-            <fieldset>
-                <div class="titulo_form">
-                    <h2>Cambio de contraseña</h2>
-                </div>
-                <div class="form__contentCon">
-                    <div class="form__contentCon__campo">
-                        <h3>Contraseña Actual</h3>
-                        <input type="password" name="contraActual" required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Nueva contraseña</h3>
-                        <input type="password" name="contraNueva"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Confirmar nueva contraseña:</h3>
-                        <input type="password" name="contraConfirmar"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <input id="button_cam" type="submit" name="action" value="Enviar" required />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+    <div class="info_plan">
 
     </div>
     <footer>

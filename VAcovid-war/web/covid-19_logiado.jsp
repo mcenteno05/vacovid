@@ -24,6 +24,7 @@
 
 <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -58,7 +59,7 @@
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text" href="#">Contacto</a>
-            </li class="header__nav__item">
+            </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text profile_boton" href="#">
                     <div class="profile">
@@ -74,10 +75,10 @@
         </nav>
     </header>
 
-    <main class="main__plan__cc">
-        <div class="container__usuario plan_logiado">
+    <main class="main__covid">
+        <div class="container__usuario covid-logiado">
             <div class="usuario__opcion">
-                <a href=""> <h2>Cambiar contraseña</h2></a>
+                <a href="cambioContraseña.jsp"> <h2>Cambiar contraseña</h2></a>
             </div>
             <div class="usuario__opcion">
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
@@ -86,36 +87,12 @@
                 <h2>Logout</h2>
             </div>
         </div>
-        <div class="main__plan__content">
-            <h1>CAMBIAR CONTRASEÑA</h1>
+        <div class="main__covid__content">
+            <h1>COVID-19</h1>
         </div>
     </main>
 
-    <div class="form_contraseña">
-        <form class="form_con" action="./CambioContrase_a" method="POST">
-            <fieldset>
-                <div class="titulo_form">
-                    <h2>Cambio de contraseña</h2>
-                </div>
-                <div class="form__contentCon">
-                    <div class="form__contentCon__campo">
-                        <h3>Contraseña Actual</h3>
-                        <input type="password" name="contraActual" required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Nueva contraseña</h3>
-                        <input type="password" name="contraNueva"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Confirmar nueva contraseña:</h3>
-                        <input type="password" name="contraConfirmar"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <input id="button_cam" type="submit" name="action" value="Enviar" required />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+    <div class="info_covid">
 
     </div>
     <footer>

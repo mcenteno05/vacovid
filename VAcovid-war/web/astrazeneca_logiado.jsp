@@ -23,7 +23,7 @@
  %>
 
 <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -58,7 +58,7 @@
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text" href="#">Contacto</a>
-            </li class="header__nav__item">
+            </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text profile_boton" href="#">
                     <div class="profile">
@@ -74,10 +74,10 @@
         </nav>
     </header>
 
-    <main class="main__plan__cc">
-        <div class="container__usuario plan_logiado">
+    <main class="main__astra">
+        <div class="container__usuario astra_logiado">
             <div class="usuario__opcion">
-                <a href=""> <h2>Cambiar contraseña</h2></a>
+                <a href="cambioContraseña.jsp"> <h2>Cambiar contraseña</h2></a>
             </div>
             <div class="usuario__opcion">
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
@@ -86,36 +86,12 @@
                 <h2>Logout</h2>
             </div>
         </div>
-        <div class="main__plan__content">
-            <h1>CAMBIAR CONTRASEÑA</h1>
-        </div>
     </main>
+    <div class="main__astra__logo">
+        <img src="img/astrazeneca.png" alt="Logo Astrazeneca">
+    </div>
 
-    <div class="form_contraseña">
-        <form class="form_con" action="./CambioContrase_a" method="POST">
-            <fieldset>
-                <div class="titulo_form">
-                    <h2>Cambio de contraseña</h2>
-                </div>
-                <div class="form__contentCon">
-                    <div class="form__contentCon__campo">
-                        <h3>Contraseña Actual</h3>
-                        <input type="password" name="contraActual" required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Nueva contraseña</h3>
-                        <input type="password" name="contraNueva"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <h3>Confirmar nueva contraseña:</h3>
-                        <input type="password" name="contraConfirmar"  required />
-                    </div>
-                    <div class="form__contentCon__campo">
-                        <input id="button_cam" type="submit" name="action" value="Enviar" required />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+    <div class="info_astra">
 
     </div>
     <footer>
@@ -126,5 +102,5 @@
             <h4>Copyright @ 2021 VAcovid</h4>
         </div>
     </footer>
-    <script src="js/opciones_usuario.js"></script>
+     <script src="js/opciones_usuario.js"></script>
 </body>
