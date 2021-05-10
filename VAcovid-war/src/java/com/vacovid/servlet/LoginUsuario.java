@@ -65,7 +65,7 @@ public class LoginUsuario extends HttpServlet {
             }
             else if (request.getParameter("rol").equals("Personal de vacunacion")) 
             {
-                loginRep(identificacion, contra, request, response);
+                loginPe(identificacion, contra, request, response);
             }
             else if (request.getParameter("rol").equals("Distribuidor de vacunas")) 
             {
@@ -147,7 +147,7 @@ public class LoginUsuario extends HttpServlet {
                 {
                     HttpSession objsession = request.getSession(true);
                     objsession.setAttribute("usuario1", Integer.toString(identificacion));
-                    response.sendRedirect("menu.jsp");
+                    response.sendRedirect("menu_personal.jsp");
                     //out.println("Login Exitoso");
                 }
                 else

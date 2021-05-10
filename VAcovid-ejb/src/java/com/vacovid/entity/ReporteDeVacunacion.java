@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReporteDeVacunacion.findByBrazo", query = "SELECT r FROM ReporteDeVacunacion r WHERE r.brazo = :brazo")})
 public class ReporteDeVacunacion implements Serializable {
 
+    @Size(max = 50)
+    @Column(name = "VACUNA")
+    private String vacuna;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +56,9 @@ public class ReporteDeVacunacion implements Serializable {
     public ReporteDeVacunacion() {
     }
 
-    public ReporteDeVacunacion(Cita idCita, Personal identificacionPersonal) {
+    public ReporteDeVacunacion(String vacuna, String brazo, Cita idCita, Personal identificacionPersonal) {
+        this.vacuna = vacuna;
+        this.brazo = brazo;
         this.idCita = idCita;
         this.identificacionPersonal = identificacionPersonal;
     }
@@ -114,6 +120,14 @@ public class ReporteDeVacunacion implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.ReporteDeVacunacion[ reporteid=" + reporteid + " ]";
+    }
+
+    public String getVacuna() {
+        return vacuna;
+    }
+
+    public void setVacuna(String vacuna) {
+        this.vacuna = vacuna;
     }
     
 }

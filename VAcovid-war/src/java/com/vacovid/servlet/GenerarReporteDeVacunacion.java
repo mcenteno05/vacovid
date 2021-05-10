@@ -5,10 +5,12 @@
  */
 package com.vacovid.servlet;
 
+import com.vacovid.entity.Cita;
 import com.vacovid.entity.ReporteDeVacunacion;
+import com.vacovid.entity.VacunaRecibida;
 import com.vacovid.session.CitaFacadeLocal;
-import com.vacovid.session.PersonalFacadeLocal;
 import com.vacovid.session.ReporteDeVacunacionFacadeLocal;
+import com.vacovid.session.VacunaRecibidaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,17 +25,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author JEFRY
  */
-@WebServlet(name = "AsignarPersonal", urlPatterns = {"/AsignarPersonal"})
-public class AsignarPersonal extends HttpServlet {
+@WebServlet(name = "GenerarReporteDeVacunacion", urlPatterns = {"/GenerarReporteDeVacunacion"})
+public class GenerarReporteDeVacunacion extends HttpServlet {
 
     @EJB
-    private PersonalFacadeLocal personalFacade;
-
-    @EJB
-    private CitaFacadeLocal citaFacade;
+    private VacunaRecibidaFacadeLocal vacunaRecibidaFacade;
 
     @EJB
     private ReporteDeVacunacionFacadeLocal reporteDeVacunacionFacade;
+
+    @EJB
+    private CitaFacadeLocal citaFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,48 +54,39 @@ public class AsignarPersonal extends HttpServlet {
             HttpSession objsession = request.getSession(false);
             String usuario = (String)objsession.getAttribute("usuario1");
             
-            Integer paciente = Integer.parseInt(request.getParameter("paciente"));
-            Integer personal = Integer.parseInt(request.getParameter("personal"));
+            Integer citaid = Integer.parseInt(request.getParameter("cita"));
+            String brazo = request.getParameter("brazo");
+            Integer vacunaid= Integer.parseInt(request.getParameter("nombreVacuna"));
             
-            if (request.getParameter("action").equals("Asignar")) 
+            if (request.getParameter("action").equals("Generar")) 
             {
-                ReporteDeVacunacion rp= new ReporteDeVacunacion("","",citaFacade.find(paciente), personalFacade.find(personal));
-                int c=0;
+                Cita cita = citaFacade.find(citaid);
+                ReporteDeVacunacion reporte = null;
+                for (ReporteDeVacunacion r : cita.getReporteDeVacunacionCollection()) {
+                    reporte = r;
+                }
+                reporte.setBrazo(brazo);
+                VacunaRecibida v = vacunaRecibidaFacade.find(vacunaid);
+                v.setCantidad(v.getCantidad() - 1);
+                vacunaRecibidaFacade.edit(v);
+                reporte.setVacuna(v.getNombre());
+                reporteDeVacunacionFacade.edit(reporte);
                 
-                for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) 
-                {
-                    if (r.getIdCita().getCitaid()==paciente) 
-                    {
-                        c=1;
-                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"El paciente ya tiene un personal asignado\");\n" + "</script>");
-                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarPersonal.jsp\" />");
-                        break;
-                    }
-                    if (Integer.parseInt(r.getIdCita().getHora().split(":")[0])==Integer.parseInt(citaFacade.find(paciente).getHora().split(":")[0])
-                       && Math.abs(Integer.parseInt(r.getIdCita().getHora().split(":")[1]))-Integer.parseInt(citaFacade.find(paciente).getHora().split(":")[1])>=30) 
-                    {
-                        c=1;
-                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"Hora no válida\");\n" + "</script>");
-                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarPersonal.jsp\" />");
-                        break;
-                    }
-                }
-                if(c==0)
-                {
-                    reporteDeVacunacionFacade.create(rp);
-                    out.println("<script type=\"text/javascript\">\n" + "  "
-                                + "alert(\"Personal Asignado Correctamente\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu_representante.jsp\"" +
+                out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Reporte generado exitosamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu_personal.jsp\"" +
                                 "</script>");
-                }
             }
+            
+            
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsignarPersonal</title>");            
+            out.println("<title>Servlet GenerarReporteDeVacunacion</title>");            
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1>Servlet GenerarReporteDeVacunacion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

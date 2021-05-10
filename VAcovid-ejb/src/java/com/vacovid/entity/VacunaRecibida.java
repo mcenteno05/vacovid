@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cristian Duarte
+ * @author JEFRY
  */
 @Entity
 @Table(name = "VACUNA_RECIBIDA")
@@ -83,7 +83,7 @@ public class VacunaRecibida implements Serializable {
         this.idInventarioVacunacion = idInventarioVacunacion;
     }
 
-    
+
     public Integer getVacunaid() {
         return vacunaid;
     }

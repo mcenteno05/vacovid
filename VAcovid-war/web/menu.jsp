@@ -22,7 +22,7 @@
     
  %>
 
-<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
+<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,6 +81,15 @@
             </div>
             <div class="usuario__opcion">
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
+            </div>
+            <div class="usuario__opcion">
+                <a href="solicitarCita.jsp"><h2>Solicitar Cita</h2></a>
+            </div>
+            <div class="usuario__opcion">
+                <a href="consultarCita.jsp"><h2>Consultar Cita</h2></a>
+            </div>
+            <div class="usuario__opcion">
+                <a href="#"><h2>Reportar sintomás</h2></a>
             </div>
             <div class="usuario__opcion">
                 <h2>Logout</h2>

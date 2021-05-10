@@ -93,7 +93,10 @@ public class SolicitarCita extends HttpServlet {
                 if (count == 1) {
                     Cita cita = new Cita(dosis, hora, date, entidad, sitioVacunacionFacade.find(sitio), usuarioFacade.find(Integer.parseInt(usuario)));
                     citaFacade.create(cita);
-                    out.println("Cita agendada existosamente");
+                    out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Cita Agendada Exitosamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/solicitarCita.jsp\"" +
+                                "</script>");
                 } //si el sitio no existe lo redirige a la pagina nuevamente
                 else {
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"El sitio de vacunacion no existe, por favor digite uno válido\");\n" + "</script>");
