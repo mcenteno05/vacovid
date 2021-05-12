@@ -34,7 +34,7 @@
                 
                 <sql:setDataSource var = "bd" driver = "org.apache.derby.jdbc.ClientDriver"
                                    url = "jdbc:derby://localhost:1527/VAcovid"
-                                   user = "root"  password = "admin"/>
+                                   user = "admin123"  password = "admin123"/>
                 
                 <td>Seleccione una funcion </td>
                 <td>

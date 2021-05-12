@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
@@ -17,12 +18,10 @@
         response.sendRedirect("loginUsuario.jsp");
     }
     
-        
-    
-    
+   
  %>
+ <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
 
-<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,19 +42,19 @@
 <body>
     <header>
         <div class="header__logo contenedor">
-            <a href="menu.jsp">
+            <a href="index.html">
                 <img href="#" src="img/VAcovid_logo.png" alt="Logo VAcovid">
             </a>
         </div>
         <nav class="header__nav contenedor">
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="menu.jsp">Inicio</a>
+                <a class="header__nav__item__text" href="#">Inicio</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="covid-19_logiado.jsp">Covid-19</a>
+                <a class="header__nav__item__text" href="#">Covid-19</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="plan_vacunacion_logiado.jsp">Plan de vacunación</a>
+                <a class="header__nav__item__text" href="#">Plan de vacunación</a>
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text" href="#">Contacto</a>
@@ -75,26 +74,63 @@
         </nav>
     </header>
 
-    <main class="main__plan">
+    <main class="main__plan__rs">
         <div class="container__usuario plan_logiado">
             <div class="usuario__opcion">
-                <a href="cambioContraseña.jsp"> <h2>Cambiar contraseña</h2></a>
+                <h2>Cambiar contraseña</h2>
             </div>
             <div class="usuario__opcion">
-                <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
+                <h2>Actualizar información</h2>
             </div>
             <div class="usuario__opcion">
                 <h2>Logout</h2>
             </div>
         </div>
         <div class="main__plan__content">
-            <h1>PLAN DE VACUNACIÓN</h1>
+            <h1>REPORTAR SINTOMAS</h1>
         </div>
     </main>
-
-    <div class="info_plan">
+ 
+    <div class="form_reportar">
+        
+        <form class="form_rep">
+            <fieldset>
+                <div class="titulo_form">
+                    <h2>Reportar efectos secundarios</h2>
+                </div>
+                <div class="form__contentRep">
+                    <div class="form__contentRep__campo">
+                        <h3>Fecha de detección:</h3>
+                        <input type="date" name="apellido" value="" required />
+                    </div>
+                    <div class="form__contentRep__area">
+                        <h3>Describa los sintomas</h3>
+                        <div class="form__contentRep__text_area">
+                            <textarea name="" id=""></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form__contentRep__campo">
+                        <input id="button_rep" type="submit" name="apellido" value="Enviar" required />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
 
     </div>
+    
+    <!-- 
+    <div class="sintomas">
+        <div class="sintomas_info">
+            <h2>Estimado usuario, no puede reportar efectos secundarios</h2>
+            <h2> ya que aun no ha recibido ninguna dosis de alguna vacuna</h2>
+        </div>
+        <div class="sintomas_info">
+            <h2>Le invitamos a que consulte su fase de vacunación</h2>
+            
+        </div>
+    </div>
+    -->
     <footer>
         <div class="footer__logo contenedor">
             <img src="img/VAcovid_logo.png" alt="Logo VAcovid">
@@ -103,5 +139,5 @@
             <h4>Copyright @ 2021 VAcovid</h4>
         </div>
     </footer>
-    <script src="js/opciones_usuario.js"></script>
+    <script src="js/app.js"></script>
 </body>

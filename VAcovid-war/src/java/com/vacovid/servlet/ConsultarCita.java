@@ -59,18 +59,13 @@ public class ConsultarCita extends HttpServlet {
                 }
             }
 
-            if (cita == null) {
-                out.println("<script type=\"text/javascript\">\n" + "  alert(\"No tiene citas asignadas\");\n" + "</script>");
-                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/consultarCita.jsp\" />");
-            } else {
-                request.setAttribute("cita", cita);
-                request.setAttribute("usuario", usuario);
-                request.setAttribute("municipio", municipio);
-                request.getRequestDispatcher("consultarCita.jsp").forward(request, response);
-            }
+            
             if (request.getParameter("action").equals("Cancelar")) {
                 citaFacade.remove(cita);
-                out.println("Cita removida");
+                out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Cita Cancelada Exitosamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
+                                "</script>");
             }
 
             out.println("<!DOCTYPE html>");

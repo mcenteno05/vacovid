@@ -95,7 +95,7 @@ public class SolicitarCita extends HttpServlet {
                     citaFacade.create(cita);
                     out.println("<script type=\"text/javascript\">\n" + "  "
                                 + "alert(\"Cita Agendada Exitosamente\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/solicitarCita.jsp\"" +
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
                                 "</script>");
                 } //si el sitio no existe lo redirige a la pagina nuevamente
                 else {

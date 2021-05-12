@@ -1347,3 +1347,394 @@ ACTUALIZAR INFORMACION*/
 .usuario__opcion a{
     text-decoration: none;
 }
+
+/*SOLICITAR CITA*/
+
+.main__plan__sc{
+    height: 580px;
+    background-image: url(../img/solicitar_cita.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+}
+
+.form_solicitar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_sol {
+    width: 800px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form_sol fieldset {
+    width: 800px;
+    height: 550px;
+}
+
+.titulo_form h2 {
+    font-size: 2em;
+    color: var(--color_primario);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form__contentSol__campo {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__contentSol__campo input {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+    margin-left: 10px;
+}
+
+.form__contentSol__campo h3 {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    margin-left: 10px;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+}
+
+#button_sol {
+    background-color: var(--color_primario);
+    color: white;
+}
+
+.form_sol fieldset {
+    border-radius: 10px;
+    border: 2px solid var(--color_primario);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.11);
+}
+
+.form__contentSol__campo select {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    margin-left: 10px;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+    border: 2px solid var(--color_primario);
+    color: white;
+    background-color: var(--color_primario);
+}
+
+.fase{
+    margin: 20px 40px;
+    width: 1820px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.fase_info{
+    width: 1820px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.fase_info h2{
+    font-size: 3.5em;
+    font-weight: 500;
+}
+
+.fase_info span{
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+
+.fase_info p{
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+
+/*REPORTAR SINTOMAS*/
+
+.main__plan__rs{
+    height: 580px;
+    background-image: url(../img/reportar_efectos.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+}
+
+.form_reportar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_rep {
+    width: 800px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form_rep fieldset {
+    width: 1000px;
+    height: 550px;
+}
+
+.titulo_rep h2 {
+    font-size: 2em;
+    color: var(--color_primario);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form__contentRep__campo {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__contentRep__campo input {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+}
+
+.form__contentRep__campo h3 {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    margin-left: 10px;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+}
+
+#button_rep {
+    background-color: var(--color_primario);
+    color: white;
+}
+
+.form_rep fieldset {
+    border-radius: 10px;
+    border: 2px solid var(--color_primario);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.11);
+}
+.form__contentRep__campo select {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    margin-left: 10px;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+    border: 2px solid var(--color_primario);
+    color: white;
+    background-color: var(--color_primario);
+}
+.form__contentRep__area {
+    margin-top: 50px;
+}
+
+.form__contentRep__area h3{
+    margin: 0;
+    color: var(--color_primario);
+    font-size: 1.3rem;
+    text-align: center;
+}
+.form__contentRep__text_area{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__contentRep__text_area textarea{
+    padding: 5px 5px;
+    font-size: 1.2em;
+    width: 700px;
+    height: 200px;
+    resize: none;
+    border-color: var(--color_primario);
+}
+
+.sintomas{
+    margin: 20px 40px;
+    width: 1820px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.sintomas_info{
+    width: 1820px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.sintomas h2{
+    font-size: 3em;
+    font-weight: 500;
+}
+
+.sintomas_info span{
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+
+.sintomas_info p{
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+
+/*CONSULTAR CITA*/
+
+.main__plan__cons{
+    height: 580px;
+    background-image: url(../img/consultar_cita.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+}
+
+.info_cita {
+    margin: 0 40px;
+    width: 1820px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_cita_div{
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.info_cita_usuario{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info_cita_cancelar{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.info_cita_usuario h2{
+    margin-left: 100px;
+    margin-top: 15px;
+    color: var(--color_primario_segundo);
+}
+
+.info_cita_usuario h2 span{
+    color: var(--color_primario);
+    margin-left: 10px;
+    
+}
+
+.info_cita_cancelar button{
+    width: 200px;
+    height: 60px;
+    border:0;
+    background-color: var(--color_secundario);
+    color:white;
+    font-size: 1.5em;
+    border-radius: 5px;
+}
+
+
+
+.consulta_cita{
+    margin: 20px 40px;
+    width: 1820px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.consulta_cita_info{
+    width: 1820px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.consulta_cita h2{
+    font-size: 3em;
+    font-weight: 500;
+}
+
+.consulta_cita_info span{
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+
+.consulta_cita_info p{
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--color_secundario);
+}
+

@@ -16,7 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
+        <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
         <sql:query var="pacientesDiarios" dataSource="${bd}">
             SELECT u.identificacion, u.nombre, u.apellido, c.hora, c.dosis
             FROM REPORTE_DE_VACUNACION r

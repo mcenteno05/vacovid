@@ -22,7 +22,7 @@
     
  %>
 
-<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="root" password="admin" />
+<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,15 +83,6 @@
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
             </div>
             <div class="usuario__opcion">
-                <a href="solicitarCita.jsp"><h2>Solicitar Cita</h2></a>
-            </div>
-            <div class="usuario__opcion">
-                <a href="consultarCita.jsp"><h2>Consultar Cita</h2></a>
-            </div>
-            <div class="usuario__opcion">
-                <a href="#"><h2>Reportar sintomás</h2></a>
-            </div>
-            <div class="usuario__opcion">
                 <h2>Logout</h2>
             </div>
         </div>
@@ -108,19 +99,19 @@
     </main>
     <div class="menu">
         <div class="menu__option">
-            <a href="">
+            <a href="solicitarCita.jsp">
                 <img class="menu__option__image" src="img/calendario.png" alt="imagen calendario">
                 <h2>Solicitar Cita de Vacunación</h2>
             </a>
         </div>
         <div class="menu__option">
-            <a href="">
+            <a href="consultarCita.jsp">
                 <img class="menu__option__image" src="img/contenido.png" alt="imagen contenido">
                 <h2>Consultar Estado de la Cita</h2>
             </a>
         </div>
         <div class="menu__option">
-            <a href="">
+            <a href="reportar_sintomas.jsp">
                 <img class="menu__option__image" src="img/corazon.png" alt="imagen corazon">
                 <h2>Reportar Efectos Secundarios</h2>
             </a>
