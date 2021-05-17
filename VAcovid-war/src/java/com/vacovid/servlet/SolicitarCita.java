@@ -84,7 +84,7 @@ public class SolicitarCita extends HttpServlet {
             }
             
             //Comprueba si antes tuvo una primera dosis
-            if (compPD==0) 
+            if (compPD==0 && dosis==2) 
             {
                 out.println("<script type=\"text/javascript\">\n" + "  "
                                 + "alert(\"Tiene que solicitar primera dosis\");\n"

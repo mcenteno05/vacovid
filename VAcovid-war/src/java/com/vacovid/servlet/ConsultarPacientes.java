@@ -82,7 +82,7 @@ public class ConsultarPacientes extends HttpServlet {
             {
                 out.println("<script type=\"text/javascript\">\n" + "  "
                                 + "alert(\"No se encontraron datos\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu_representante.jsp\"" +
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/consultarPacientes.jsp\"" +
                                 "</script>");
             }
         }
