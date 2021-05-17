@@ -42,19 +42,19 @@
 <body>
     <header>
         <div class="header__logo contenedor">
-            <a href="index.html">
+            <a href="menu.jsp">
                 <img href="#" src="img/VAcovid_logo.png" alt="Logo VAcovid">
             </a>
         </div>
         <nav class="header__nav contenedor">
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Inicio</a>
+                <a class="header__nav__item__text" href="menu.jsp">Inicio</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Covid-19</a>
+                <a class="header__nav__item__text" href="covid-19_logiado.jsp">Covid-19</a>
             </li>
             <li class="header__nav__item">
-                <a class="header__nav__item__text" href="#">Plan de vacunación</a>
+                <a class="header__nav__item__text" href="plan_vacunacion_logiado.jsp">Plan de vacunación</a>
             </li>
             <li class="header__nav__item">
                 <a class="header__nav__item__text" href="#">Contacto</a>
@@ -76,15 +76,21 @@
 
     <main class="main__plan__rs">
         <div class="container__usuario plan_logiado">
-            <div class="usuario__opcion">
-                <h2>Cambiar contraseña</h2>
-            </div>
-            <div class="usuario__opcion">
-                <h2>Actualizar información</h2>
-            </div>
-            <div class="usuario__opcion">
-                <h2>Logout</h2>
-            </div>
+            <a href="cambioContraseña.jsp">
+                <div class="usuario__opcion">
+                    <h2>Cambiar contraseña</h2>
+                </div>
+            </a>
+            <a href="actualizarDatos.jsp">
+                <div class="usuario__opcion">
+                    <h2>Actualizar información</h2>
+                </div>
+            </a>
+            <a href="">
+                <div class="usuario__opcion">
+                    <h2>Logout</h2>
+                </div>
+            </a>
         </div>
         <div class="main__plan__content">
             <h1>REPORTAR SINTOMAS</h1>
@@ -139,5 +145,5 @@
             <h4>Copyright @ 2021 VAcovid</h4>
         </div>
     </footer>
-    <script src="js/app.js"></script>
+    <script src="js/opciones_usuario.js"></script>
 </body>

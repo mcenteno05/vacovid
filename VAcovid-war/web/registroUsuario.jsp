@@ -174,19 +174,41 @@
                     <div class="form__content3__campo">
                         <h3>Enfermedad:</h3>
                         <select>
-                            <option value="">Select</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value"">Cáncer de pulmón</option>
+                            <option value"">Fibrosis quística</option>
+                            <option value"">Fibrosis pulmonar</option>
+                            <option value"">Asma moderada a grave</option>
+                            <option value"">Miocardiopatía</option>
+                            <option value"">Hipertensión pulmonar</option>
+                            <option value"">Enfermedad cardíaca congénita</option>
+                            <option value"">Insuficiencia cardíaca</option>
+                            <option value"">diabetes</option>
+                            <option value"">Otra enfermedad pulmonar</option>
+                            <option value"">Otra enfermedad cardiaca</option>
+                            <option value"">Otra enfermedad</option>
+                            
                         </select>
                     </div>
                     <div class="form__content3__campo">
                         <h3>EPS:</h3>
                         <select>
-                            <option value="">Select</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value"">Nueva EPS</option>
+                            <option value"">Sura</option>
+                            <option value"">Medimas</option>
+                            <option value"">Sanitas</option>
+                            <option value"">Salud Total</option>
+                            <option value"">Compensar</option>
+                            <option value"">Otra</option>
                         </select>
                     </div>
                     <div class="form__content3__campo">
                         <h3>Categoria de profesion:</h3>
                         <select>
-                            <option value="">Select</option>
+                            <option value="">Seleccione una opcion</option>
+                            <option value"">Servidor publico</option>
+                            <option value"">Personal educativo</option>
                         </select>
                     </div>
                 </div>
