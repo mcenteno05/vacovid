@@ -56,7 +56,7 @@ public class ConsultarPacientes extends HttpServlet {
                 for (Cita cita : citaFacade.findAll()) 
                 {
                     if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())<=0)  
+                    cita.getFechaDate().compareTo(new Date())<0)  
                     {
                         lista.add(cita);
                     }
@@ -78,17 +78,13 @@ public class ConsultarPacientes extends HttpServlet {
                 request.setAttribute("allCitas", lista);
                 request.getRequestDispatcher("consultarPacientes.jsp").forward(request, response);
             }
-            
-            
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ConsultarPacientes</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("</body>");
-            out.println("</html>");
+            else
+            {
+                out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"No se encontraron datos\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu_representante.jsp\"" +
+                                "</script>");
+            }
         }
     }
 

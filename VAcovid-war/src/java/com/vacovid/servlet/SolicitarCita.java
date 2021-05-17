@@ -66,7 +66,7 @@ public class SolicitarCita extends HttpServlet {
             int sitio = Integer.parseInt(request.getParameter("sitio"));
             DateFormat df= new SimpleDateFormat("yyyy-MM-ddHH:mm");
             Date date= df.parse(fecha+hora);
-            int count=0,c=0;
+            int count=0,c=0,compPD=0;
             
             for (Cita cita : citaFacade.findAll()) 
             {
@@ -79,28 +79,39 @@ public class SolicitarCita extends HttpServlet {
                         c=1;
                         break;
                     }
+                    compPD=1;
                 }
             }
             
-            if (c == 0) {
-                //verifica si existe el sitio de vacunacion
-                for (SitioVacunacion sitio1 : sitioVacunacionFacade.findAll()) {
-                    if (sitio == sitio1.getSitioid()) {
-                        count = 1;
-                    }
-                }
-                //si el sitio existe crea la cita
-                if (count == 1) {
-                    Cita cita = new Cita(dosis, hora, date, entidad, sitioVacunacionFacade.find(sitio), usuarioFacade.find(Integer.parseInt(usuario)));
-                    citaFacade.create(cita);
-                    out.println("<script type=\"text/javascript\">\n" + "  "
-                                + "alert(\"Cita Agendada Exitosamente\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
+            //Comprueba si antes tuvo una primera dosis
+            if (compPD==0) 
+            {
+                out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Tiene que solicitar primera dosis\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/solicitarCita.jsp\"" +
                                 "</script>");
-                } //si el sitio no existe lo redirige a la pagina nuevamente
-                else {
-                    out.println("<script type=\"text/javascript\">\n" + "  alert(\"El sitio de vacunacion no existe, por favor digite uno válido\");\n" + "</script>");
-                    out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
+            }
+            else {
+                if (c == 0) {
+                    //verifica si existe el sitio de vacunacion
+                    for (SitioVacunacion sitio1 : sitioVacunacionFacade.findAll()) {
+                        if (sitio == sitio1.getSitioid()) {
+                            count = 1;
+                        }
+                    }
+                    //si el sitio existe crea la cita
+                    if (count == 1) {
+                        Cita cita = new Cita(dosis, hora, date, entidad, sitioVacunacionFacade.find(sitio), usuarioFacade.find(Integer.parseInt(usuario)));
+                        citaFacade.create(cita);
+                        out.println("<script type=\"text/javascript\">\n" + "  "
+                                + "alert(\"Cita Agendada Exitosamente\");\n"
+                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\""
+                                + "</script>");
+                    } //si el sitio no existe lo redirige a la pagina nuevamente
+                    else {
+                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"El sitio de vacunacion no existe, por favor digite uno válido\");\n" + "</script>");
+                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/solicitarCita.jsp\" />");
+                    }
                 }
 
                 out.println("<!DOCTYPE html>");

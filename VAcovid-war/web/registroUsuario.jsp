@@ -122,7 +122,7 @@
                         <input type="date" max="<%=dateString%>" name="fecha de nacimiento" value="${usuario.fechaDeNacimiento}" required>
                     </div>
 
-                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user="admin123" password="admin123" />
+                    <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
 
                     <div class="form__content2__campo">
                         <h3>Ciudad/Municipio:</h3>

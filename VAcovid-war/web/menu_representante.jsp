@@ -24,10 +24,6 @@
     <body>
         <h1> Hola usuario <% out.println(usuario);  %>  acceso correcto </h1>
         
-        
-        <form action="http://localhost:8080/VAcovid-war/ingresarVacunasRecibidas.jsp">
-            <input type="submit" value="Ir a ingresar vacunas" />
-        </form>
         <form action="http://localhost:8080/VAcovid-war/consultarPacientes.jsp">
             <input type="submit" value="Ir a consultar pacientes" />
         </form>

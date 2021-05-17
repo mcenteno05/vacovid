@@ -30,11 +30,12 @@
                             SELECT c.citaid, u.nombre || ' ' || u.apellido AS nombres
                             FROM CITA c
                             INNER JOIN USUARIO u ON (c.identificacion_usuario=u.identificacion)
-                            WHERE id_sitio =(
+                            WHERE c.fecha >= CURRENT_DATE
+                            AND id_sitio =(
                                 SELECT sitioid
                                 FROM SITIO_VACUNACION
                                 WHERE IDENTIFICACION_REPRESENTANTE=<%=usuario%>
-                            ) AND c.fecha < CURRENT_DATE
+                            ) 
                         </sql:query>
                             
                         <select id="paciente" name="paciente">
@@ -67,6 +68,7 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
                     <td colspan="2">
                         <input type="submit" name="action" value="Asignar" />
                     </td>

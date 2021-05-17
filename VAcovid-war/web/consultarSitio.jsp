@@ -16,7 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123"/>
+        <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
         <h1>Sitio de vacunación asignado</h1><br>
         <sql:query var="sitioAsignado" dataSource="${bd}">
             SELECT s.nombre, s.direccion

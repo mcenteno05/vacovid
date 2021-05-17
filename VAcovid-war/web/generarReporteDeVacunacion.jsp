@@ -27,7 +27,7 @@
                             FROM REPORTE_DE_VACUNACION r
                             INNER JOIN CITA c ON (r.id_cita=c.citaid)
                             INNER JOIN USUARIO u ON (c.identificacion_usuario = u.identificacion)
-                            WHERE r.identificacion_personal =<%=usuario%> AND c.fecha <= CURRENT_DATE AND r.brazo=''
+                            WHERE r.identificacion_personal =<%=usuario%> AND c.fecha = CURRENT_DATE AND r.brazo=''
                         </sql:query>
                             
                         <select id="cita" name="cita">

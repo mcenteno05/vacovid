@@ -43,7 +43,7 @@
         FROM CITA c
         INNER JOIN USUARIO u ON(c.identificacion_usuario = u.identificacion)
         INNER JOIN MUNICIPIO m ON(m.codigo_dane_municipio = u.codigo_dane_municipio)
-        WHERE u.identificacion = <%=usuario%> AND c.fecha > CURRENT_DATE
+        WHERE u.identificacion = <%=usuario%> AND c.fecha >= CURRENT_DATE
     </sql:query>  
     <c:forEach var = "row" items = "${info_cita.rows}">
         <h2 id="con_nombre" style="display: none">${row.nombre}</h2>
@@ -59,7 +59,7 @@
     </c:forEach>
     <header>
         <div class="header__logo contenedor">
-            <a href="index.html">
+            <a href="menu.jsp">
                 <img href="#" src="img/VAcovid_logo.png" alt="Logo VAcovid">
             </a>
         </div>
