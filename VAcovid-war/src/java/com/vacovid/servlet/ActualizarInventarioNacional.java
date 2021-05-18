@@ -5,9 +5,7 @@
  */
 package com.vacovid.servlet;
 
-import com.vacovid.entity.InventarioNacional;
 import com.vacovid.entity.Vacuna;
-import com.vacovid.session.InventarioNacionalFacadeLocal;
 import com.vacovid.session.VacunaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,9 +26,6 @@ public class ActualizarInventarioNacional extends HttpServlet {
     @EJB
     private VacunaFacadeLocal vacunaFacade;
 
-    @EJB
-    private InventarioNacionalFacadeLocal inventarioNacionalFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,24 +42,28 @@ public class ActualizarInventarioNacional extends HttpServlet {
 
             int idvacuna = Integer.parseInt(request.getParameter("vacuna"));
             int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            
+            if (cantidad > 0) {
+                if (request.getParameter("action").equals("Actualizar")) {
 
-            if (request.getParameter("action").equals("Actualizar")) {
-                
-                Vacuna vacuna = vacunaFacade.find(idvacuna);
+                    Vacuna vacuna = vacunaFacade.find(idvacuna);
 
-                if (request.getParameter("tipo").equals("Agregar vacunas")) {
-                    vacuna.setCantidad(vacuna.getCantidad() + cantidad);
-                    vacunaFacade.edit(vacuna);
-                }
-                if (request.getParameter("tipo").equals("Quitar vacunas")) {
-
-                    if (vacuna.getCantidad() >= cantidad) {
-                        vacuna.setCantidad(vacuna.getCantidad() - cantidad);
+                    if (request.getParameter("tipo").equals("Agregar vacunas")) {
+                        vacuna.setCantidad(vacuna.getCantidad() + cantidad);
                         vacunaFacade.edit(vacuna);
-                    } else {
-                        out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas retiradas son mayores a las ya existentes,"
-                                + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
-                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/actualizarInventarioNacional.jsp\" />");
+                    }
+                    if (request.getParameter("tipo").equals("Quitar vacunas")) {
+
+                        if (vacuna.getCantidad() >= cantidad) {
+                            vacuna.setCantidad(vacuna.getCantidad() - cantidad);
+                            vacunaFacade.edit(vacuna);
+                            out.println("<script type=\"text/javascript\">\n" + "  alert(\" Inventario nacional actualizado correctamente\" ); \n" + "</script>");
+                            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/menu_distribuidor.jsp\" />");
+                        } else {
+                            out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas retiradas son mayores a las ya existentes,"
+                                    + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
+                            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/actualizarInventarioNacional.jsp\" />");
+                        }
                     }
                 }
             }
@@ -75,8 +74,7 @@ public class ActualizarInventarioNacional extends HttpServlet {
             out.println("<title>Servlet ActualizarInventarioNacional</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<script type=\"text/javascript\">\n" + "  alert(\" Inventario nacional actualizado correctamente\" ); \n" + "</script>");
-            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/menu_distribuidor.jsp\" />");
+            
             out.println("</body>");
             out.println("</html>");
         }

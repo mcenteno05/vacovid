@@ -21,8 +21,8 @@
         <title>Cerrar Sesión</title>
     </head>
     <body>
+        <% objsession.invalidate(); %>
         <script type="text/javascript">
-                <% objsession.invalidate(); %>
                 alert("Se ha cerrado sesión correctamente")
                 window.location.href ="http://localhost:8080/VAcovid-war/index.html"
         </script>

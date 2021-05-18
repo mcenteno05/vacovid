@@ -16,10 +16,6 @@
     if(usuario.equals("")){
         response.sendRedirect("loginUsuario.jsp");
     }
-    
-        
-    
-    
  %>
 
 <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123"  />
@@ -64,7 +60,9 @@
                 <a class="header__nav__item__text profile_boton" href="#">
                     <div class="profile">
                         <sql:query var="inicial" dataSource="${bd}">
-                           SELECT substr(u.nombre,1,1)AS nombre FROM PERSONAL u WHERE identificacion =<%=usuario%>
+                           SELECT substr(u.nombre,1,1)AS nombre 
+                           FROM PERSONAL u 
+                           WHERE identificacion =<%=usuario%>
                         </sql:query>  
                         <c:forEach var = "row" items = "${inicial.rows}">
                             <h3>${row.nombre}</h3>
@@ -77,7 +75,7 @@
 
     <div class="container__usuario_ad astra_logiado">
         <div class="usuario__opcion">
-                <h2>Logout</h2>
+                <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
         </div>
     </div>
     <main class="menu_representante">
@@ -124,8 +122,8 @@
                 FROM REPORTE_DE_VACUNACION r
                 INNER JOIN CITA c ON (r.id_cita=c.citaid)
                 INNER JOIN USUARIO u ON (c.identificacion_usuario=u.identificacion)
-                WHERE r.identificacion_personal=<%=usuario%> AND c.fecha = CURRENT_DATE
-                ORDER BY c.hora
+                WHERE r.identificacion_personal=<%=usuario%> AND c.fecha = CURRENT_DATE AND r.brazo = ''
+                ORDER BY c.hora 
                 </sql:query>
                 <div class="menu_representante_main_consultar_table">
                     <table border="1" bordercolor="white"  cellspacing="0">

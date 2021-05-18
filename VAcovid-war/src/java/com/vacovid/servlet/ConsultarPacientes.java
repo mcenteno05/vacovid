@@ -38,66 +38,73 @@ public class ConsultarPacientes extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             HttpSession objsession = request.getSession(false);
-            String usuario = (String)objsession.getAttribute("usuario1");
-            
-            ArrayList<Cita> lista= new ArrayList();
-            
-            
-            if (request.getParameter("action").equals("Consultar Pacientes sin vacunar por fase")) 
-            {
-                for (Cita cita : citaFacade.findAll()) 
-                {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())>=0)  
-                    {
-                        lista.add(cita);
+            String usuario = (String) objsession.getAttribute("usuario1");
+
+            ArrayList<Cita> lista = new ArrayList();
+            Date f = null;
+            Date actual = new Date();
+            Cita c = null;
+
+            if (request.getParameter("action").equals("Consultar Pacientes sin vacunar por fase")) {
+                for (Cita cita : citaFacade.findAll()) {
+                    f = cita.getFechaDate();
+                    if (f.getDate() == actual.getDate()) {
+                        f.setDate(f.getDate() + 1);
                     }
-                }
-            }
-            else if (request.getParameter("action").equals("Consultar Pacientes vacunados")) 
-            {
-                Cita c=null;
-                for (Cita cita : citaFacade.findAll()) 
-                {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario))
-                    {
-                        c=cita;
+                    System.out.println("+++++" + f.getDate());
+                    System.out.println("+++++++++++" + actual.getDate());
+                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) && f.compareTo(actual) >= 0) {
+                        c = cita;
                     }
-                }
-                if (c != null) {
-                    for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) 
-                    {
-                        if (c.getCitaid()==r.getIdCita().getCitaid() && r.getBrazo()!="") 
-                        {
-                            lista.add(c);
+                    if (c != null) {
+                        for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) {
+                            if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo() == "") {
+                                lista.add(c);
+                                c = null;
+                            }
                         }
                     }
                 }
-            }
-            else if (request.getParameter("action").equals("Consultar Pacientes por vacunar segunda dosis")) 
-            {
-                for (Cita cita : citaFacade.findAll()) 
-                {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())>=0 && cita.getDosis()==2)  
-                    {
+
+            } else if (request.getParameter("action").equals("Consultar Pacientes vacunados")) {
+
+                for (Cita cita : citaFacade.findAll()) {
+                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario)) {
+                        c = cita;
+                    }
+                    if (c != null) {
+                        for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) {
+                            if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo() != "") {
+                                lista.add(c);
+                                c = null;
+                            }
+                        }
+                    }
+                }
+
+            } else if (request.getParameter("action").equals("Consultar Pacientes por vacunar segunda dosis")) {
+
+                for (Cita cita : citaFacade.findAll()) {
+                    f = cita.getFechaDate();
+                    if (f.getDate() == actual.getDate()) {
+                        f.setDate(f.getDate() + 1);
+                    }
+                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario)
+                            && f.compareTo(actual) >= 0 && cita.getDosis() == 2) {
                         lista.add(cita);
                     }
                 }
             }
-            if (lista.size() != 0) 
-            {
+            if (!lista.isEmpty()) {
                 request.setAttribute("allCitas", lista);
                 request.getRequestDispatcher("consultarPacientes.jsp").forward(request, response);
-            }
-            else
-            {
+            } else {
                 out.println("<script type=\"text/javascript\">\n" + "  "
-                                + "alert(\"No se encontraron datos\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/consultarPacientes.jsp\"" +
-                                "</script>");
+                        + "alert(\"No se encontraron datos\");\n"
+                        + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/consultarPacientes.jsp\""
+                        + "</script>");
             }
         }
     }

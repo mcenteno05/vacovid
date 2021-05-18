@@ -64,7 +64,9 @@
                 <a class="header__nav__item__text profile_boton" href="#">
                     <div class="profile">
                         <sql:query var="inicial" dataSource="${bd}">
-                           SELECT substr(u.nombre,1,1)AS nombre FROM REPRESENTANTE u WHERE identificacion =<%=usuario%>
+                           SELECT substr(u.nombre,1,1)AS nombre
+                           FROM REPRESENTANTE u 
+                           WHERE identificacion =<%=usuario%>
                         </sql:query>  
                         <c:forEach var = "row" items = "${inicial.rows}">
                             <h3>${row.nombre}</h3>
@@ -142,7 +144,7 @@
                                 SELECT SITIOID
                                 FROM SITIO_VACUNACION
                                 WHERE IDENTIFICACION_REPRESENTANTE=<%=usuario%>
-                            ) AND 
+                            ) 
                             
                             </sql:query>
                             <h3>Seleccione el personal:</h3>
