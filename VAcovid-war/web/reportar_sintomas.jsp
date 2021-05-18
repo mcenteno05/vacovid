@@ -86,11 +86,9 @@
                     <h2>Actualizar información</h2>
                 </div>
             </a>
-            <a href="">
                 <div class="usuario__opcion">
-                    <h2>Logout</h2>
+                    <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
                 </div>
-            </a>
         </div>
         <div class="main__plan__content">
             <h1>REPORTAR SINTOMAS</h1>

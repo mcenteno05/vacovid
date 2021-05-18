@@ -13,7 +13,7 @@
     
     HttpSession objsession = request.getSession(false);
     String usuario = (String)objsession.getAttribute("usuario1");
-    if(usuario.equals("")){
+    if(usuario.equals(null)){
         response.sendRedirect("loginUsuario.jsp");
     }
     
@@ -22,7 +22,7 @@
     
  %>
 
-<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123"  />
+<sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +84,7 @@
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
             </div>
             <div class="usuario__opcion">
-                <h2>Logout</h2>
+                <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
             </div>
         </div>
     </main>

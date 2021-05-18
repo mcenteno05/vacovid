@@ -13,7 +13,7 @@
     
     HttpSession objsession = request.getSession(false);
     String usuario = (String)objsession.getAttribute("usuario1");
-    if(usuario.equals("")){
+    if(usuario.equals(null)){
         response.sendRedirect("loginUsuario.jsp");
     }
     
@@ -77,7 +77,7 @@
 
     <div class="container__usuario_ad astra_logiado">
         <div class="usuario__opcion">
-                <h2>Logout</h2>
+                <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
         </div>
     </div>
     <main class="menu_representante">
@@ -123,7 +123,7 @@
                                 SELECT sitioid
                                 FROM SITIO_VACUNACION
                                 WHERE IDENTIFICACION_REPRESENTANTE=<%=usuario%>
-                            ) 
+                            )
                             </sql:query>
                             <h3>Seleccione el paciente:</h3>
                             <select id="paciente" name="paciente" >
@@ -142,7 +142,8 @@
                                 SELECT SITIOID
                                 FROM SITIO_VACUNACION
                                 WHERE IDENTIFICACION_REPRESENTANTE=<%=usuario%>
-                            )
+                            ) AND 
+                            
                             </sql:query>
                             <h3>Seleccione el personal:</h3>
                             <select id="personal" name="personal">

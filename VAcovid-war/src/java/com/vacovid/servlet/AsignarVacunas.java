@@ -79,6 +79,7 @@ public class AsignarVacunas extends HttpServlet {
                     Vacuna vacuna = vacunaFacade.find(idvacuna);
                     InventarioDeVacunacion inventario;
                     SitioVacunacion sitio = sitioVacunacionFacade.find(idSitio);
+                    boolean cantidadIncorrecta=true;
                     
                     //busca los inventarios existentes
                     for (InventarioDeVacunacion ob : sitio.getInventarioDeVacunacionCollection()) {
@@ -107,6 +108,7 @@ public class AsignarVacunas extends HttpServlet {
                                 out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas asignadas son mayores a las ya existentes en el inventario nacional,"
                                         + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
                                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
+                                cantidadIncorrecta=false;
                                 break;
                             }
                         }
@@ -120,9 +122,13 @@ public class AsignarVacunas extends HttpServlet {
                             vacunarecibida = new VacunaRecibida(vacuna.getNombre(), vacuna.getFechaDeVencimiento(), cantidad, vacuna.getLote(), inventario);
                             vacuna.setCantidad(vacuna.getCantidad() - cantidad);
                         } else {
-                            out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas asignadas son mayores a las ya existentes en el inventario nacional,"
+                            if (cantidadIncorrecta) 
+                            {
+                                out.println("<script type=\"text/javascript\">\n" + "  alert(\"La cantidad de vacunas asignadas son mayores a las ya existentes en el inventario nacional,"
                                     + " por favor digite una nueva cantidad valida\" ); \n" + "</script>");
-                            out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
+                                out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/asignarVacunas.jsp\" />");
+                            }
+                            
                         }
                     }
                     //
@@ -138,7 +144,6 @@ public class AsignarVacunas extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Vacunas asignadas correctamente</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<script type=\"text/javascript\">\n" + "  alert(\" Vacunas asignadas correctamente\" ); \n" + "</script>");

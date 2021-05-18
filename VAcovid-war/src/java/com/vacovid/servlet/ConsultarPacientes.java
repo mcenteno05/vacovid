@@ -6,7 +6,9 @@
 package com.vacovid.servlet;
 
 import com.vacovid.entity.Cita;
+import com.vacovid.entity.ReporteDeVacunacion;
 import com.vacovid.session.CitaFacadeLocal;
+import com.vacovid.session.ReporteDeVacunacionFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ConsultarPacientes", urlPatterns = {"/ConsultarPacientes"})
 public class ConsultarPacientes extends HttpServlet {
+
+    @EJB
+    private ReporteDeVacunacionFacadeLocal reporteDeVacunacionFacade;
 
     @EJB
     private CitaFacadeLocal citaFacade;
@@ -53,12 +58,21 @@ public class ConsultarPacientes extends HttpServlet {
             }
             else if (request.getParameter("action").equals("Consultar Pacientes vacunados")) 
             {
+                Cita c=null;
                 for (Cita cita : citaFacade.findAll()) 
                 {
-                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) &&
-                    cita.getFechaDate().compareTo(new Date())<0)  
+                    if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario))
                     {
-                        lista.add(cita);
+                        c=cita;
+                    }
+                }
+                if (c != null) {
+                    for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) 
+                    {
+                        if (c.getCitaid()==r.getIdCita().getCitaid() && r.getBrazo()!="") 
+                        {
+                            lista.add(c);
+                        }
                     }
                 }
             }
