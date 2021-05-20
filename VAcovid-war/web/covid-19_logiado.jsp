@@ -84,7 +84,7 @@
                 <a href="actualizarDatos.jsp"><h2>Actualizar información</h2></a>
             </div>
             <div class="usuario__opcion">
-                <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
+               <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
             </div>
         </div>
         <div class="main__covid__content">

@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="main__login__square__content__options">
-                    <a href="#">
+                    <a href="email.jsp">
                         <h3>¿Olvidó la contraseña?</h3>
                     </a>
                     <a href="registroUsuario.jsp">

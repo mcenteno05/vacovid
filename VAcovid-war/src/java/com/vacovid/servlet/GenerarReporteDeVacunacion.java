@@ -6,10 +6,13 @@
 package com.vacovid.servlet;
 
 import com.vacovid.entity.Cita;
+import com.vacovid.entity.CorreoBean;
 import com.vacovid.entity.ReporteDeVacunacion;
+import com.vacovid.entity.Usuario;
 import com.vacovid.entity.VacunaRecibida;
 import com.vacovid.session.CitaFacadeLocal;
 import com.vacovid.session.ReporteDeVacunacionFacadeLocal;
+import com.vacovid.session.UsuarioFacadeLocal;
 import com.vacovid.session.VacunaRecibidaFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,6 +30,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "GenerarReporteDeVacunacion", urlPatterns = {"/GenerarReporteDeVacunacion"})
 public class GenerarReporteDeVacunacion extends HttpServlet {
+
+    @EJB
+    private CorreoBean correoBean;
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
 
     @EJB
     private VacunaRecibidaFacadeLocal vacunaRecibidaFacade;
@@ -57,10 +66,12 @@ public class GenerarReporteDeVacunacion extends HttpServlet {
             Integer citaid = Integer.parseInt(request.getParameter("cita"));
             String brazo = request.getParameter("brazo");
             Integer vacunaid= Integer.parseInt(request.getParameter("nombreVacuna"));
+            Usuario user = null;
             
             if (request.getParameter("action").equals("Generar")) 
             {
                 Cita cita = citaFacade.find(citaid);
+                user = usuarioFacade.find(cita.getIdentificacionUsuario().getIdentificacion());
                 ReporteDeVacunacion reporte = null;
                 for (ReporteDeVacunacion r : cita.getReporteDeVacunacionCollection()) {
                     reporte = r;
@@ -71,6 +82,21 @@ public class GenerarReporteDeVacunacion extends HttpServlet {
                 vacunaRecibidaFacade.edit(v);
                 reporte.setVacuna(v.getNombre());
                 reporteDeVacunacionFacade.edit(reporte);
+                
+                String reporteVacunacion="Querido usuario " +user.getApellido() +","+ user.getNombre() + " Su reporte se ha generado exitosamente en la";
+                reporteVacunacion+=" Fecha: " + cita.getFecha() +" "+ cita.getHora() +" con el ";
+                reporteVacunacion+=" Personal: " + reporte.getIdentificacionPersonal().getApellido() +","+reporte.getIdentificacionPersonal().getNombre()+" aplicando la";
+                reporteVacunacion+=" Vacuna: " + v.getNombre()+" en el";
+                reporteVacunacion+=" Brazo: " + reporte.getBrazo()+" con la";
+                reporteVacunacion+=" Dosis: #" + cita.getDosis()+" en el";
+                reporteVacunacion+=" Sitio: " + reporte.getIdentificacionPersonal().getIdSitio().getNombre();
+                
+                //Datos del correo que envia los codigos
+                String vaEmail = "vacovidunipiloto@gmail.com";
+                String username ="vacovidunipiloto";
+                String pass = "123@Admin";
+                
+                correoBean.generarReporte(vaEmail, username, pass, user.getCorreo(), reporteVacunacion);
                 
                 out.println("<script type=\"text/javascript\">\n" + "  "
                                 + "alert(\"Reporte generado exitosamente\");\n"
@@ -86,7 +112,6 @@ public class GenerarReporteDeVacunacion extends HttpServlet {
             out.println("<title>Servlet GenerarReporteDeVacunacion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GenerarReporteDeVacunacion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

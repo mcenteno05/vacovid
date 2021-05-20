@@ -108,7 +108,7 @@ public class Cita implements Serializable {
 
     public String getFecha() {
         int año=fecha.getYear()+1900;
-        String fechaStr=fecha.getDate()+"/"+fecha.getMonth()+"/"+año;
+        String fechaStr=(fecha.getDate()+1)+"/"+fecha.getMonth()+"/"+año;
         return fechaStr;
     }
     

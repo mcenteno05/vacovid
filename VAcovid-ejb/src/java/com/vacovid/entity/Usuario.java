@@ -6,10 +6,8 @@
 package com.vacovid.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,18 +15,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JEFRY
+ * @author Cristian Duarte
  */
 @Entity
 @Table(name = "USUARIO")
@@ -38,27 +34,19 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByIdentificacion", query = "SELECT u FROM Usuario u WHERE u.identificacion = :identificacion"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
-    @NamedQuery(name = "Usuario.findByFechaDeNacimiento", query = "SELECT u FROM Usuario u WHERE u.fechaDeNacimiento = :fechaDeNacimiento"),
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByTipoDocumento", query = "SELECT u FROM Usuario u WHERE u.tipoDocumento = :tipoDocumento"),
-    @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion")})
+    @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion"),
+    @NamedQuery(name = "Usuario.findByFechaDeNacimiento", query = "SELECT u FROM Usuario u WHERE u.fechaDeNacimiento = :fechaDeNacimiento"),
+    @NamedQuery(name = "Usuario.findByPresentaEnfermedad", query = "SELECT u FROM Usuario u WHERE u.presentaEnfermedad = :presentaEnfermedad"),
+    @NamedQuery(name = "Usuario.findByPersonalSalud", query = "SELECT u FROM Usuario u WHERE u.personalSalud = :personalSalud"),
+    @NamedQuery(name = "Usuario.findByFase", query = "SELECT u FROM Usuario u WHERE u.fase = :fase"),
+    @NamedQuery(name = "Usuario.findByClaveConfirmacion", query = "SELECT u FROM Usuario u WHERE u.claveConfirmacion = :claveConfirmacion"),
+    @NamedQuery(name = "Usuario.findByEnfermedad", query = "SELECT u FROM Usuario u WHERE u.enfermedad = :enfermedad"),
+    @NamedQuery(name = "Usuario.findByCategoriaProfesion", query = "SELECT u FROM Usuario u WHERE u.categoriaProfesion = :categoriaProfesion")})
 public class Usuario implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FASE")
-    private int fase;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PRESENTA_ENFERMEDAD")
-    private Boolean presentaEnfermedad;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PERSONAL_SALUD")
-    private Boolean personalSalud;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,19 +56,14 @@ public class Usuario implements Serializable {
     private Integer identificacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 65)
+    @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 65)
+    @Size(min = 1, max = 100)
     @Column(name = "APELLIDO")
     private String apellido;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_DE_NACIMIENTO")
-    @Temporal(TemporalType.DATE)
-    private Date fechaDeNacimiento;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
@@ -93,7 +76,7 @@ public class Usuario implements Serializable {
     private String correo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 250)
     @Column(name = "PASSWORD")
     private String password;
     @Basic(optional = false)
@@ -106,8 +89,31 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "DIRECCION")
     private String direccion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "identificacionUsuario")
-    private Collection<Cita> citaCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FECHA_DE_NACIMIENTO")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeNacimiento;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRESENTA_ENFERMEDAD")
+    private Boolean presentaEnfermedad;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PERSONAL_SALUD")
+    private Boolean personalSalud;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FASE")
+    private int fase;
+    @Column(name = "CLAVE_CONFIRMACION")
+    private Integer claveConfirmacion;
+    @Size(max = 50)
+    @Column(name = "ENFERMEDAD")
+    private String enfermedad;
+    @Size(max = 50)
+    @Column(name = "CATEGORIA_PROFESION")
+    private String categoriaProfesion;
     @JoinColumn(name = "CODIGO_DANE_MUNICIPIO", referencedColumnName = "CODIGO_DANE_MUNICIPIO")
     @ManyToOne(optional = false)
     private Municipio codigoDaneMunicipio;
@@ -119,21 +125,25 @@ public class Usuario implements Serializable {
         this.identificacion = identificacion;
     }
 
-    public Usuario(Integer identificacion, String nombre, String apellido, Date fechaDeNacimiento, String telefono, String correo, String password, String tipoDocumento, String direccion, Municipio codigoDaneMunicipio, boolean presentaEnfermedad, boolean personalSalud, int fase) {
+    public Usuario(int identificacion, String nombres, String apellidos, Date date, String telefono, String email, String contraseña, 
+            String tipo, String direccion, Municipio find, boolean presentaEnfermedad, boolean personalSalud, int fase, String enfermedad, String categoria) {
         this.identificacion = identificacion;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaDeNacimiento = fechaDeNacimiento;
+        this.nombre = nombres;
+        this.apellido = apellidos;
         this.telefono = telefono;
-        this.correo = correo;
-        this.password = password;
-        this.tipoDocumento = tipoDocumento;
+        this.correo = email;
+        this.password = contraseña;
+        this.tipoDocumento = tipo;
         this.direccion = direccion;
-        this.codigoDaneMunicipio=codigoDaneMunicipio;
-        this.presentaEnfermedad=presentaEnfermedad;
-        this.personalSalud=personalSalud;
-        this.fase=fase;
+        this.fechaDeNacimiento = date;
+        this.presentaEnfermedad = presentaEnfermedad;
+        this.personalSalud = personalSalud;
+        this.fase = fase;
+        this.enfermedad = enfermedad;
+        this.categoriaProfesion = categoria;
     }
+
+    
 
     public Integer getIdentificacion() {
         return identificacion;
@@ -157,14 +167,6 @@ public class Usuario implements Serializable {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
     public String getTelefono() {
@@ -207,13 +209,60 @@ public class Usuario implements Serializable {
         this.direccion = direccion;
     }
 
-    @XmlTransient
-    public Collection<Cita> getCitaCollection() {
-        return citaCollection;
+    public Date getFechaDeNacimiento() {
+        return fechaDeNacimiento;
     }
 
-    public void setCitaCollection(Collection<Cita> citaCollection) {
-        this.citaCollection = citaCollection;
+    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
+
+    public Boolean getPresentaEnfermedad() {
+        return presentaEnfermedad;
+    }
+
+    public void setPresentaEnfermedad(Boolean presentaEnfermedad) {
+        this.presentaEnfermedad = presentaEnfermedad;
+    }
+
+    public Boolean getPersonalSalud() {
+        return personalSalud;
+    }
+
+    public void setPersonalSalud(Boolean personalSalud) {
+        this.personalSalud = personalSalud;
+    }
+
+    public int getFase() {
+        return fase;
+    }
+
+    public void setFase(int fase) {
+        this.fase = fase;
+    }
+
+    public Integer getClaveConfirmacion() {
+        return claveConfirmacion;
+    }
+
+    public void setClaveConfirmacion(Integer claveConfirmacion) {
+        this.claveConfirmacion = claveConfirmacion;
+    }
+
+    public String getEnfermedad() {
+        return enfermedad;
+    }
+
+    public void setEnfermedad(String enfermedad) {
+        this.enfermedad = enfermedad;
+    }
+
+    public String getCategoriaProfesion() {
+        return categoriaProfesion;
+    }
+
+    public void setCategoriaProfesion(String categoriaProfesion) {
+        this.categoriaProfesion = categoriaProfesion;
     }
 
     public Municipio getCodigoDaneMunicipio() {
@@ -247,30 +296,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.vacovid.entity.Usuario[ identificacion=" + identificacion + " ]";
-    }
-
-    public Boolean getPresentaEnfermedad() {
-        return presentaEnfermedad;
-    }
-
-    public void setPresentaEnfermedad(Boolean presentaEnfermedad) {
-        this.presentaEnfermedad = presentaEnfermedad;
-    }
-
-    public Boolean getPersonalSalud() {
-        return personalSalud;
-    }
-
-    public void setPersonalSalud(Boolean personalSalud) {
-        this.personalSalud = personalSalud;
-    }
-
-    public int getFase() {
-        return fase;
-    }
-
-    public void setFase(int fase) {
-        this.fase = fase;
     }
     
 }

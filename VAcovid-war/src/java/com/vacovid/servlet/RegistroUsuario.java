@@ -67,6 +67,9 @@ public class RegistroUsuario extends HttpServlet {
             String direccion = request.getParameter("direccion");
             boolean presentaEnfermedad = (request.getParameter("check_enfermedad").equals("Si"))?true:false;
             boolean personalSalud = (request.getParameter("check_personal").equals("Si"))?true:false;
+            String enfermedad = null;
+            String personal = null;
+            
             
             DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
             Date date= df.parse(fecha);
@@ -83,7 +86,15 @@ public class RegistroUsuario extends HttpServlet {
                     out.println("<script type=\"text/javascript\">\n" + "  alert(\"Contraseñas no coincidentes\");\n" + "</script>");
                     out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/registroUsuario.jsp\" />");
                 } else {
-                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud));
+                    if (presentaEnfermedad) {
+                        enfermedad = request.getParameter("enfermedad");
+                    }
+                    if (!request.getParameter("profesion").equals("0")) {
+                        personal = request.getParameter("profesion");
+                    }
+                    
+                    Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), 
+                                                  presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud), enfermedad, personal);
                     if (request.getParameter("action").equals("Registrarse")) {
                         usuarioFacade.create(usuario);
                         out.println("<script type=\"text/javascript\">\n" + "  "

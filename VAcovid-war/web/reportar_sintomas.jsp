@@ -97,7 +97,7 @@
  
     <div class="form_reportar">
         
-        <form class="form_rep">
+        <form class="form_rep" action="./ReportarSintomas" method="POST">
             <fieldset>
                 <div class="titulo_form">
                     <h2>Reportar efectos secundarios</h2>
@@ -105,17 +105,17 @@
                 <div class="form__contentRep">
                     <div class="form__contentRep__campo">
                         <h3>Fecha de detección:</h3>
-                        <input type="date" name="apellido" value="" required />
+                        <input type="date" name="fecha" value="" required />
                     </div>
                     <div class="form__contentRep__area">
                         <h3>Describa los sintomas</h3>
                         <div class="form__contentRep__text_area">
-                            <textarea name="" id=""></textarea>
+                            <textarea name="sintomas" required>  </textarea>
                         </div>
                     </div>
                     
                     <div class="form__contentRep__campo">
-                        <input id="button_rep" type="submit" name="apellido" value="Enviar" required />
+                        <input id="button_rep" type="submit" name="action" value="Enviar" required />
                     </div>
                 </div>
             </fieldset>

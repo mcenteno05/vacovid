@@ -173,42 +173,29 @@
                     </div>
                     <div class="form__content3__campo">
                         <h3>Enfermedad:</h3>
-                        <select>
-                            <option value="">Seleccione una opcion</option>
-                            <option value"">Cáncer de pulmón</option>
-                            <option value"">Fibrosis quística</option>
-                            <option value"">Fibrosis pulmonar</option>
-                            <option value"">Asma moderada a grave</option>
-                            <option value"">Miocardiopatía</option>
-                            <option value"">Hipertensión pulmonar</option>
-                            <option value"">Enfermedad cardíaca congénita</option>
-                            <option value"">Insuficiencia cardíaca</option>
-                            <option value"">diabetes</option>
-                            <option value"">Otra enfermedad pulmonar</option>
-                            <option value"">Otra enfermedad cardiaca</option>
-                            <option value"">Otra enfermedad</option>
+                        <select name="enfermedad">
+                            <option >Seleccione una opcion</option>
+                            <option value="Cancer de pulmon">Cancer de pulmón</option>
+                            <option value="Fibrosis quística">Fibrosis quística</option>
+                            <option value="Fibrosis pulmonar">Fibrosis pulmonar</option>
+                            <option value="Asma moderada a grave">Asma moderada a grave</option>
+                            <option value="Miocardiopatía">Miocardiopatía</option>
+                            <option value="Hipertension pulmonar">Hipertensión pulmonar</option>
+                            <option value="Enfermedad cardíaca congenita">Enfermedad cardíaca congénita</option>
+                            <option value="Insuficiencia cardíaca">Insuficiencia cardíaca</option>
+                            <option value="Diabetes">Diabetes</option>
+                            <option value="Otra enfermedad pulmonar">Otra enfermedad pulmonar</option>
+                            <option value="Otra enfermedad cardiaca">Otra enfermedad cardiaca</option>
+                            <option value="Otra enfermedad">Otra enfermedad</option>
                             
                         </select>
                     </div>
                     <div class="form__content3__campo">
-                        <h3>EPS:</h3>
-                        <select>
-                            <option value="">Seleccione una opcion</option>
-                            <option value"">Nueva EPS</option>
-                            <option value"">Sura</option>
-                            <option value"">Medimas</option>
-                            <option value"">Sanitas</option>
-                            <option value"">Salud Total</option>
-                            <option value"">Compensar</option>
-                            <option value"">Otra</option>
-                        </select>
-                    </div>
-                    <div class="form__content3__campo">
                         <h3>Categoria de profesion:</h3>
-                        <select>
-                            <option value="">Seleccione una opcion</option>
-                            <option value"">Servidor publico</option>
-                            <option value"">Personal educativo</option>
+                        <select name="profesion">
+                            <option value="0"> Seleccione una opcion</option>
+                            <option value="Servidor publico">Servidor publico</option>
+                            <option value="Personal educativo">Personal educativo</option>
                         </select>
                     </div>
                 </div>
