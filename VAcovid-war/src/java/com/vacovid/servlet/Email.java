@@ -59,6 +59,7 @@ public class Email extends HttpServlet {
                 user.setClaveConfirmacion(codigo);
                 usuarioFacade.edit(user);
                 
+                out.println("<script type=\"text/javascript\">\n" + "  alert(\"Se ha enviado un codigo a su correo para cambiar la contraseña\");\n" + "</script>");
                 out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/recuperaContrasena.jsp\" />");
                 
             }else{

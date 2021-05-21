@@ -156,7 +156,7 @@
 
 
 
-    <script src="js/opciones_usuario"></script>
+    <script src="js/opciones_usuario.js"></script>
 </body>
 
 </html>

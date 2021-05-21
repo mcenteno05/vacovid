@@ -1127,3 +1127,111 @@ MAIN JANNSEN*/
     align-items: center;
     height: 1400px;
 }
+/*RECUPERAR CONTRASEÑA*/
+
+.main__plan__cc {
+    height: 580px;
+    background-image: url(../img/cambiar_contrasena.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+}
+
+.form_contrasena_Rec {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_con {
+    width: 800px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form_con fieldset {
+    width: 800px;
+    height: 400px;
+}
+
+.titulo_form h2 {
+    font-size: 2em;
+    color: var(--color_primario);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form__contentCon__campo {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__contentCon__campo input {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+}
+
+.form__contentCon__campo h3 {
+    height: 35px;
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    margin-left: 10px;
+    color: var(--color_primario);
+    padding: 2px 10px;
+    font-size: 1.3rem;
+}
+
+#button_cam {
+    background-color: var(--color_primario);
+    color: white;
+}
+
+.form_con fieldset {
+    border-radius: 10px;
+    border: 2px solid var(--color_primario);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.11);
+}
+
+.form_RecCon {
+  width: 800px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_RecCon fieldset {
+  width: 800px;
+  height: 260px;
+  border-radius: 10px;
+  border: 2px solid var(--color_primario);
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.11);
+}
+
+.form_RecConCod {
+  width: 800px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_RecConCod fieldsetCod {
+  width: 800px;
+  height: 400px;
+  border-radius: 10px;
+  border: 2px solid var(--color_primario);
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.11);
+}

@@ -1181,7 +1181,7 @@ CAMBIAR CONTRASEÑA*/
 
 .main__plan__cc {
     height: 580px;
-    background-image: url(../img/cambiar_contraseña.jpg);
+    background-image: url(../img/cambiar_contrasena.jpg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2016,3 +2016,4 @@ ACTUALIZAR INFORMACION*/
     font-weight: 400;
     margin-top: 15px;
 }
+
