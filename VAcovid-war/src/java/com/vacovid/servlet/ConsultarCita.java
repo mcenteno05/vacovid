@@ -7,8 +7,10 @@ package com.vacovid.servlet;
 
 import com.vacovid.entity.Cita;
 import com.vacovid.entity.Municipio;
+import com.vacovid.entity.ReporteDeVacunacion;
 import com.vacovid.entity.Usuario;
 import com.vacovid.session.CitaFacadeLocal;
+import com.vacovid.session.ReporteDeVacunacionFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ConsultarCita", urlPatterns = {"/ConsultarCita"})
 public class ConsultarCita extends HttpServlet {
+
+    @EJB
+    private ReporteDeVacunacionFacadeLocal reporteDeVacunacionFacade;
 
     @EJB
     private CitaFacadeLocal citaFacade;
@@ -46,26 +51,26 @@ public class ConsultarCita extends HttpServlet {
             HttpSession objsession = request.getSession(false);
             String user1 = (String) objsession.getAttribute("usuario1");
             int user = Integer.parseInt(user1);
+            Cita cita = citaFacade.find(Integer.parseInt(request.getParameter("citass")));
+            /*for (Cita object : citaFacade.findAll()) {
 
-            Municipio municipio = null;
-            Usuario usuario = null;
-            Cita cita = null;
-            for (Cita object : citaFacade.findAll()) {
-
-                if (object.getIdentificacionUsuario().getIdentificacion() == user) {
+                if (object.getIdentificacionUsuario().getIdentificacion() == user && object.getDosis()==Integer.parseInt(request.getParameter("dosis"))) {
+                    System.out.println("DOSIS"+request.getParameter("dosis"));
                     cita = object;
-                    usuario = object.getIdentificacionUsuario();
-                    municipio = usuario.getCodigoDaneMunicipio();
                 }
-            }
+            }*/
 
             
             if (request.getParameter("action").equals("Cancelar")) {
+                for (ReporteDeVacunacion rep : cita.getReporteDeVacunacionCollection()) {
+                    reporteDeVacunacionFacade.remove(rep);
+                }
                 citaFacade.remove(cita);
+
                 out.println("<script type=\"text/javascript\">\n" + "  "
-                                + "alert(\"Cita Cancelada Exitosamente\");\n"
-                                + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\"" +
-                                "</script>");
+                        + "alert(\"Cita Cancelada Exitosamente\");\n"
+                        + "window.location.href =" + "\"http://localhost:8080/VAcovid-war/menu.jsp\""
+                        + "</script>");
             }
 
             out.println("<!DOCTYPE html>");

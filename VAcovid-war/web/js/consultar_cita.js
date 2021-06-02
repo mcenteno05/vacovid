@@ -12,6 +12,7 @@ if(con_nombre){
     const con_dep = document.getElementById("con_dep")
     const con_mun = document.getElementById("con_mun")
     const con_entidad = document.getElementById("con_entidad")
+    const con_cita = document.getElementById("con_idcita")
 
     document.getElementById("apellidos").textContent = con_apellido.textContent
     document.getElementById("nombres").textContent = con_nombre.textContent
@@ -23,6 +24,7 @@ if(con_nombre){
     document.getElementById("departamento").textContent = con_dep.textContent
     document.getElementById("ciudad").textContent = con_mun.textContent
     document.getElementById("entidad").textContent = con_entidad.textContent
+    document.getElementById("citaname").textContent = con_cita.textContent
 }else{
     document.getElementById("sin_cita").style.display = "flex" ;
     document.getElementById("in_cita").style.display = "none" ;

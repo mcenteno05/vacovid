@@ -60,7 +60,7 @@ public class ConsultarPacientes extends HttpServlet {
                     }
                     if (c != null) {
                         for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) {
-                            if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo() == "") {
+                            if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo().equals("")) {
                                 lista.add(c);
                                 c = null;
                             }

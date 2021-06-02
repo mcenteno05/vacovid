@@ -94,7 +94,7 @@ public class RegistroUsuario extends HttpServlet {
                     }
                     
                     Usuario usuario = new Usuario(identificacion, nombres, apellidos, date, telefono, email, contraseña, tipo, direccion, municipioFacade.find(municipio), 
-                                                  presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud), enfermedad, personal);
+                                                  presentaEnfermedad, personalSalud, determinarFase(date, presentaEnfermedad, personalSalud,personal), enfermedad, personal);
                     if (request.getParameter("action").equals("Registrarse")) {
                         usuarioFacade.create(usuario);
                         out.println("<script type=\"text/javascript\">\n" + "  "
@@ -121,7 +121,7 @@ public class RegistroUsuario extends HttpServlet {
         }
     }
     
-    private int determinarFase(Date fecha, boolean presentaEnfermedad, boolean personalSalud)
+    private int determinarFase(Date fecha, boolean presentaEnfermedad, boolean personalSalud, String personal)
     {
         LocalDate date= LocalDate.of(fecha.getYear()+1900, fecha.getMonth()+1, fecha.getDay());
         Period period = Period.between(date, LocalDate.now());
@@ -133,7 +133,7 @@ public class RegistroUsuario extends HttpServlet {
         {
             return 2;
         }
-        else if (period.getYears()>=16 && period.getYears()<60 && presentaEnfermedad) {
+        else if ((period.getYears()>=16 && period.getYears()<60 && presentaEnfermedad)|| personal.equals("Personal educativo")) {
             return 3;
         }
         else if (presentaEnfermedad) {

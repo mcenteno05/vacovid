@@ -21,7 +21,7 @@
     String faseActual = "1";
    
  %>
- <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123" />
+ <sql:setDataSource var="bd" driver="org.apache.derby.jdbc.ClientDriver" url="jdbc:derby://localhost:1527/vacovid" user = "admin123"  password = "admin123"  />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,11 +85,9 @@
                     <h2>Actualizar información</h2>
                 </div>
             </a>
-            <a href="">
                 <div class="usuario__opcion">
-                    <h2>Logout</h2>
+                    <a href="cerrarSesion.jsp"><h2>Logout</h2></a>
                 </div>
-            </a>
         </div>
         <div class="main__plan__content">
             <h1>SOLICITAR CITA</h1>

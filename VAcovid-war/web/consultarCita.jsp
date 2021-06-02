@@ -39,13 +39,15 @@
 
 <body>
     <sql:query var="info_cita" dataSource="${bd}">
-        SELECT u.nombre, u.apellido, u.tipo_documento, u.identificacion, c.dosis, c.fecha, c.hora, m.departamento, m.municipio, c.entidad_salud
+        SELECT c.citaid, u.nombre, u.apellido, u.tipo_documento, u.identificacion, c.dosis, c.fecha, c.hora, m.departamento, m.municipio, c.entidad_salud
         FROM CITA c
         INNER JOIN USUARIO u ON(c.identificacion_usuario = u.identificacion)
         INNER JOIN MUNICIPIO m ON(m.codigo_dane_municipio = u.codigo_dane_municipio)
         WHERE u.identificacion = <%=usuario%> AND c.fecha >= CURRENT_DATE
-    </sql:query>  
+    </sql:query>
+        
     <c:forEach var = "row" items = "${info_cita.rows}">
+        <span id="con_idcita" style="display: none">${row.citaid}</span>
         <h2 id="con_nombre" style="display: none">${row.nombre}</h2>
         <h2 id="con_apellido" style="display: none">${row.apellido}</h2>
         <h2 id="con_tipo_d" style="display: none">${row.tipo_documento}</h2>
@@ -116,6 +118,9 @@
         <form id="in_cita" class="info_cita" action="./ConsultarCita" method="POST" style="display: none">
         <div class="info_cita_div">
             <div class="info_cita_usuario">
+                <select name="citass" hidden>
+                    <option type="text" id="citaname"></option>
+                </select>
                 <h2>Apellidos:<span id="apellidos"></span></h2>
                 <h2>Nombres:<span id="nombres"></span></h2>
                 <h2>Tipo de documento:<span id="tipo_d"></span></h2>
