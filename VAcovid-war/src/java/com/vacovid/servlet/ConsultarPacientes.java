@@ -49,12 +49,12 @@ public class ConsultarPacientes extends HttpServlet {
 
             if (request.getParameter("action").equals("Consultar Pacientes sin vacunar por fase")) {
                 for (Cita cita : citaFacade.findAll()) {
-                    f = cita.getFechaDate();
+                    f = new Date(cita.getFechaDate().getYear(),cita.getFechaDate().getMonth(),cita.getFechaDate().getDate());
                     if (f.getDate() == actual.getDate()) {
                         f.setDate(f.getDate() + 1);
                     }
-                    System.out.println("+++++" + f.getDate());
-                    System.out.println("+++++++++++" + actual.getDate());
+                    
+                    
                     if (cita.getIdSitio().getIdentificacionRepresentante().getIdentificacion() == Integer.parseInt(usuario) && f.compareTo(actual) >= 0) {
                         c = cita;
                     }
@@ -63,6 +63,7 @@ public class ConsultarPacientes extends HttpServlet {
                             if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo().equals("")) {
                                 lista.add(c);
                                 c = null;
+                                break;
                             }
                         }
                     }
@@ -76,9 +77,10 @@ public class ConsultarPacientes extends HttpServlet {
                     }
                     if (c != null) {
                         for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) {
-                            if (c.getCitaid() == r.getIdCita().getCitaid() && r.getBrazo() != "") {
+                            if (c.getCitaid() == r.getIdCita().getCitaid() && !r.getBrazo().equals("")) {
                                 lista.add(c);
                                 c = null;
+                                break;
                             }
                         }
                     }
@@ -87,7 +89,7 @@ public class ConsultarPacientes extends HttpServlet {
             } else if (request.getParameter("action").equals("Consultar Pacientes por vacunar segunda dosis")) {
 
                 for (Cita cita : citaFacade.findAll()) {
-                    f = cita.getFechaDate();
+                    f = new Date(cita.getFechaDate().getMonth(),cita.getFechaDate().getMonth(),cita.getFechaDate().getDate());
                     if (f.getDate() == actual.getDate()) {
                         f.setDate(f.getDate() + 1);
                     }

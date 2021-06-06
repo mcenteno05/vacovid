@@ -73,8 +73,10 @@ public class GenerarReporteDeVacunacion extends HttpServlet {
                 Cita cita = citaFacade.find(citaid);
                 user = usuarioFacade.find(cita.getIdentificacionUsuario().getIdentificacion());
                 ReporteDeVacunacion reporte = null;
-                for (ReporteDeVacunacion r : cita.getReporteDeVacunacionCollection()) {
-                    reporte = r;
+                for (ReporteDeVacunacion r : reporteDeVacunacionFacade.findAll()) {
+                    if (r.getIdCita().getCitaid()==cita.getCitaid()) {
+                        reporte = r;
+                    }
                 }
                 reporte.setBrazo(brazo);
                 VacunaRecibida v = vacunaRecibidaFacade.find(vacunaid);

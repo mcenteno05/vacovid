@@ -51,6 +51,8 @@ public class ActualizarInventarioNacional extends HttpServlet {
                     if (request.getParameter("tipo").equals("Agregar vacunas")) {
                         vacuna.setCantidad(vacuna.getCantidad() + cantidad);
                         vacunaFacade.edit(vacuna);
+                        out.println("<script type=\"text/javascript\">\n" + "  alert(\" Inventario nacional actualizado correctamente\" ); \n" + "</script>");
+                        out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/VAcovid-war/menu_distribuidor.jsp\" />");
                     }
                     if (request.getParameter("tipo").equals("Quitar vacunas")) {
 
@@ -71,7 +73,6 @@ public class ActualizarInventarioNacional extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarInventarioNacional</title>");
             out.println("</head>");
             out.println("<body>");
             

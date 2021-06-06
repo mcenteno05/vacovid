@@ -57,7 +57,7 @@ public class ReportarSintomas extends HttpServlet {
             String username = "vacovidunipiloto";
             String pass = "123@Admin";
             String vaEmail = "vacovidunipiloto@gmail.com";
-            String asunto =request.getParameter("sintomas");
+            String asunto ="En la fecha "+ request.getParameter("fecha") + " El usuario identificado con el número: "+ usuario +" ha presentado los siguientes síntomás luego de recibir su vacuna:  "+request.getParameter("sintomas");
             
             correoBean.reportarSintomas(correo, username, pass, vaEmail, asunto);
          

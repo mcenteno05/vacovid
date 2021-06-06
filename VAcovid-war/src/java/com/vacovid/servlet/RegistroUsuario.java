@@ -123,8 +123,9 @@ public class RegistroUsuario extends HttpServlet {
     
     private int determinarFase(Date fecha, boolean presentaEnfermedad, boolean personalSalud, String personal)
     {
-        LocalDate date= LocalDate.of(fecha.getYear()+1900, fecha.getMonth()+1, fecha.getDay());
+        LocalDate date= LocalDate.of(fecha.getYear()+1900, fecha.getMonth()+1, fecha.getDate());
         Period period = Period.between(date, LocalDate.now());
+        
         if (period.getYears()>=80 || personalSalud)
         {
             return 1;
@@ -133,7 +134,7 @@ public class RegistroUsuario extends HttpServlet {
         {
             return 2;
         }
-        else if ((period.getYears()>=16 && period.getYears()<60 && presentaEnfermedad)|| personal.equals("Personal educativo")) {
+        else if ((period.getYears()>=16 && period.getYears()<60 && presentaEnfermedad)|| (personal!=null && personal.equals("Personal educativo"))) {
             return 3;
         }
         else if (presentaEnfermedad) {

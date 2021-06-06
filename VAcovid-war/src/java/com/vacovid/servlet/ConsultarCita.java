@@ -62,9 +62,9 @@ public class ConsultarCita extends HttpServlet {
 
             
             if (request.getParameter("action").equals("Cancelar")) {
-                for (ReporteDeVacunacion rep : cita.getReporteDeVacunacionCollection()) {
-                    reporteDeVacunacionFacade.remove(rep);
-                }
+                reporteDeVacunacionFacade.findAll().stream().filter((r) -> (r.getIdCita().getCitaid()==cita.getCitaid())).forEach((r) -> {
+                    reporteDeVacunacionFacade.remove(r);
+                });
                 citaFacade.remove(cita);
 
                 out.println("<script type=\"text/javascript\">\n" + "  "

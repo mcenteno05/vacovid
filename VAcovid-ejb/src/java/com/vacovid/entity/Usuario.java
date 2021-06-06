@@ -126,7 +126,7 @@ public class Usuario implements Serializable {
     }
 
     public Usuario(int identificacion, String nombres, String apellidos, Date date, String telefono, String email, String contraseña, 
-            String tipo, String direccion, Municipio find, boolean presentaEnfermedad, boolean personalSalud, int fase, String enfermedad, String categoria) {
+            String tipo, String direccion, Municipio municipio, boolean presentaEnfermedad, boolean personalSalud, int fase, String enfermedad, String categoria) {
         this.identificacion = identificacion;
         this.nombre = nombres;
         this.apellido = apellidos;
@@ -141,6 +141,7 @@ public class Usuario implements Serializable {
         this.fase = fase;
         this.enfermedad = enfermedad;
         this.categoriaProfesion = categoria;
+        this.codigoDaneMunicipio=municipio;
     }
 
     
